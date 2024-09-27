@@ -12,3 +12,12 @@ Les médias pouvant être stockés sont:
 - Séries
 
 Un média ajouté est ajouter dans le catalogue commun.
+
+tables:
+- media
+> Films
+> Livres
+> Bande-dessinées
+> Jeux vidéos
+> Séries
+- utilisateur
