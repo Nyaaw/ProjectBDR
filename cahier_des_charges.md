@@ -5,9 +5,10 @@ Application pour la gestion d'un historique de médias consommés.
 
 Un utilisateur peut ajouter, rechercher, modifier, supprimer et noter des médias à son historique.
 Les médias pouvant être stockés sont: 
-- films
-- livres
+- Films
+- Livres
 - Bande-dessinées
-- jeux vidéos
+- Jeux vidéos
+- Séries
 
 Un média ajouté est ajouter dans le catalogue commun.
