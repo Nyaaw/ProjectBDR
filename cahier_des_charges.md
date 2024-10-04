@@ -21,3 +21,16 @@ tables:
   - Jeux vidéos 
   - Séries
 - utilisateur
+- rate
+  - classe association commentaire?
+
+fonctionalités:
+- recherche
+- ajout
+- supression
+- modification
+- rating
+- commentaire?
+- recommandation?
+- comparaison?
+- admin?
