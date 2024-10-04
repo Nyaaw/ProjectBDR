@@ -34,3 +34,7 @@ fonctionalités:
 - recommandation?
 - comparaison?
 - admin?
+
+
+donnée base:
+2 utilisateurs et 4-5 média de chaque catégorie
