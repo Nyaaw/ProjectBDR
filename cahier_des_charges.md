@@ -1,4 +1,5 @@
 # Projet BDR
+Groupe 9 : Lisa Gorgerat - Alex Berberat - Pierric Ripoll
 
 ## Description brève
 Nous prévoyons de faire une application web pour maintenir une liste personnelle de médias artistiques
