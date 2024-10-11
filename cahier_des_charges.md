@@ -83,6 +83,3 @@ Système de recommendation basé sur les listes et les notes d'autres utilisateu
 - PostgreSQL
 - HTML
 - CSS avec feuille d'aide type bootstrap
-
-donnée base:
-2 utilisateurs et 4-5 média de chaque catégorie
