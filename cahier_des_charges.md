@@ -14,6 +14,7 @@ Les médias pouvant être stockés sont:
 Un média ajouté est ajouter dans le catalogue commun.
 
 tables:
+- créateur
 - media
   - Films 
   - Livres 
