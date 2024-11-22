@@ -1,21 +1,24 @@
 /* Création de la base de données*/
-DROP DATABASE IF EXIST projet;
-CREATE DATABASE projet;
+DROP DATABASE IF EXIST mediateque;
+CREATE DATABASE mediateque;
 
 /*Création de tables*/
-CREATE TABLE createur(
+CREATE TABLE Createur(
+    id serial,
+    nom varchar(50),
+    CONSTRAINT PK_Createur PRIMARY KEY (id)
+);
+
+CREATE TABLE Groupe(
+    id serial,
 
 );
 
-CREATE TABLE groupe(
+CREATE TABLE Personne(
 
 );
 
-CREATE TABLE personne(
-
-);
-
-CREATE TABLE genre(
+CREATE TABLE Genre(
 
 );
 
@@ -23,51 +26,51 @@ CREATE TABLE Type(
 
 );
 
-CREATE TABLE media(
+CREATE TABLE Media(
 
 );
 
-CREATE TABLE papier(
-
-);
-
-
-CREATE TABLE livre(
-
-);
-
-CREATE TABLE bd(
+CREATE TABLE Papier(
 
 );
 
 
-CREATE TABLE numerique(
+CREATE TABLE Livre(
+
+);
+
+CREATE TABLE BD(
 
 );
 
 
-CREATE TABLE film(
+CREATE TABLE Numerique(
 
 );
 
 
-CREATE TABLE serie(
+CREATE TABLE Film(
 
 );
 
-CREATE TABLE jeuvideo(
+
+CREATE TABLE Serie(
 
 );
 
-CREATE TABLE utilisateur(
+CREATE TABLE JeuVideo(
 
 );
 
-CREATE TABLE liste(
+CREATE TABLE Utilisateur(
 
 );
 
-CREATE TABLE mediautilisateur(
+CREATE TABLE Liste(
+
+);
+
+CREATE TABLE MediaUtilisateur(
 
 );
 
