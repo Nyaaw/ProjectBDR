@@ -68,6 +68,6 @@ CREATE TABLE liste(
 );
 
 CREATE TABLE mediautilisateur(
-    
+
 );
 
