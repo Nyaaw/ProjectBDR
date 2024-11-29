@@ -9,8 +9,15 @@ Personne.id references Createur.id
 Genre(<u>nom</u>)
 
 Media(<u>id</u>, nom, dateSortie, description, genre)  
-Media.genre references Genre.nom  
-Media.id UNIQUE et NOT NULL
+Media.genre references Genre.nom
+
+Media_Createur(<u>idMedia, idCreateur</u>)
+Media_Createur.idMedia references Media.id
+Media_Createur.idCreateur references Createur.id
+
+Media_Genre(<u>idMedia, nomGenre</u>)
+Media_Genre.idMedia references Media.id
+Media_Genre.nomGenre references Genre.nom
 
 Papier(<u>id</u>)  
 Papier.id references Media.id
@@ -41,6 +48,10 @@ Utilisateur(<u>pseudo</u>, motDePasse)
 Liste(<u>pseudo, nom</u>, dateCreation, mediaId)  
 Liste.pseudo references Utilisateur.pseudo  
 Liste.mediaId references Media.id
+
+Media_Liste(<u>idMedia, pseudoListe, nomListe</u>)
+Media_Liste.idMedia references Media.id
+(Media_Liste.pseudoListe, Media_Liste) references (Liste.pseudo, Liste.nom)
 
 Commentaire(<u>pseudo, id</u>, date, note, text)  
 Commentaire.pseudo references Utilisateur.pseudo  
