@@ -1,13 +1,12 @@
 /* Création de la base de données, à séparer du script principal dans dBeaver*/
-DROP DATABASE IF EXIST mediateque;
+DROP DATABASE IF EXISTS mediateque;
 CREATE DATABASE mediateque;
 
-/*Création de tables*/
-/* 
+/*Supression des tables si elles existent déjà*/
 DROP TABLE IF EXISTS Media_Genre;
 DROP TABLE IF EXISTS Media_Liste;
 DROP TABLE IF EXISTS Media_Createur;
-*/
+DROP TABLE IF EXISTS JeuVideo_Type;
 DROP TABLE IF EXISTS Groupe;
 DROP TABLE IF EXISTS Personne;
 DROP TABLE IF EXISTS Livre;
@@ -25,6 +24,7 @@ DROP TABLE IF EXISTS Createur;
 DROP TABLE IF EXISTS Media;
 DROP TABLE IF EXISTS Genre;
 
+/* Création des tables */
 
 CREATE TABLE Createur(
      id serial,
@@ -64,12 +64,22 @@ CREATE TABLE Media_Createur(
     mediaId integer,
     createurId integer,
     CONSTRAINT PK_Media_Createur PRIMARY KEY(mediaId, createurId),
-    CONSTRAINT FK_Media_Createur
-)
+    CONSTRAINT FK_Media_Createur_mediaId FOREIGN KEY
+        (mediaId) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_Media_Createur_createurId FOREIGN KEY
+        (createurId) REFERENCES Createur(id) ON UPDATE CASCADE ON DELETE NO ACTION
+);
 
-/* CREATE TABLE Media_Createur */
 
-/* CREATE TABLE Media_Genre */
+CREATE TABLE Media_Genre(
+    mediaId integer,
+    genreNom varchar(50),
+    CONSTRAINT PK_Media_Genre PRIMARY KEY(mediaId, genreNom),
+    CONSTRAINT FK_Media_Genre_mediaId FOREIGN KEY
+        (mediaId) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_Media_Genre_genreNom FOREIGN KEY
+        (genreNom) REFERENCES Genre(nom) ON UPDATE CASCADE ON DELETE NO ACTION
+);
 
 CREATE TABLE Papier(
     id serial,
@@ -128,12 +138,9 @@ CREATE TABLE Type(
 
 CREATE TABLE JeuVideo(
     id serial,
-    type varchar(50) NOT NULL,
     CONSTRAINT PK_JeuVideo PRIMARY KEY(id),
     CONSTRAINT FK_JeuVideo_id FOREIGN KEY
-     (id) REFERENCES Numerique(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_JeuVideo_type FOREIGN KEY
-     (type) REFERENCES Type(nom) ON UPDATE CASCADE ON DELETE CASCADE
+     (id) REFERENCES Numerique(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Utilisateur(
@@ -145,15 +152,31 @@ CREATE TABLE Utilisateur(
 CREATE TABLE Liste(
     pseudo varchar(50),
     nom varchar(50),
-    mediaId serial NOT NULL,
     CONSTRAINT PK_Liste PRIMARY KEY (pseudo, nom),
     CONSTRAINT FK_Liste_pseudo FOREIGN KEY
-      (pseudo) REFERENCES Utilisateur(pseudo) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_Liste_mediaId FOREIGN KEY
-      (mediaId) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE
+      (pseudo) REFERENCES Utilisateur(pseudo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-/* CREATE TABLE Media_Liste */
+CREATE TABLE Media_Liste(
+    idMedia integer,
+    listeNom varchar(50),
+    listePseudo varchar(50),
+    CONSTRAINT PK_Media_Liste PRIMARY KEY (idMedia, listeNom, listePseudo),
+    CONSTRAINT FK_Media_Liste_idMedia FOREIGN KEY
+      (idMedia) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_Media_Liste_listeNom FOREIGN KEY
+      (listeNom, listePseudo) REFERENCES Liste(nom, pseudo) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE JeuVideo_Type(
+    jeuVideoId integer,
+    typeNom varchar(50),
+    CONSTRAINT PK_JeuVideo_Type PRIMARY KEY(jeuVideoId, typeNom),
+    CONSTRAINT FK_JeuVideo_Type_jeuVideoId FOREIGN KEY
+        (jeuVideoId) REFERENCES JeuVideo(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_JeuVideo_Type_typeNom FOREIGN KEY
+        (typeNom) REFERENCES Type(nom) ON UPDATE CASCADE ON DELETE NO ACTION
+);
 
 CREATE TABLE Commentaire(
     pseudo varchar(50),
