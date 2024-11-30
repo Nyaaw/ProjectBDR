@@ -3,6 +3,11 @@ DROP DATABASE IF EXIST mediateque;
 CREATE DATABASE mediateque;
 
 /*Création de tables*/
+/* 
+DROP TABLE IF EXISTS Media_Genre;
+DROP TABLE IF EXISTS Media_Liste;
+DROP TABLE IF EXISTS Media_Createur;
+*/
 DROP TABLE IF EXISTS Groupe;
 DROP TABLE IF EXISTS Personne;
 DROP TABLE IF EXISTS Livre;
@@ -52,11 +57,15 @@ CREATE TABLE Media(
     nom varchar(255) NOT NULL,
     dateSortie date NOT NULL,
     description TEXT NOT NULL,
-    genre varchar(50) NOT NULL,
-    CONSTRAINT PK_Media PRIMARY KEY (id),
-    CONSTRAINT FK_Media_genre FOREIGN KEY
-      (genre) REFERENCES Genre(nom) ON UPDATE CASCADE
+    CONSTRAINT PK_Media PRIMARY KEY (id)
 );
+
+CREATE TABLE Media_Createur(
+    mediaId integer,
+    createurId integer,
+    CONSTRAINT PK_Media_Createur PRIMARY KEY(mediaId, createurId),
+    CONSTRAINT FK_Media_Createur
+)
 
 /* CREATE TABLE Media_Createur */
 
