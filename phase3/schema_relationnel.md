@@ -8,8 +8,7 @@ Personne.id references Createur.id
 
 Genre(<u>nom</u>)
 
-Media(<u>id</u>, nom, dateSortie, description, genre)  
-Media.genre references Genre.nom
+Media(<u>id</u>, nom, dateSortie, description)
 
 Media_Createur(<u>idMedia, idCreateur</u>)
 Media_Createur.idMedia references Media.id
@@ -39,7 +38,7 @@ Serie.id references Numerique.id
 
 Type(<u>nom</u>)
 
-JeuVideo(<u>id</u>, type)  
+JeuVideo(<u>id</u>)  
 JeuVideo.id references Numerique.id
 
 JeuVideo_Type(<u>jeuVideoId, typeNom</u>)

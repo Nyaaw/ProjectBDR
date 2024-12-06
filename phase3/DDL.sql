@@ -33,14 +33,14 @@ CREATE TABLE Createur(
 );
 
 CREATE TABLE Groupe(
-    id serial,
+    id integer,
     CONSTRAINT PK_Groupe PRIMARY KEY (id),
     CONSTRAINT FK_Groupe_id FOREIGN KEY
        (id) REFERENCES Createur(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Personne(
-    id serial,
+    id integer,
     prenom varchar(255) NOT NULL,
     CONSTRAINT PK_Personne PRIMARY KEY (id),
     CONSTRAINT FK_Personne_id FOREIGN KEY
@@ -82,7 +82,7 @@ CREATE TABLE Media_Genre(
 );
 
 CREATE TABLE Papier(
-    id serial,
+    id integer,
     CONSTRAINT PK_Papier PRIMARY KEY (id),
     CONSTRAINT FK_Papier_id FOREIGN KEY
        (id) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -90,7 +90,7 @@ CREATE TABLE Papier(
 
 
 CREATE TABLE Livre(
-    id serial,
+    id integer,
     nbPage int NOT NULL,
     CONSTRAINT PK_Livre PRIMARY KEY (id),
     CONSTRAINT FK_Livre_id FOREIGN KEY
@@ -98,7 +98,7 @@ CREATE TABLE Livre(
 );
 
 CREATE TABLE BD(
-    id serial,
+    id integer,
     couleur bool NOT NULL,
     CONSTRAINT PK_BD PRIMARY KEY (id),
     CONSTRAINT FK_BD_id FOREIGN KEY
@@ -107,7 +107,7 @@ CREATE TABLE BD(
 
 
 CREATE TABLE Numerique(
-    id serial,
+    id integer,
     CONSTRAINT PK_Numerique PRIMARY KEY(id),
     CONSTRAINT FK_Numerique_id FOREIGN KEY
       (id) REFERENCES Media(id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -115,7 +115,7 @@ CREATE TABLE Numerique(
 
 
 CREATE TABLE Film(
-    id serial,
+    id integer,
     duree time NOT NULL,
     CONSTRAINT PK_Film PRIMARY KEY(id),
     CONSTRAINT FK_Film_id FOREIGN KEY
@@ -124,7 +124,7 @@ CREATE TABLE Film(
 
 
 CREATE TABLE Serie(
-    id serial,
+    id integer,
     nbSaison int NOT NULL,
     CONSTRAINT PK_Serie PRIMARY KEY(id),
     CONSTRAINT FK_Serie_id FOREIGN KEY
@@ -137,7 +137,7 @@ CREATE TABLE Type(
 );
 
 CREATE TABLE JeuVideo(
-    id serial,
+    id integer,
     CONSTRAINT PK_JeuVideo PRIMARY KEY(id),
     CONSTRAINT FK_JeuVideo_id FOREIGN KEY
      (id) REFERENCES Numerique(id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -180,7 +180,7 @@ CREATE TABLE JeuVideo_Type(
 
 CREATE TABLE Commentaire(
     pseudo varchar(50),
-    id serial,
+    id integer,
     date date NOT NULL,
     note int NOT NULL,
     texte TEXT,
