@@ -40,13 +40,16 @@ Serie.id references Numerique.id
 Type(<u>nom</u>)
 
 JeuVideo(<u>id</u>, type)  
-JeuVideo.id references Numerique.id   
-JeuVideo.type references Type.nom
+JeuVideo.id references Numerique.id
+
+JeuVideo_Type(<u>jeuVideoId, typeNom</u>)
+JeuVideo_Type.jeuVideoId references JeuVideo.id
+JeuVideo_Type.typeNom references Type.nom
 
 Utilisateur(<u>pseudo</u>, motDePasse)
 
 Liste(<u>pseudo, nom</u>, dateCreation, mediaId)  
-Liste.pseudo references Utilisateur.pseudo  
+Liste.pseudo references Utilisateur.pseudo
 Liste.mediaId references Media.id
 
 Media_Liste(<u>idMedia, pseudoListe, nomListe</u>)
@@ -56,4 +59,3 @@ Media_Liste.idMedia references Media.id
 Commentaire(<u>pseudo, id</u>, date, note, text)  
 Commentaire.pseudo references Utilisateur.pseudo  
 Commentaire.id references Media.id
-
