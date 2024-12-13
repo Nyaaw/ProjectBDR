@@ -57,7 +57,7 @@ press `CTRL + w` and `CTRL + x` to save and exit
 
 ### 8 : Configure your VirtualHost
 
-Just start by creating a directory where you will your local website
+Just start by creating a directory where you'll have your local website
 
 ```bash
 $ cd ~
@@ -79,7 +79,7 @@ $ sudo chmod +rx /home/USER/ProjectBDR/src
 $ sudo chmod +rx /home/USER/ProjectBDR/src/index.html
 ```
 
-### 9 : Helpful script
+### 9 : Helpful script (Optionnal)
 
 I don’t want my webserver start each time I boot my computer. So I deciding to disable the autostart and create a little script that gonna start it or not.
 
