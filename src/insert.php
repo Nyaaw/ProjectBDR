@@ -9,18 +9,6 @@
     <textarea name="description" id="description"></textarea>
 
     <br>
-    <form>
-        <label for="creator">Select creator:</label>
-        <select id="creator" name="creator">
-            <option value="0">John Cena</option>
-            <option value="1">Mario</option>
-            <!-- tous les créateurs ici -->
-        </select>
-        <br>
-        <input type="button" value="Add">
-    </form>
-    
-    <br>
 
     <label for="genre">Add genre:</label>
     <select id="genre" name="genre">
@@ -37,6 +25,19 @@
             <li>Comedy <btn>remove</btn></li>
         </ul>
     </div>
+
+    <br>
+
+    <form>
+        <label for="creator">Select creator:</label>
+        <select id="creator" name="creator">
+            <option value="0">John Cena</option>
+            <option value="1">Mario</option>
+            <!-- tous les créateurs ici -->
+        </select>
+        <br>
+        <input type="button" value="Add">
+    </form>
     
     <br>
 
@@ -45,8 +46,8 @@
         <input type="text" id="creatorName" name="creatorName">
         <br>
         <label for="creatorType">type de créateur:</label>
-        <input type="radio" name="creatorType" id="creatorTypePerson">
-        <input type="radio" name="creatorType" id="creatorTypeGroup">
+        <input type="radio" name="creatorType" id="creatorTypePerson"> Personne
+        <input type="radio" name="creatorType" id="creatorTypeGroup"> Groupe
         <br>
         <input type="button" value="Add">
     </form>
@@ -93,4 +94,6 @@
     </div>
 
     <br>
+
+    <input type="button" value="Create !">
 </form> 
