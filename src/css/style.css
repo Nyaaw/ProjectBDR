@@ -60,6 +60,16 @@ a:hover{
     color: lightsalmon;
 }
 
+footer{
+    height: 70px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 main{
     text-align: center;
 }
@@ -196,4 +206,23 @@ button{
     justify-content: center;
     justify-items: center;
     padding-bottom: 50px;
+}
+
+#media{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px;
+    height: 100%;
+    min-height: 591px;
+    align-items: center;
+}
+
+.media_section1{
+    width: 30%;
+    text-align: left;
+}
+
+.media_section2{
+    width: 70%;
 }
