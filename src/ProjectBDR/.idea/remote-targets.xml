@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <option name="projectDefaultTargetUuid" value="c9694f88-6e43-4304-bf20-cc445c557ed4" />
+    <targets>
+      <target name="WSL" type="wsl" uuid="c9694f88-6e43-4304-bf20-cc445c557ed4">
+        <config>
+          <option name="distributionMsId" value="Ubuntu" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/home/wslrip/.sdkman/candidates/java/21.0.4-tem" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
