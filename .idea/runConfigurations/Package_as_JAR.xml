@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Package as JAR" type="MavenRunConfiguration" factoryName="Maven">
+    <target name="WSL - Ubuntu" />
     <MavenSettings>
       <option name="myGeneralSettings">
         <MavenGeneralSettings>
