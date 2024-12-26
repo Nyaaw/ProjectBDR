@@ -40,7 +40,7 @@
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
-            <version>6.3.0</version>
+            <version>6.4.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin-rendering</artifactId>
-            <version>6.3.0</version>
+            <version>6.4.0</version>
         </dependency>
     </dependencies>
 
