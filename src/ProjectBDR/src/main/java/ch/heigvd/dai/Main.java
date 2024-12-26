@@ -5,7 +5,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
+import java.util.Map;
 
 public class Main {
     public static final int PORT = 8080;
@@ -24,7 +24,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/", ctx -> ctx.render("index.html", Map.of("title", "ProjectBDR !")));
 
         app.start(PORT);
     }
