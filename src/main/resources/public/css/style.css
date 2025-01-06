@@ -108,6 +108,7 @@ h2{
     border-radius: 15px;
     font-weight: bold;
     text-decoration: none;
+    box-shadow: 2px 2px 7px grey;
 }
 
 .bouton:hover{
@@ -225,4 +226,11 @@ button{
 
 .media_section2{
     width: 70%;
+}
+
+.list-lists{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
 }

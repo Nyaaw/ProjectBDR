@@ -24,7 +24,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        app.get("/", ctx -> ctx.render("index.html", Map.of("title", "ProjectBDR !")));
+        app.get("/", ctx -> ctx.render("index.html");
 
         app.start(PORT);
     }
