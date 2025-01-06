@@ -72,6 +72,8 @@ footer{
 
 main{
     text-align: center;
+    min-height: 750px;
+    height: 100%;
 }
 
 h2{
@@ -159,31 +161,7 @@ input[type="number"]{
     box-shadow: 2px 2px 7px grey;
 }
 
-.media_list{
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: white;
 
-    justify-self: center;
-    border-radius: 20px;
-    box-shadow: 2px 2px 7px lightsalmon;
-
-    padding-right: 40px;
-}
-
-#List_item{
-    display: flex;
-    flex-direction: row;
-    gap:20px;
-    text-decoration: none;
-    list-style: none;
-}
-
-#List_item li{
-    text-decoration: none;
-}
 
 button{
     border-radius: 10px;
@@ -201,12 +179,43 @@ button{
 
 #part_3{
     padding-top:50px;
-    background-color: antiquewhite;
+    display:flex;
+    background-color: lightgray;
     text-align: center;
     flex-direction: column;
     justify-content: center;
-    justify-items: center;
     padding-bottom: 50px;
+}
+
+.media_list{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gra;
+    padding-right: 40px;
+}
+
+.media_list a{
+    color: black;
+}
+
+.media_list a:hover{
+    color: lightsalmon;
+}
+
+.List_item{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    text-decoration: none;
+    list-style: none;
+}
+
+.List_item li{
+    text-decoration: none;
 }
 
 #media{
@@ -228,9 +237,14 @@ button{
     width: 70%;
 }
 
-.list-lists{
+.list_lists{
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gray;
+    margin: 20px;
+    padding: 10px;
 }
