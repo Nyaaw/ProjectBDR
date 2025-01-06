@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="includes/layout :: head"></head>
+
+<body>
+  <header th:replace="includes/layout :: header"></header>
+
+  <main>
+    <div id="part_1">
+      <img src="img/banner.jpg" alt="">
+      <div id="ainfo">
+          <h2 th:text="${title}">Title fallback</h2>
+          <a class="bouton" href="explore.php">En savoir plus</a>
+      </div>
+    </div>
+  </main>
+
+<footer th:replace="includes/layout :: footer"></footer>
+</body>
+</html>

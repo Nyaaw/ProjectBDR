@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head th:fragment="head">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>BDR Project</title>
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<header>
+<header th:fragment="header">
     <div id="entete">
         <a href="index.php"><img src="img/timewhite.svg" alt="" id="logo"></a>
         <div id="menu">
@@ -31,3 +31,13 @@
     </div>
     <div><a class="bouton" id="btn_menu" href="login.php">Login</a></div>
 </header>
+
+<main>
+    layout template !
+</main>
+
+<footer th:fragments="footer">
+    footer footer
+</footer>
+</body>
+</html>
