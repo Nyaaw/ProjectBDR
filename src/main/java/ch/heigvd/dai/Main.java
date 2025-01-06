@@ -24,7 +24,14 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        app.get("/", ctx -> ctx.render("index.html");
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/explore.html", ctx -> ctx.render("explore.html"));
+        app.get("/insert.html", ctx -> ctx.render("insert.html"));
+        app.get("/list.html", ctx -> ctx.render("list.html"));
+        app.get("/login.html", ctx -> ctx.render("login.html"));
+        app.get("/media.html", ctx -> ctx.render("media.html"));
+        app.get("/mylists.html", ctx -> ctx.render("mylists.html"));
+
 
         app.start(PORT);
     }
