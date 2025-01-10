@@ -36,18 +36,18 @@
             <version>4.7.6</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.javalin/javalin -->
-        <dependency>
-            <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
-            <version>6.4.0</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
             <version>3.1.2.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.javalin/javalin -->
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>6.4.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.javalin/javalin-rendering -->
@@ -56,6 +56,14 @@
             <artifactId>javalin-rendering</artifactId>
             <version>6.4.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.19.17</version>
+        </dependency>
+
     </dependencies>
 
     <build>
