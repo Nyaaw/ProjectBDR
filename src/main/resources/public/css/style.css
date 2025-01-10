@@ -276,3 +276,21 @@ button{
 #ask{
    padding-top: 20px;
 }
+
+.commentaire{
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gray;
+    padding: 20px;
+}
+
+.commentaire p{
+    text-align: left;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
