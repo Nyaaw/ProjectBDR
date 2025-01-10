@@ -7,7 +7,19 @@
 <header th:replace="includes/layout :: header"></header>
 
 <main>
-
+    <div id="login">
+    <h1>Login</h1>
+        <div>
+            <form action="">
+                <p>Username</p>
+                <input type="text" name="username" id="username">
+                <p>Password</p>
+                <input type="password" name="password" id="password">
+                <div><button type="submit">Login</button></div>
+            </form>
+        </div>
+    </div>
+    <div id="ask"><a href="login_creation.html">Pas de compte?</a></div>
 </main>
 
 <footer th:replace="includes/layout :: footer"></footer>

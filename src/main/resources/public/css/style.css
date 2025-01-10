@@ -154,6 +154,13 @@ input[type="text"]{
     box-shadow: 2px 2px 7px grey;
 }
 
+input[type="password"]{
+    border-radius: 5px;
+    border-style: hidden;
+    padding: 5px;
+    box-shadow: 2px 2px 7px grey;
+}
+
 input[type="number"]{
     border-radius: 5px;
     border-style: hidden;
@@ -177,6 +184,11 @@ button{
     padding-bottom: 50px;
 }
 
+#part_2 a{
+    color: white;
+    text-underline: none;
+}
+
 #part_3{
     padding-top:50px;
     display:flex;
@@ -194,7 +206,7 @@ button{
     justify-content: space-between;
     background-color: white;
     border-radius: 20px;
-    box-shadow: 2px 2px 7px gra;
+    box-shadow: 2px 2px 7px gray;
     padding-right: 40px;
 }
 
@@ -247,4 +259,20 @@ button{
     box-shadow: 2px 2px 7px gray;
     margin: 20px;
     padding: 10px;
+}
+
+#login{
+    padding-top: 20px;
+}
+
+#login form{
+    padding-top: 20px;
+}
+
+#login button{
+    margin-top: 20px;
+}
+
+#ask{
+   padding-top: 20px;
 }
