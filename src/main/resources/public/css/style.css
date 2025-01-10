@@ -60,8 +60,20 @@ a:hover{
     color: lightsalmon;
 }
 
+footer{
+    height: 70px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 main{
     text-align: center;
+    min-height: 750px;
+    height: 100%;
 }
 
 h2{
@@ -98,6 +110,7 @@ h2{
     border-radius: 15px;
     font-weight: bold;
     text-decoration: none;
+    box-shadow: 2px 2px 7px grey;
 }
 
 .bouton:hover{
@@ -113,3 +126,171 @@ h2{
     margin-right: 20px;
 }
 
+#checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+
+}
+
+#checks > div {
+    flex: 1 1 250px;
+    min-width: 250px;
+}
+
+.checkbox {
+    margin-bottom: 10px;
+}
+
+.checkbox input {
+    margin-left: 10px;
+}
+
+input[type="text"]{
+    border-radius: 5px;
+    border-style: hidden;
+    padding: 5px;
+    box-shadow: 2px 2px 7px grey;
+}
+
+input[type="password"]{
+    border-radius: 5px;
+    border-style: hidden;
+    padding: 5px;
+    box-shadow: 2px 2px 7px grey;
+}
+
+input[type="number"]{
+    border-radius: 5px;
+    border-style: hidden;
+    padding: 5px;
+    box-shadow: 2px 2px 7px grey;
+}
+
+
+
+button{
+    border-radius: 10px;
+    border-style: hidden;
+    padding: 10px;
+    color: white;
+    background-color: darkorange;
+    box-shadow: 2px 2px 7px grey;
+}
+
+#part_2{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#part_2 a{
+    color: white;
+    text-underline: none;
+}
+
+#part_3{
+    padding-top:50px;
+    display:flex;
+    background-color: lightgray;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.media_list{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gray;
+    padding-right: 40px;
+}
+
+.media_list a{
+    color: black;
+}
+
+.media_list a:hover{
+    color: lightsalmon;
+}
+
+.List_item{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    text-decoration: none;
+    list-style: none;
+}
+
+.List_item li{
+    text-decoration: none;
+}
+
+#media{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px;
+    height: 100%;
+    min-height: 591px;
+    align-items: center;
+}
+
+.media_section1{
+    width: 30%;
+    text-align: left;
+}
+
+.media_section2{
+    width: 70%;
+}
+
+.list_lists{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gray;
+    margin: 20px;
+    padding: 10px;
+}
+
+#login{
+    padding-top: 20px;
+}
+
+#login form{
+    padding-top: 20px;
+}
+
+#login button{
+    margin-top: 20px;
+}
+
+#ask{
+   padding-top: 20px;
+}
+
+.commentaire{
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 7px gray;
+    padding: 20px;
+}
+
+.commentaire p{
+    text-align: left;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

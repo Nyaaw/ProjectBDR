@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="RemoteTargetsManager">
-    <option name="projectDefaultTargetUuid" value="6c444bc2-a789-4673-a6b1-a7d7c49aa922" />
+    <option name="projectDefaultTargetUuid" value="ae094f09-3e8d-475f-bc19-a535d38e5515" />
     <targets>
-      <target name="WSL - Ubuntu" type="wsl" uuid="4ebc6ef7-7190-47a9-991a-d9d3f43d0171">
+      <target name="WSL - Ubuntu" type="wsl" uuid="83d25dbb-5036-40bf-919d-40326066a34d">
         <config>
           <option name="distributionMsId" value="Ubuntu" />
-          <option name="projectRootOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.N3JRCSveCQ&#10;, stderr=}/ProjectBDR" />
+          <option name="projectRootOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.RdQ6ESmrCk&#10;, stderr=}/ProjectBDR" />
         </config>
         <ContributedStateBase type="JavaLanguageRuntime">
           <config>
-            <option name="homePath" value="/home/wslrip/.sdkman/candidates/java/current" />
+            <option name="homePath" value="/home/lisag/.sdkman/candidates/java/current" />
+            <option name="javaVersionString" value="21.0.4" />
           </config>
         </ContributedStateBase>
         <ContributedStateBase type="MavenRuntime">
           <config>
-            <option name="homePath" value="/home/wslrip/.sdkman/candidates/maven/current" />
+            <option name="homePath" value="/home/lisag/.sdkman/candidates/maven/current" />
           </config>
         </ContributedStateBase>
       </target>

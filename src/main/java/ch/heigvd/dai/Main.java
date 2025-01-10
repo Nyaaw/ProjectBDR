@@ -24,7 +24,16 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        app.get("/", ctx -> ctx.render("index.html", Map.of("title", "ProjectBDR !")));
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/explore.html", ctx -> ctx.render("explore.html"));
+        app.get("/insert.html", ctx -> ctx.render("insert.html"));
+        app.get("/list.html", ctx -> ctx.render("list.html"));
+        app.get("/login.html", ctx -> ctx.render("login.html"));
+        app.get("/login_creation.html", ctx -> ctx.render("login_creation.html"));
+        app.get("/media.html", ctx -> ctx.render("media.html"));
+        app.get("/mylists.html", ctx -> ctx.render("mylists.html"));
+        app.get("/result.html", ctx -> ctx.render("result.html"));
+
 
         app.start(PORT);
     }

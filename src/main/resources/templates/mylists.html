@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="includes/layout :: head"></head>
+
+<body>
+<header th:replace="includes/layout :: header"></header>
+
+<main>
+    <h1>Your lists</h1>
+    <div class="list_lists">
+        <div><h3><a href="list.html">Favorite</a></h3></div>
+        <div><p>Added: dd.mm.yyyy</p></div>
+    </div>
+    <div class="list_lists">
+        <div><h3><a href="list.html">In progress</a></h3></div>
+        <div><p>Added: dd.mm.yyyy</p></div>
+    </div>
+    <div class="list_lists">
+        <h3><a href="list.html">Finished</a></h3>
+        <p>Added: dd.mm.yyyy</p>
+    </div>
+    <div class="list_lists">
+        <div><h3><a href="list.html">To enjoy</a></h3></div>
+        <div><p>Added: dd.mm.yyyy</p></div>
+    </div>
+</main>
+
+<footer th:replace="includes/layout :: footer"></footer>
+</body>
+</html>
