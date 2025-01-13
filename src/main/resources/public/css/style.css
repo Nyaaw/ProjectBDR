@@ -235,8 +235,6 @@ button{
     flex-direction: row;
     gap: 30px;
     padding: 50px;
-    height: 100%;
-    min-height: 591px;
     align-items: center;
 }
 
@@ -289,8 +287,45 @@ button{
     text-align: left;
 }
 
+#comment{
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+#comment label{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#comment button{
+    margin-left: 20px;
+}
+
 .title{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#insert{
+    padding: 50px;
+}
+
+#insert li{
+    list-style: none;
+}
+
+.form_part{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_part input{
+    margin: 10px;
+    max-width: 200px;
+}
+.form_part label{
+    margin: 20px;
 }

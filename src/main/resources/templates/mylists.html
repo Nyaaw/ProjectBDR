@@ -8,21 +8,9 @@
 
 <main>
     <h1>Your lists</h1>
-    <div class="list_lists">
-        <div><h3><a href="list.html">Favorite</a></h3></div>
-        <div><p>Added: dd.mm.yyyy</p></div>
-    </div>
-    <div class="list_lists">
-        <div><h3><a href="list.html">In progress</a></h3></div>
-        <div><p>Added: dd.mm.yyyy</p></div>
-    </div>
-    <div class="list_lists">
-        <h3><a href="list.html">Finished</a></h3>
-        <p>Added: dd.mm.yyyy</p>
-    </div>
-    <div class="list_lists">
-        <div><h3><a href="list.html">To enjoy</a></h3></div>
-        <div><p>Added: dd.mm.yyyy</p></div>
+    <div th:each="genre : ${genres}" class="list_lists">
+        <div><a href="list.html"><h3 th:text="${genre.nom()}">list</h3></a></div>
+        <div><p>Added: <span th:text="${genre.nom()}">dd.mm.yyyy</span></p></div>
     </div>
 </main>
 

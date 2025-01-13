@@ -6,101 +6,89 @@
 <body>
 <header th:replace="includes/layout :: header"></header>
 
-<main>
+<main id="insert">
+    <h1>Insert a new media</h1>
     <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+        <div class="form_part">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
 
-        <br>
 
-        <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description"></textarea>
+            <div class="form_part">
+                <label for="type">Type de média:</label>
+                <select id="type" name="type">
+                    <option value="film">Film</option>
+                    <option value="serie">Série</option>
+                    <option value="jeuvideo">Jeu-Vidéo</option>
+                    <option value="livre">Livre</option>
+                    <option value="bd">BD</option>
+                </select>
+            </div>
 
-        <br>
-        <form>
-            <label for="creator">Select creator:</label>
-            <select id="creator" name="creator">
-                <option value="0">John Cena</option>
-                <option value="1">Mario</option>
-                <!-- tous les créateurs ici -->
-            </select>
-            <br>
-            <input type="button" value="Add">
-        </form>
-
-        <br>
-
-        <label for="genre">Add genre:</label>
-        <select id="genre" name="genre">
-            <option value="genre1">Genre 1</option>
-            <option value="genre2">Genre 2</option>
-            <!-- tous les genres ici -->
-        </select>
-        <input type="button" value="Add">
-        <br>
-        <div>
+        </div>
+        <div class="form_part">
             <h2>Genres: </h2>
-            <ul>
-                <li>Horror <btn>remove</btn></li>
-                <li>Comedy <btn>remove</btn></li>
-            </ul>
-        </div>
-
-        <br>
-
-        <form>
-            <label for="creatorName">Add creator:</label>
-            <input type="text" id="creatorName" name="creatorName">
-            <br>
-            <label for="creatorType">type de créateur:</label>
-            <input type="radio" name="creatorType" id="creatorTypePerson">
-            <input type="radio" name="creatorType" id="creatorTypeGroup">
-            <br>
+            <label for="genre">Add genre:</label>
+            <select  id="genre" name="genre">
+                <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
+            </select>
             <input type="button" value="Add">
-        </form>
+            <h4>Genre selected:</h4>
+            <ul th:each="genre : ${genres}">
+                <li th:text="${genre.nom()}">Genre </li><input type="button" value="remove">
+            </ul>
+        </div>
 
-        <br>
-        <div>
+
+        <div class="form_part">
             <h2>Creators: </h2>
-            <ul>
-                <li>Luigi <btn>remove</btn></li>
-                <li>Zelda <btn>remove</btn></li>
-                <li>Studio Ghibli <btn>remove</btn></li>
+            <div>
+                <form>
+                    <label for="creator">Select creator:</label>
+                    <select  id="creator" name="creator">
+                        <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">Creator</option>
+                    </select>
+                    <input type="button" value="Add">
+                </form>
+
+            </div>
+            <form>
+                <label for="creatorName">Add creator:</label>
+                <input type="text" id="creatorName" name="creatorName">
+                <br>
+                <label for="creatorType">type de créateur:</label>
+                <input type="radio" name="creatorType" id="creatorTypePerson">
+                <label>Groupe</label>
+                <input type="radio" name="creatorType" id="creatorTypeGroup">
+                <label>Person</label>
+                <input type="button" value="Add">
+            </form>
+            <h4>Creator selected:</h4>
+            <ul th:each="genre : ${genres}">
+                <li th:text="${genre.nom()}">Creator </li><input type="button" value="remove">
             </ul>
+
         </div>
 
-        <label for="type">Type de média:</label>
-        <select id="type" name="type">
-            <option value="film">Film</option>
-            <option value="serie">Série</option>
-            <option value="jeuvideo">Jeu-Vidéo</option>
-            <option value="livre">Livre</option>
-            <option value="bd">BD</option>
-        </select>
+        <div class="form_part">
+            <div>
+                <h3>Video game types: </h3>
+                <label for="videoGameType">Add video game type</label>
+                <select id="videoGameType" name="videoGameType">
+                    <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
+                    <!-- tous les genres ici -->
+                </select>
+                <input type="button" value="Add">
+                <h4>Video Game type selected:</h4>
+                <ul th:each="genre : ${genres}">
+                    <li th:text="${genre.nom()}">Type </li><input type="button" value="remove">
+                </ul>
+            </div>
 
-
-        <br>
-
-        <!-- SEULEMENT POUR JEUX VIDEOS -->
-
-        <label for="videoGameType">Add video game type</label>
-        <select id="videoGameType" name="videoGameType">
-            <option value="type1">Type 1</option>
-            <option value="type2">Type 2</option>
-            <!-- tous les genres ici -->
-        </select>
-        <input type="button" value="Add">
-
-        <br>
-        <div>
-            <h2>Video game types: </h2>
-            <ul>
-                <li>FPS <btn>remove</btn></li>
-                <li>Multiplayer <btn>remove</btn></li>
-            </ul>
         </div>
 
-        <br>
     </form>
 </main>
 

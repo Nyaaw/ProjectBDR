@@ -21,63 +21,42 @@
               <div id="checks">
                   <div>
                       <h3>Genres</h3>
-                      <div class="box">
-                          Genre 1
-                          <input type="checkbox" class="box" name="genre1" value="Genre 1">
-                      </div>
-                      <div class="box">
-                          Genre 2
-                          <input type="checkbox" class="box" name="genre2" value="Genre 2">
-                      </div>
-                      <div class="box">
-                          Genre 3
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="genre : ${genres}" class="box">
+                          <input type="checkbox" th:value="${genre.nom()}" class="box" name="genres" >
+                          <label th:text="${genre.nom()}">Genre</label>
                       </div>
                   </div>
                   <div>
                       <h3>Media type</h3>
-                      <div class="box">
-                          Type 1
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
-                      </div>
-                      <div class="box">
-                          Type 2
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="genre : ${genres}" class="box">
+                          <input type="checkbox" class="box" name="mediaType" th:value="${genre.nom()}">
+                          <label th:text="${genre.nom()}">Type</label>
                       </div>
                   </div>
-                  <!-- if video game checked -->
                   <div>
                       <h3>Video game type</h3>
-                      <div class="box">
-                          Type 1
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
-                      </div>
-                      <div class="box">
-                          Type 2
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="genre : ${genres}" class="box">
+                          <input type="checkbox" class="box" name="typeVideogame" th:value="${genre.nom()}">
+                          <label th:text="${genre.nom()}">Type</label>
                       </div>
                   </div>
-                  <!-- if BD checked -->
                   <div>
                       <h3>BD option</h3>
                       <div class="box">
-                          Color
-                          <input type="checkbox" class="box" name="genre3" value="color">
+                          <input type="checkbox" class="box" name="color" value="color">
+                          <label >Color</label>
                       </div>
                   </div>
-                  <!-- if book checked -->
                   <div>
                       <h3>Book option</h3>
                       <p>Number of pages</p>
                       <input type="number" name="Number of pages" min="1">
                   </div>
-                  <!-- if film checked -->
                   <div>
                       <h3>Film option</h3>
                       <p>Duration (minutes)</p>
                       <input type="number" name="Duration" min="1">
                   </div>
-                  <!-- if serie checked -->
                   <div>
                       <h3>Serie option</h3>
                       <p>Number of season</p>
@@ -93,28 +72,15 @@
       </div>
       <div id="part_3">
           <div><h1>Last added</h1></div>
-          <div class="media_list">
+          <div th:each="genre : ${genres}" class="media_list">
               <div class="List">
-                  <h3><a href="media.html">Name</a></h3>
-                  <ul class="List_item">
-                      <li>Genre 1</li>
-                      <li>Genre 2</li>
+                  <a href="media.html" th:text="${genre.nom()}"><h3>Name</h3></a>
+                  <ul th:each="genre : ${genres}" class="List_item">
+                      <li th:text="${genre.nom()}">Genre</li>
                   </ul>
               </div>
               <div>
-                  <p>Added: dd.mm.yyyy</p>
-              </div>
-          </div>
-          <div class="media_list">
-              <div class="List">
-                  <h3><a href="media.html">Name</a></h3>
-                  <ul class="List_item">
-                      <li>Genre 1</li>
-                      <li>Genre 2</li>
-                  </ul>
-              </div>
-              <div>
-                  <p>Added: dd.mm.yyyy</p>
+                  <p>Added: <span th:text="${genre.nom()}">dd.mm.yyyy</span></p>
               </div>
           </div>
       </div>

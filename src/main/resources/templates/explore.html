@@ -8,40 +8,15 @@
 
 <main>
     <h1>Explore the database</h1>
-    <div class="media_list">
+    <div th:each="genre : ${genres}" class="media_list">
         <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
+            <a href="media.html"><h3 th:text="${genre.nom()}">Name</h3></a>
+            <ul th:each="genre : ${genres}" class="List_item">
+                <li th:text="${genre.nom()}">Genre</li>
             </ul>
         </div>
         <div>
-            <p>Added: dd.mm.yyyy</p>
-        </div>
-    </div>
-    <div class="media_list">
-        <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
-            </ul>
-        </div>
-        <div>
-            <p>Added: dd.mm.yyyy</p>
-        </div>
-    </div>
-    <div class="media_list">
-        <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
-            </ul>
-        </div>
-        <div>
-            <p>Added: dd.mm.yyyy</p>
+            <p>Added: <span th:text="${genre.nom()}">dd.mm.yyyy</span></p>
         </div>
     </div>
 </main>
