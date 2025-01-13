@@ -31,7 +31,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/mediatheque", "root", "root");
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/mediatheque", "postgres", "postgres");
         DSLContext dsl = DSL.using(conn);
 
         MediaController mediaController = new MediaController(dsl);

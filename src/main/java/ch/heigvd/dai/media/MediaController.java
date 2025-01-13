@@ -24,4 +24,8 @@ public class MediaController {
 
         return null;
     }
+
+    public insertMedia(Media media){
+
+    }
 }
