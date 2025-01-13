@@ -31,8 +31,10 @@
           </option>
           <option name="goals">
             <list>
-              <option value="package" />
+              <option value="dependency:go-offline" />
               <option value="clean" />
+              <option value="compile" />
+              <option value="package" />
             </list>
           </option>
           <option name="multimoduleDir" />

@@ -1,0 +1,10 @@
+services:
+  webserver:
+    image: ghcr.io/lisagorgerat/webserver
+    build:
+        context: ..
+        dockerfile: Dockerfile
+    command:
+      - --help
+    ports:
+      - 8080:80
