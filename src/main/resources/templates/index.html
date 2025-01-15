@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-  <header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
   <main>
     <div id="part_1">
@@ -12,7 +12,7 @@
       <div id="ainfo">
           <!--<h2 th:text="${title}">Title fallback</h2> -->
           <h2>Explore our wide range of media</h2>
-          <a class="bouton" href="explore.html">En savoir plus</a>
+          <a class="bouton" th:href="|explore|">En savoir plus</a>
       </div>
     </div>
       <div id="part_2">
@@ -65,7 +65,7 @@
                   <div>
                       <h3>Keyword</h3>
                       <input type="text" id="search" name="Search..">
-                      <button type="submit" class="btn btn-success btn-block mb-3 btn-rounded" value="submit"><a href="result.html">Search</a></button>
+                      <button type="submit" class="btn btn-success btn-block mb-3 btn-rounded" value="submit"><a th:href="|result|">Search</a></button>
                   </div>
               </div>
           </form>
@@ -74,7 +74,7 @@
           <div><h1>Last added</h1></div>
           <div th:each="genre : ${genres}" class="media_list">
               <div class="List">
-                  <a href="media.html" th:text="${genre.nom()}"><h3>Name</h3></a>
+                  <a th:href="|media|" th:text="${genre.nom()}"><h3>Name</h3></a>
                   <ul th:each="genre : ${genres}" class="List_item">
                       <li th:text="${genre.nom()}">Genre</li>
                   </ul>
@@ -86,6 +86,6 @@
       </div>
   </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>

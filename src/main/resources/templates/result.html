@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-<header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
     <div th:each="genre : ${genres}" class="media_list">
         <div class="List">
-            <a href="media.html"><h3 th:text="${genre.nom()}">Name</h3></a>
+            <a th:href="|media|"><h3 th:text="${genre.nom()}">Name</h3></a>
             <ul th:each="genre : ${genres}" class="List_item">
                 <li th:text="${genre.nom()}">Genre</li>
             </ul>
@@ -20,6 +20,6 @@
     </div>
 </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>

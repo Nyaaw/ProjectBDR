@@ -6,7 +6,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,15 +30,42 @@ public class Main {
 
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
-        app.get("/", ctx -> ctx.render("index.html", Map.of("genres", genres)));
-        app.get("/explore.html", ctx -> ctx.render("explore.html", Map.of("genres", genres)));
-        app.get("/insert.html", ctx -> ctx.render("insert.html", Map.of("genres", genres)));
-        app.get("/list.html", ctx -> ctx.render("list.html", Map.of("genres", genres)));
-        app.get("/login.html", ctx -> ctx.render("login.html"));
-        app.get("/login_creation.html", ctx -> ctx.render("login_creation.html"));
-        app.get("/media.html", ctx -> ctx.render("media.html", Map.of("genres", genres)));
-        app.get("/mylists.html", ctx -> ctx.render("mylists.html", Map.of("genres", genres)));
-        app.get("/result.html", ctx -> ctx.render("result.html", Map.of("genres", genres)));
+        app.get("/", ctx -> {
+            ctx.render("index.html", Map.of("genres", genres));
+        });
+        
+        app.get("/explore", ctx -> {
+            ctx.render("explore.html", Map.of("genres", genres));
+        });
+        
+        app.get("/insert", ctx -> {
+            ctx.render("insert.html", Map.of("genres", genres));
+        });
+        
+        app.get("/list", ctx -> {
+            ctx.render("list.html", Map.of("genres", genres));
+        });
+        
+        app.get("/login", ctx -> {
+            ctx.render("login.html");
+        });
+        
+        app.get("/login_creation", ctx -> {
+            ctx.render("login_creation.html");
+        });
+        
+        app.get("/media", ctx -> {
+            ctx.render("media.html", Map.of("genres", genres));
+        });
+        
+        app.get("/mylists", ctx -> {
+            ctx.render("mylists.html", Map.of("genres", genres));
+        });
+        
+        app.get("/result", ctx -> {
+            ctx.render("result.html", Map.of("genres", genres));
+        });
+        
 
 
         app.start(PORT);
