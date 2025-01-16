@@ -1,10 +1,16 @@
+version: '3.8'
 services:
-  webserver:
-    image: ghcr.io/lisagorgerat/webserver
-    build:
-        context: ..
-        dockerfile: Dockerfile
-    command:
-      - --help
+  db:
+    container_name: bdr_postgresql_16
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=trustno1
+      - POSTGRES_DB=bdr
     ports:
-      - 8080:80
+      - '5666:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
