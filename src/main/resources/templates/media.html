@@ -7,9 +7,19 @@
 <header th:replace="includes/layout :: header"></header>
 
 <main>
-    <h1>titre</h1>
+    <h1 th:text="${genres[0].nom()}">titre</h1>
     <div id="media">
         <div class="media_section1">
+            <div>
+                <form>
+                    <label for="list">add to list:</label>
+                    <select  id="list" name="add_list">
+                        <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">list</option>
+                    </select>
+                    <button type="submit">Add</button>
+                </form>
+
+            </div>
             <div>
                 <h3>Note</h3>
                 <p><span th:text="${genres[0].nom()}">x</span>/5</p>
@@ -22,12 +32,6 @@
             <ul th:each="genre : ${genres}">
                 <li th:text="${genre.nom()}">Genre</li>
             </ul>
-            <!--
-            <h3>Options specifique</h3>
-            <ul>
-                <li>option 1: attribut</li>
-            </ul>
--->
         </div>
         <div class="media_section2">
             <h2>Description</h2>
