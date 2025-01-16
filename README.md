@@ -22,6 +22,8 @@
     - [Build the application](#build-the-application-1)
 - [Usage](#usage)
   - [Run the application](#run-the-application)
+    - [Using Docker](#using-docker)
+    - [Without Docker](#without-docker)
 - [Demonstration](#demonstration)
 
 
@@ -46,6 +48,7 @@
   - [ ] The README displays the domain names configuration in the DNS zone to validate everything is set up right
 
 - [ ] And More
+- [ ] Complet all the TOADD
 
 
 
@@ -61,26 +64,98 @@
 
 ## Getting Started Using GitHub
 ### Prerequisites
+- JDK
+- Maven (optional, a maven wrapper comes with the project)
+- Docker
+- 
+
 ### Recommendation
+
 ### Setup
 #### Clone the repository
-#### Build the application
+1. Go to the [repository](https://github.com/AlexB-HEIG/DAI-Practical-work-2) on GitHub and choose your favorite clone option.
+2. Open the terminal in the folder where you want to clone the repository.
+3. Clone the repo.
+    ```sh 
+    git clone https://github.com/Nyaaw/ProjectBDR.git
+    ```
+4. Change git remote url to avoid accidental pushes to base project.
+    ```sh
+    git remote set-url origin <github_username/repo_name>
+    git remote -v
+    ```
 
+
+#### Build the application
+To build the application, you can use the following commands in your terminal.
+```sh
+# Download the dependencies and their transitive dependencies
+./mvnw dependency:go-offline
+
+# Package the application
+./mvnw package
+```
 
 
 
 
 ## Getting Started Using Docker
 ### Prerequisites
+To use the docker image, you first need to ensure that docker is installed on your machine.
+If that's not the case, please go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction for the version you need.
+
+
+
 ### Setup
 #### Get the package
-#### Build the application
+You can find our package at [this link.]()
 
+or use this command:
+```sh
+docker pull ghcr.io/<TOADD>
+```
+
+#### Build the application
+If you were to change our application, you will need to build it again and publish it on your account.
+
+To build the app:
+
+Go into the folder of the app and use the command:
+```sh
+docker build -t <TOADD> .
+```
+
+To publish the container on GitHub:
+
+1. You first need to connect to your account:
+````sh
+docker login ghcr.io -u <username>
+````
+
+2. You need to tag the image:
+````sh
+# Tag the image with the correct format
+docker tag <TOADD> ghcr.io/<username>/<TOADD>:latest
+````
+
+3. You publish the container on your account:
+````sh
+docker push ghcr.io/<username>/<TOADD>
+````
 
 
 
 ## Usage
+Once the app is built, you can run it.
+
+
 ### Run the application
+#### Using Docker
+
+
+
+
+#### Without Docker 
 
 
 
