@@ -12,8 +12,8 @@
         <div class="media_section1">
             <div>
                 <form>
-                    <label for="list">add to list:</label>
-                    <select  id="list" name="add_list">
+                    <label for="add_to_list">Add to list:</label>
+                    <select  id="add_to_list" name="add_to_list">
                         <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">list</option>
                     </select>
                     <button type="submit">Add</button>
