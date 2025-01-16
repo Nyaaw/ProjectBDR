@@ -1,3 +1,114 @@
+/*Triggers*/
+-- Créer un trigger pour générer automatiquement les listes des utilisateurs
+DO $$
+BEGIN
+    -- Supprimer le trigger existant s'il existe
+    IF EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'after_user_insert'
+    ) THEN
+DROP TRIGGER after_user_insert ON Utilisateur;
+END IF;
+END $$;
+
+CREATE OR REPLACE FUNCTION create_default_lists()
+RETURNS TRIGGER AS $$
+BEGIN
+INSERT INTO Liste (pseudo, nom)
+VALUES (NEW.pseudo, 'Finished'),
+       (NEW.pseudo, 'Favorite'),
+       (NEW.pseudo, 'Watching'),
+       (NEW.pseudo, 'To watch');
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_user_insert
+    AFTER INSERT ON Utilisateur
+    FOR EACH ROW
+    EXECUTE FUNCTION create_default_lists();
+
+
+
+/*Functions*/
+
+
+
+
+/*Views*/
+
+-- Types
+CREATE VIEW vLivre
+AS
+SELECT
+    Media.id,
+    Media.nom,
+    Media.dateSortie,
+    Media.description,
+    Livre.nbPage
+FROM
+    Livre
+        INNER JOIN Media ON
+        Livre.id = Media.id;
+
+
+CREATE VIEW vBD
+AS
+SELECT
+    Media.id,
+    Media.nom,
+    Media.dateSortie,
+    Media.description,
+    BD.couleur
+FROM
+    BD
+        INNER JOIN Media ON
+        BD.id = Media.id;
+
+
+CREATE VIEW vFilm
+AS
+SELECT
+    Media.id,
+    Media.nom,
+    Media.dateSortie,
+    Media.description,
+    Film.duree
+FROM
+    Film
+        INNER JOIN Media ON
+        Film.id = Media.id;
+
+CREATE VIEW vSerie
+AS
+SELECT
+    Media.id,
+    Media.nom,
+    Media.dateSortie,
+    Media.description,
+    Serie.nbPage
+FROM
+    Serie
+        INNER JOIN Media ON
+        Serie.id = Media.id;
+
+
+CREATE VIEW vJeuVideo
+AS
+SELECT
+    Media.id,
+    Media.nom,
+    Media.dateSortie,
+    Media.description,
+    JeuVideo.nbPage
+FROM
+    JeuVideo
+        INNER JOIN Media ON
+        JeuVideo.id = Media.id;
+
+
+/*add base data*/
+
 -- Insérer 5 créateurs génériques
 DO $$
 DECLARE
@@ -148,35 +259,6 @@ VALUES (id_media);
 END LOOP;
 END $$;
 
-
--- Créer un trigger pour générer automatiquement les listes des utilisateurs
-DO $$
-BEGIN
-    -- Supprimer le trigger existant s'il existe
-    IF EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'after_user_insert'
-    ) THEN
-DROP TRIGGER after_user_insert ON Utilisateur;
-END IF;
-END $$;
-
-CREATE OR REPLACE FUNCTION create_default_lists()
-RETURNS TRIGGER AS $$
-BEGIN
-INSERT INTO Liste (pseudo, nom)
-VALUES (NEW.pseudo, 'Finished'),
-       (NEW.pseudo, 'Favorite'),
-       (NEW.pseudo, 'Watching'),
-       (NEW.pseudo, 'To watch');
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_user_insert
-    AFTER INSERT ON Utilisateur
-    FOR EACH ROW
-    EXECUTE FUNCTION create_default_lists();
 
 -- Insérer 2 utilisateurs génériques avec email et mot de passe
 DO $$
