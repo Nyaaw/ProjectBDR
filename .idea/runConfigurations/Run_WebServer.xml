@@ -3,7 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="ch.heigvd.dai.Main" />
     <module name="WebServer" />
     <projectPathOnTarget name="projectPathOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.hZox8AvB1y , stderr=}/ProjectBDR" />
-    <target name="WSL - Ubuntu" />
+    <target name="WSL" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
