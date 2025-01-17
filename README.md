@@ -11,25 +11,23 @@
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
   - [General Prerequisites](#general-prerequisites)
-  - [Recommendation (maybe)](#recommendation-maybe)
+  - [Recommendation (MAYBE)](#recommendation-maybe)
   - [As a User](#as-a-user)
   - [As a Developer](#as-a-developer)
     - [Additional Prerequisites](#additional-prerequisites)
-  - [Setup](#setup)
-    - [Using GitHub](#using-github)
+    - [Setup Using GitHub](#setup-using-github)
       - [Clone the repository](#clone-the-repository)
-      - [Build the application](#build-the-application)
-    - [Using Docker](#using-docker)
-      - [Get the package](#get-the-package)
-      - [Build the application](#build-the-application-1)
+      - [Build the application source code](#build-the-application-source-code)
+      - [Build the application package](#build-the-application-package)
 - [Deployment](#deployment)
   - [Prerequisites](#prerequisites)
     - [Local Use](#local-use)
     - [Online Use](#online-use)
+  - [Steps](#steps)
 - [Usage](#usage)
   - [Run the application](#run-the-application)
-    - [Using Docker](#using-docker-1)
-    - [Without Docker](#without-docker)
+    - [Using Docker](#using-docker)
+    - [Without Docker (MAYBE remove)](#without-docker-maybe-remove)
 - [Demonstration](#demonstration)
   - [Project](#project)
   - [API](#api)
@@ -57,7 +55,8 @@
   - [ ] The README displays the domain names configuration in the DNS zone to validate everything is set up right
 
 - [ ] And More
-- [ ] Complet all the TOADD
+- [ ] Complet all the `TOADD`
+- [ ] Verify all the `MAYBE`
 
 
 
@@ -91,7 +90,7 @@ If that's not the case, please go to the official website ([Dockerdocs](https://
 
 
 
-### Recommendation (maybe)
+### Recommendation (MAYBE)
 
 
 
@@ -100,7 +99,14 @@ If that's not the case, please go to the official website ([Dockerdocs](https://
 
 
 ### As a User
-You can directly follow those [steps](#get-the-package) and skip to this [part](#deployment) after.
+To begin you'll need our app package that you can find [here](TOADD).  
+
+You can also use this command in your terminal:  
+```sh
+docker pull ghcr.io/<TOADD>
+```
+
+Then you can skip to this [section](#deployment).
 
 
 
@@ -115,13 +121,7 @@ You can directly follow those [steps](#get-the-package) and skip to this [part](
 
 
 
-
-
-
-
-### Setup 
-
-#### Using GitHub
+#### Setup Using GitHub 
 ##### Clone the repository
 1. Go to the [repository](https://github.com/Nyaaw/ProjectBDR) on GitHub and choose your favorite clone option.
 2. Open the terminal in the folder where you want to clone the repository.
@@ -135,7 +135,7 @@ You can directly follow those [steps](#get-the-package) and skip to this [part](
     git remote -v
     ```
 
-##### Build the application
+##### Build the application source code
 To build the application, you can use the following commands in your terminal.
 ```sh
 # Download the dependencies and their transitive dependencies
@@ -147,21 +147,7 @@ To build the application, you can use the following commands in your terminal.
 
 
 
-
-
-
-
-#### Using Docker
-
-##### Get the package
-You can find our package at [this link.](TOADD)
-
-or use this command:
-```sh
-docker pull ghcr.io/<TOADD>
-```
-
-##### Build the application
+##### Build the application package
 If you were to change our application, you will need to build it again and publish it on your account.
 
 To build the app:
@@ -199,11 +185,6 @@ docker push ghcr.io/<username>/<TOADD>
 
 
 
-
-
-
-
-
 ## Deployment
 
 ### Prerequisites
@@ -212,7 +193,7 @@ docker push ghcr.io/<username>/<TOADD>
   - Docker Compose
   - Java
   
-- TOADD (maybe)
+- TOADD (MAYBE)
 
 
 #### Online Use
@@ -221,7 +202,22 @@ docker push ghcr.io/<username>/<TOADD>
   - Java
 - Domain Name
 
-- TOADD (maybe)
+- TOADD (MAYBE)
+
+
+
+
+
+
+
+
+### Steps
+
+TOADD
+
+
+
+
 
 
 
@@ -241,7 +237,7 @@ Once the app is built, you can run it.
 
 
 
-#### Without Docker 
+#### Without Docker (MAYBE remove)
 
 
 
