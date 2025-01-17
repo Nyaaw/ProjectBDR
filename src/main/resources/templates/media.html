@@ -38,6 +38,10 @@
             <ul th:each="genre : ${media.genres}">
                 <li th:text="${genre.nom}">Genre</li>
             </ul>
+            <h3>Video game types</h3>
+            <ul th:each="type : ${media.jeuvideotypes}">
+                <li th:text="${type}">Genre</li>
+            </ul>
         </div>
         <div class="media_section2">
             <h2>Description</h2>

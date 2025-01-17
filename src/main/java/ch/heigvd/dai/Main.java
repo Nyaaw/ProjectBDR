@@ -37,7 +37,7 @@ public class Main {
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
         app.get("/", ctx -> {
-            ctx.render("index.html", Map.of("genres", genres));
+            mediaController.getFive(ctx);
         });
         
         app.get("/explore", ctx -> {

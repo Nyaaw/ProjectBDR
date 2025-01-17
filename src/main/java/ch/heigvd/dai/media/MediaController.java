@@ -72,6 +72,14 @@ public class MediaController {
         ctx.render("explore.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia)));
     }
 
+
+    public void getFive(Context ctx) {
+
+        // get medias with id from db
+
+        ctx.render("index.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia), "genres", List.of("Genre 1","Genre 2"), "mediatypes", List.of("type 1","type 2"), "jeuvideotypes", List.of("type 1","type 2")));
+    }
+
     public void insertMedia(Context ctx){
         Media media = new Media();
 
