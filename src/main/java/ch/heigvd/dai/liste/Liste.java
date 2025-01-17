@@ -9,6 +9,7 @@ public class Liste {
 
     public String nom;
     public Utilisateur utilisateur;
+    public Integer count;
 
     public List<Media> medias;
 

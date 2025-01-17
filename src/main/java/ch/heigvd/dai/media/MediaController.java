@@ -14,9 +14,9 @@ import io.javalin.http.*;
 
 public class MediaController {
 
-    Media exampleMedia;
+    static Media exampleMedia;
 
-    public MediaController() {
+    static{
         exampleMedia = new Media();
 
         exampleMedia.id = 2;
@@ -60,16 +60,20 @@ public class MediaController {
         exampleMedia.commentaires = List.of(com1, com2);
     }
 
-    public void getOne(Context ctx) {
+    public MediaController() {
 
-        // Integer id = ctx.queryParamAsClass("id", Integer.class).get();
+    }
+
+    public static void getOne(Context ctx) {
+
+        Integer id = ctx.queryParamAsClass("id", Integer.class).get();
 
         // get media with id from DB.
 
         ctx.render("media.html", Map.of("media", exampleMedia));
     }
 
-    public void getAll(Context ctx) {
+    public static void getAll(Context ctx) {
 
         // get medias with id from db
 
@@ -77,14 +81,14 @@ public class MediaController {
     }
 
 
-    public void getFive(Context ctx) {
+    public static void getFive(Context ctx) {
 
         // get medias with id from db
 
         ctx.render("index.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia), "genres", List.of("Genre 1","Genre 2"), "mediatypes", List.of("type 1","type 2"), "jeuvideotypes", List.of("type 1","type 2")));
     }
 
-    public void insertMedia(Context ctx){
+    public static void insertMedia(Context ctx){
         Media media = new Media();
 
         //media.id = ctx.formParamAsClass("id", Integer.class).get();

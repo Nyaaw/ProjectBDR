@@ -32,16 +32,14 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        MediaController mediaController = new MediaController();
-
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
         app.get("/", ctx -> {
-            mediaController.getFive(ctx);
+            MediaController.getFive(ctx);
         });
         
         app.get("/explore", ctx -> {
-            mediaController.getAll(ctx);
+            MediaController.getAll(ctx);
         });
         
         app.get("/insert", ctx -> {
@@ -63,24 +61,18 @@ public class Main {
         });
         
         app.get("/media", ctx -> {
-            String idParam = getQueryParam(ctx, "id");
-            Integer id = checkForNumericParam(ctx, idParam);
-
-            ctx.render("media.html", Map.of("genres", genres));
+            MediaController.getOne(ctx);
         });
 
         app.post("/media", ctx -> {
-            mediaController.insertMedia(ctx);
+            MediaController.insertMedia(ctx);
         });
 
         app.post("/insert/addgenre", ctx -> {
-            mediaController.insertMedia(ctx);
+            MediaController.insertMedia(ctx);
         });
 
         app.post("/media/addtolist", ctx -> {
-
-            String idParam = getQueryParam(ctx, "id");
-            Integer id = checkForNumericParam(ctx, idParam);
 
             // add to List
 
