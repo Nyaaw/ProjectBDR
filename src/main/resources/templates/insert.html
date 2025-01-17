@@ -40,9 +40,9 @@
                 <input type="submit" value="Add">
             </form>
             <h4>Genre selected:</h4>
-            <ul th:each="genre : ${genres}">
-                <form action="insert/removegenre" method="post"><li th:text="${genre.nom()}">Genre </li><input type="submit" value="remove"></form>
-                <input type="hidden" name="genres" th:value="${genre.nom()}" form="mainForm">
+            <ul th:each="genreSelected : ${genresSelected}">
+                <form action="insert/removegenre" method="post"><li th:text="${genreSelected.nom()}">Genre </li><input type="submit" value="remove"></form>
+                <input type="hidden" name="genres" th:value="${genreSelected.nom()}" form="mainForm">
             </ul>
         </div>
 
@@ -53,7 +53,7 @@
                 <form action="insert/addcreator" method="post">
                     <label for="addcreator">Select creator:</label>
                     <select  id="addcreator" name="nom">
-                        <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">Creator</option>
+                        <option th:each="creator : ${creators}" th:value="${creator.nom()} ${creator.prenom()}" th:text="${creator.nom()} ${creator.prenom()}">Creator</option>
                     </select>
                     <input type="button" value="Add">
                 </form>
@@ -73,29 +73,27 @@
                 <input type="submit" value="Add">
             </form>
             <h4>Creator selected:</h4>
-            <ul th:each="genre : ${genres}">
-                <form action="insert/removecreator" method="post"><li th:text="${genre.nom()}">Creator</li><input type="submit" value="remove"></form>
-                <input type="hidden" name="createurs" th:value="${genre.nom()}" form="mainForm">
+            <ul th:each="creatorSelected : ${creatorsSelected}">
+                <form action="insert/removecreator" method="post"><li th:text="${creatorSelected.nom()} ${creatorSelected.prenom()}">Creator</li><input type="submit" value="remove"></form>
+                <input type="hidden" name="createurs" th:value="${creatorSelected.nom()} ${creatorSelected.prenom()}" form="mainForm">
             </ul>
 
         </div>
 
-        <!-- should only show if type is videogame -->
         <div class="form_part">
             <div>
                 <h3>Video game types: </h3>
                 <form action="insert/addvideogametype" method="post"></form>
                     <label for="videoGameType">Add video game type</label>
                     <select id="videoGameType" name="jeuvideotype">
-                        <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
-                        <!-- tous les genres ici -->
+                        <option th:each="videoGameType : ${videoGameTypes}" th:value="${videoGameType.nom()}" th:text="${videoGameType.nom()}">Genre</option>
                     </select>
                     <input type="submit" value="Add">
                 </form>
                 <h4>Video Game type selected:</h4>
-                <ul th:each="genre : ${genres}">
-                    <form action="insert/removevideogametype" method="post"><li th:text="${genre.nom()}">Type </li><input type="submit" value="remove"></form>
-                    <input type="hidden" name="jeuvideotypes" th:value="${genre.nom()}" form="mainForm">
+                <ul th:each="videoGameTypeSelected : ${videoGameTypesSelected}">
+                    <form action="insert/removevideogametype" method="post"><li th:text="${videoGameTypeSelected.nom()}">Type </li><input type="submit" value="remove"></form>
+                    <input type="hidden" name="jeuvideotypes" th:value="${videoGameTypeSelected.nom()}" form="mainForm">
                 </ul>
             </div>
 

@@ -28,16 +28,16 @@
                   </div>
                   <div>
                       <h3>Media type</h3>
-                      <div th:each="genre : ${genres}" class="box">
-                          <input type="checkbox" class="box" name="mediaType" th:value="${genre.nom()}">
-                          <label th:text="${genre.nom()}">Type</label>
+                      <div th:each="mediaType : ${mediaTypes}" class="box">
+                          <input type="checkbox" class="box" name="mediaType" th:value="${mediaType.nom()}">
+                          <label th:text="${mediaType.nom()}">Type</label>
                       </div>
                   </div>
                   <div>
                       <h3>Video game type</h3>
-                      <div th:each="genre : ${genres}" class="box">
-                          <input type="checkbox" class="box" name="typeVideogame" th:value="${genre.nom()}">
-                          <label th:text="${genre.nom()}">Type</label>
+                      <div th:each="VideoGameType : ${VideoGameTypes}" class="box">
+                          <input type="checkbox" class="box" name="typeVideogame" th:value="${VideoGameType.nom()}">
+                          <label th:text="${VideoGameType.nom()}">Type</label>
                       </div>
                   </div>
                   <div>
@@ -72,15 +72,15 @@
       </div>
       <div id="part_3">
           <div><h1>Last added</h1></div>
-          <div th:each="genre : ${genres}" class="media_list">
+          <div th:each="media : ${medias}" class="media_list">
               <div class="List">
-                  <a th:href="|media|" th:text="${genre.nom()}"><h3>Name</h3></a>
+                  <a th:href="|media|" th:text="${media.nom()}"><h3>Name</h3></a>
                   <ul th:each="genre : ${genres}" class="List_item">
                       <li th:text="${genre.nom()}">Genre</li>
                   </ul>
               </div>
               <div>
-                  <p>Added: <span th:text="${genre.nom()}">dd.mm.yyyy</span></p>
+                  <p>Added: <span th:text="${media.datesortie()}">dd.mm.yyyy</span></p>
               </div>
           </div>
       </div>

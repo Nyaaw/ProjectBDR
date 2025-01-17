@@ -7,14 +7,14 @@
 <header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
-    <h1 th:text="${genres[0].nom()}">titre</h1>
+    <h1 th:text="${genres.nom()}">titre</h1>
     <div id="media">
         <div class="media_section1">
             <div>
                 <form>
                     <label for="add_to_list">Add to list:</label>
                     <select  id="add_to_list" name="add_to_list">
-                        <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">list</option>
+                        <option th:each="liste : ${lists}" th:value="${list.nom()}" th:text="${list.nom()}">list</option>
                     </select>
                     <button type="submit">Add</button>
                 </form>
@@ -22,11 +22,17 @@
             </div>
             <div>
                 <h3>Note</h3>
-                <p><span th:text="${genres[0].nom()}">x</span>/5</p>
+                <p><span th:text="${media.note()}">x</span>/5</p>
             </div>
             <div>
-                <h3>Réalisateur</h3>
-                <p th:text="${genres[0].nom()}">NOM</p>
+                <h3>Creator</h3>
+                <ul th:each="creator : ${creators}">
+                    <li th:text="${creator.nom()} ${creator.prenom()}">Genre</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Media Type</h3>
+                <p th th:text="${media.typemedia()}">NOM</p>
             </div>
             <h3>Genres</h3>
             <ul th:each="genre : ${genres}">
@@ -35,7 +41,7 @@
         </div>
         <div class="media_section2">
             <h2>Description</h2>
-            <p th:text="${genres[0].nom()}">Lorem ipsum</p>
+            <p th:text="${media.description()}">Lorem ipsum</p>
         </div>
     </div>
     <div id="commentaires">
@@ -47,13 +53,13 @@
             <textarea name="comment-body"></textarea>
             <button type="submit">Submit</button>
         </form>
-        <div th:each="genre : ${genres}" class="commentaire">
+        <div th:each="commentaire : ${commentaires}" class="commentaire">
             <div class="title">
-                <h3 th:text="${genre.nom()}">user</h3>
-                <p><span th:text="${genre.nom()}">x</span>/5</p>
+                <h3 th:text="${commentaire.nom()}">user</h3>
+                <p><span th:text="${commentaire.note()}">x</span>/5</p>
             </div>
             <div>
-                <p th:text="${genre.nom()}">
+                <p th:text="${commentaire.text()}">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
                 </p>
             </div>
