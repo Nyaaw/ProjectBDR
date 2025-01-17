@@ -9,22 +9,31 @@
 ## Table of Content <!-- omit in toc -->
 - [README Criterion (to remove later)](#readme-criterion-to-remove-later)
 - [Introduction](#introduction)
-- [Getting Started Using GitHub](#getting-started-using-github)
-  - [Prerequisites](#prerequisites)
-  - [Recommendation](#recommendation)
+- [Getting Started](#getting-started)
+  - [General Prerequisites](#general-prerequisites)
+  - [Recommendation (maybe)](#recommendation-maybe)
+  - [As a User](#as-a-user)
+  - [As a Developer](#as-a-developer)
+    - [Additional Prerequisites](#additional-prerequisites)
   - [Setup](#setup)
-    - [Clone the repository](#clone-the-repository)
-    - [Build the application](#build-the-application)
-- [Getting Started Using Docker](#getting-started-using-docker)
-  - [Prerequisites](#prerequisites-1)
-  - [Setup](#setup-1)
-    - [Get the package](#get-the-package)
-    - [Build the application](#build-the-application-1)
+    - [Using GitHub](#using-github)
+      - [Clone the repository](#clone-the-repository)
+      - [Build the application](#build-the-application)
+    - [Using Docker](#using-docker)
+      - [Get the package](#get-the-package)
+      - [Build the application](#build-the-application-1)
+- [Deployment](#deployment)
+  - [Prerequisites](#prerequisites)
+    - [Local Use](#local-use)
+    - [Online Use](#online-use)
 - [Usage](#usage)
   - [Run the application](#run-the-application)
-    - [Using Docker](#using-docker)
+    - [Using Docker](#using-docker-1)
     - [Without Docker](#without-docker)
 - [Demonstration](#demonstration)
+  - [Project](#project)
+  - [API](#api)
+- [Complementary Information](#complementary-information)
 
 
 
@@ -57,23 +66,64 @@
 
 
 
+
+
 ## Introduction
 
 
 
 
-## Getting Started Using GitHub
-### Prerequisites
+
+
+
+
+## Getting Started 
+### General Prerequisites
+- Docker
+- Docker Compose
+
+To use the docker image, you first need to ensure that docker is installed on your machine.
+If that's not the case, please go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction for the version you need.
+
+
+
+
+
+
+
+### Recommendation (maybe)
+
+
+
+
+
+
+
+### As a User
+You can directly follow those [steps](#get-the-package) and skip to this [part](#deployment) after.
+
+
+
+
+
+
+### As a Developer
+#### Additional Prerequisites
 - JDK
 - Maven (optional, a maven wrapper comes with the project)
-- Docker
-- 
 
-### Recommendation
 
-### Setup
-#### Clone the repository
-1. Go to the [repository](https://github.com/AlexB-HEIG/DAI-Practical-work-2) on GitHub and choose your favorite clone option.
+
+
+
+
+
+
+### Setup 
+
+#### Using GitHub
+##### Clone the repository
+1. Go to the [repository](https://github.com/Nyaaw/ProjectBDR) on GitHub and choose your favorite clone option.
 2. Open the terminal in the folder where you want to clone the repository.
 3. Clone the repo.
     ```sh 
@@ -85,8 +135,7 @@
     git remote -v
     ```
 
-
-#### Build the application
+##### Build the application
 To build the application, you can use the following commands in your terminal.
 ```sh
 # Download the dependencies and their transitive dependencies
@@ -99,23 +148,20 @@ To build the application, you can use the following commands in your terminal.
 
 
 
-## Getting Started Using Docker
-### Prerequisites
-To use the docker image, you first need to ensure that docker is installed on your machine.
-If that's not the case, please go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction for the version you need.
 
 
 
-### Setup
-#### Get the package
-You can find our package at [this link.]()
+#### Using Docker
+
+##### Get the package
+You can find our package at [this link.](TOADD)
 
 or use this command:
 ```sh
 docker pull ghcr.io/<TOADD>
 ```
 
-#### Build the application
+##### Build the application
 If you were to change our application, you will need to build it again and publish it on your account.
 
 To build the app:
@@ -145,6 +191,46 @@ docker push ghcr.io/<username>/<TOADD>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Deployment
+
+### Prerequisites
+#### Local Use
+- Virtual Machine 
+  - Docker Compose
+  - Java
+  
+- TOADD (maybe)
+
+
+#### Online Use
+- Virtual Machine
+  - Docker Compose
+  - Java
+- Domain Name
+
+- TOADD (maybe)
+
+
+
+
+
+
+
+
+
 ## Usage
 Once the app is built, you can run it.
 
@@ -161,4 +247,18 @@ Once the app is built, you can run it.
 
 
 ## Demonstration
+### Project 
+
+
+
+### API
+Demonstration made using curl to simulate request.
+
+
+
+
+
+
+## Complementary Information
+If you need more informations about the API you can read [this file](docs/API.md).
 
