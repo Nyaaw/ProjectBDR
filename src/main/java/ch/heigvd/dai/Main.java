@@ -1,5 +1,7 @@
 package ch.heigvd.dai;
 
+import ch.heigvd.dai.media.Media;
+import ch.heigvd.dai.media.MediaController;
 import io.javalin.Javalin;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
@@ -29,6 +31,8 @@ public class Main {
 
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
+
+        MediaController mediaController = new MediaController();
 
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
@@ -65,6 +69,10 @@ public class Main {
             ctx.render("media.html", Map.of("genres", genres));
         });
 
+        app.post("/media", ctx -> {
+            mediaController.insertMedia(ctx);
+        });
+
         app.post("/media/addtolist", ctx -> {
 
             String idParam = getQueryParam(ctx, "id");
@@ -72,7 +80,7 @@ public class Main {
 
             // add to List
 
-            ctx.redirect("/media?id=" + id);
+            ctx.redirect("/media?id=1");
 
         });
 

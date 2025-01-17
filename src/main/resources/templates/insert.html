@@ -8,17 +8,19 @@
 
 <main id="insert">
     <h1>Insert a new media</h1>
-    <form>
+    <form id="mainForm" action="/media" method="post"> </form>
         <div class="form_part">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="nom" form="mainForm">
 
+            <label for="date">Release date:</label>
+            <input type="date" id="date" name="datesortie" form="mainForm">
 
             <label for="description">Description:</label>
-            <textarea name="description" id="description"></textarea>
+            <textarea name="description" id="description" form="mainForm"></textarea>
             <div class="form_part">
                 <label for="type">Type de média:</label>
-                <select id="type" name="type">
+                <select id="type" name="typemedia" form="mainForm">
                     <option value="film">Film</option>
                     <option value="serie">Série</option>
                     <option value="jeuvideo">Jeu-Vidéo</option>
@@ -30,14 +32,17 @@
         </div>
         <div class="form_part">
             <h2>Genres: </h2>
-            <label for="genre">Add genre:</label>
-            <select  id="genre" name="genre">
-                <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
-            </select>
-            <input type="button" value="Add">
+            <form action="/insert/addgenre" method="post">
+                <label for="genre">Add genre:</label>
+                <select  id="genre" name="genre">
+                    <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
+                </select>
+                <input type="submit" value="Add">
+            </form>
             <h4>Genre selected:</h4>
             <ul th:each="genre : ${genres}">
-                <li th:text="${genre.nom()}">Genre </li><input type="button" value="remove">
+                <form action="insert/removegenre" method="post"><li th:text="${genre.nom()}">Genre </li><input type="submit" value="remove"></form>
+                <input type="hidden" name="genres" th:value="${genre.nom()}" form="mainForm">
             </ul>
         </div>
 
@@ -45,49 +50,58 @@
         <div class="form_part">
             <h2>Creators: </h2>
             <div>
-                <form>
-                    <label for="creator">Select creator:</label>
-                    <select  id="creator" name="creator">
+                <form action="insert/addcreator" method="post">
+                    <label for="addcreator">Select creator:</label>
+                    <select  id="addcreator" name="nom">
                         <option th:each="genre : ${genres}" th:value="${genre.nom()}" th:text="${genre.nom()}">Creator</option>
                     </select>
                     <input type="button" value="Add">
                 </form>
 
             </div>
-            <form>
-                <label for="creatorName">Add creator:</label>
-                <input type="text" id="creatorName" name="creatorName">
+            <form action="insert/createcreator" method="post">
+                <label for="createcreator">Add creator:</label>
+                <input type="text" id="createcreator" name="nom">
                 <br>
-                <label for="creatorType">type de créateur:</label>
-                <input type="radio" name="creatorType" id="creatorTypePerson">
-                <label>Groupe</label>
-                <input type="radio" name="creatorType" id="creatorTypeGroup">
-                <label>Person</label>
-                <input type="button" value="Add">
+                <label>type de créateur:</label>
+
+                <input type="radio" name="typecreateur" id="creatorTypePerson" value="person">
+                <label for="creatorTypePerson">Person</label>
+                <input type="radio" name="typecreateur" id="creatorTypeGroup" value="group">
+                <label for="creatorTypeGroup">Group</label>
+
+                <input type="submit" value="Add">
             </form>
             <h4>Creator selected:</h4>
             <ul th:each="genre : ${genres}">
-                <li th:text="${genre.nom()}">Creator </li><input type="button" value="remove">
+                <form action="insert/removecreator" method="post"><li th:text="${genre.nom()}">Creator</li><input type="submit" value="remove"></form>
+                <input type="hidden" name="createurs" th:value="${genre.nom()}" form="mainForm">
             </ul>
 
         </div>
 
+        <!-- should only show if type is videogame -->
         <div class="form_part">
             <div>
                 <h3>Video game types: </h3>
-                <label for="videoGameType">Add video game type</label>
-                <select id="videoGameType" name="videoGameType">
-                    <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
-                    <!-- tous les genres ici -->
-                </select>
-                <input type="button" value="Add">
+                <form action="insert/addvideogametype" method="post"></form>
+                    <label for="videoGameType">Add video game type</label>
+                    <select id="videoGameType" name="jeuvideotype">
+                        <option th:each="genre : ${genres}" th:value="genre" th:text="${genre.nom()}">Genre</option>
+                        <!-- tous les genres ici -->
+                    </select>
+                    <input type="submit" value="Add">
+                </form>
                 <h4>Video Game type selected:</h4>
                 <ul th:each="genre : ${genres}">
-                    <li th:text="${genre.nom()}">Type </li><input type="button" value="remove">
+                    <form action="insert/removevideogametype" method="post"><li th:text="${genre.nom()}">Type </li><input type="submit" value="remove"></form>
+                    <input type="hidden" name="jeuvideotypes" th:value="${genre.nom()}" form="mainForm">
                 </ul>
             </div>
 
         </div>
+
+        <input type="submit" value="Create" form="mainForm">
 
     </form>
 </main>
