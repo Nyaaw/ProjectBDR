@@ -10,13 +10,13 @@
     <h1>List name</h1>
     <div th:each="media : ${medias}" class="media_list">
         <div class="List">
-            <a th:href="|media|"><h3 th:text="${media.nom()}">Name</h3></a>
-            <ul th:each="genre : ${genres}" class="List_item">
-                <li th:text="${genre.nom()}">Genre</li>
+            <a th:href="|media?id=${media.id}|"><h3 th:text="${media.nom}">Name</h3></a>
+            <ul th:each="genre : ${media.genres}" class="List_item">
+                <li th:text="${genre}">Genre</li>
             </ul>
         </div>
         <div>
-            <p>Added: <span th:text="${media.datesortie()}">dd.mm.yyyy</span></p>
+            <p>Added: <span th:text="${media.datesortie}">dd.mm.yyyy</span></p>
         </div>
     </div>
 </main>

@@ -16,8 +16,8 @@
         </form>
 
     </div>
-    <div th:each="list : ${lists}" class="list_lists">
-        <div><a th:href="|list|"><h3 th:text="${list.nom()}">list</h3></a></div>
+    <div th:each="list : ${utilisateur.listes}" class="list_lists">
+        <div><a th:href="|list|"><h3 th:text="${list.nom}">list</h3></a></div>
     </div>
 </main>
 

@@ -41,7 +41,7 @@ public class Main {
         });
         
         app.get("/explore", ctx -> {
-            ctx.render("explore.html", Map.of("genres", genres));
+            mediaController.getAll(ctx);
         });
         
         app.get("/insert", ctx -> {

@@ -57,13 +57,19 @@ public class MediaController {
         exampleMedia.commentaires = List.of(com1, com2);
     }
 
-    public Media getOne(Context ctx) {
+    public void getOne(Context ctx) {
 
         Integer id = ctx.queryParamAsClass("id", Integer.class).get();
 
         // get media with id from DB.
 
-        return exampleMedia;
+    }
+
+    public void getAll(Context ctx) {
+
+        // get medias with id from db
+
+        ctx.render("explore.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia)));
     }
 
     public void insertMedia(Context ctx){

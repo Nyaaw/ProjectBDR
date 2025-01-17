@@ -22,22 +22,22 @@
                   <div>
                       <h3>Genres</h3>
                       <div th:each="genre : ${genres}" class="box">
-                          <input type="checkbox" th:value="${genre.nom()}" class="box" name="genres" >
-                          <label th:text="${genre.nom()}">Genre</label>
+                          <input type="checkbox" th:value="${genre}" class="box" name="genres" >
+                          <label th:text="${genre}">Genre</label>
                       </div>
                   </div>
                   <div>
                       <h3>Media type</h3>
-                      <div th:each="mediaType : ${mediaTypes}" class="box">
-                          <input type="checkbox" class="box" name="mediaType" th:value="${mediaType.nom()}">
-                          <label th:text="${mediaType.nom()}">Type</label>
+                      <div th:each="mediatype : ${mediatypes}" class="box">
+                          <input type="checkbox" class="box" name="mediaType" th:value="${mediatype}">
+                          <label th:text="${mediatype}">Type</label>
                       </div>
                   </div>
                   <div>
                       <h3>Video game type</h3>
-                      <div th:each="VideoGameType : ${VideoGameTypes}" class="box">
-                          <input type="checkbox" class="box" name="typeVideogame" th:value="${VideoGameType.nom()}">
-                          <label th:text="${VideoGameType.nom()}">Type</label>
+                      <div th:each="VideoGameType : ${jeuvideotypes}" class="box">
+                          <input type="checkbox" class="box" name="typeVideogame" th:value="${VideoGameType}">
+                          <label th:text="${VideoGameType}">Type</label>
                       </div>
                   </div>
                   <div>
@@ -74,13 +74,13 @@
           <div><h1>Last added</h1></div>
           <div th:each="media : ${medias}" class="media_list">
               <div class="List">
-                  <a th:href="|media|" th:text="${media.nom()}"><h3>Name</h3></a>
-                  <ul th:each="genre : ${genres}" class="List_item">
-                      <li th:text="${genre.nom()}">Genre</li>
+                  <a th:href="|media?id=${media.id}|" th:text="${media.nom}"><h3>Name</h3></a>
+                  <ul th:each="genre : ${media.genres}" class="List_item">
+                      <li th:text="${genre}">Genre</li>
                   </ul>
               </div>
               <div>
-                  <p>Added: <span th:text="${media.datesortie()}">dd.mm.yyyy</span></p>
+                  <p>Added: <span th:text="${media.datesortie}">dd.mm.yyyy</span></p>
               </div>
           </div>
       </div>

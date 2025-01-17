@@ -22,26 +22,26 @@
             </div>
             <div>
                 <h3>Note</h3>
-                <p><span th:text="${media.note()}">x</span>/5</p>
+                <p><span th:text="${media.note}">x</span>/5</p>
             </div>
             <div>
                 <h3>Creator</h3>
-                <ul th:each="creator : ${creators}">
-                    <li th:text="${creator.nom()} ${creator.prenom()}">Genre</li>
+                <ul th:each="creator : ${media.creators}">
+                    <li th:text="${creator.nom} ${creator.prenom}">Genre</li>
                 </ul>
             </div>
             <div>
                 <h3>Media Type</h3>
-                <p th th:text="${media.typemedia()}">NOM</p>
+                <p th th:text="${media.typemedia}">NOM</p>
             </div>
             <h3>Genres</h3>
-            <ul th:each="genre : ${genres}">
-                <li th:text="${genre.nom()}">Genre</li>
+            <ul th:each="genre : ${media.genres}">
+                <li th:text="${genre.nom}">Genre</li>
             </ul>
         </div>
         <div class="media_section2">
             <h2>Description</h2>
-            <p th:text="${media.description()}">Lorem ipsum</p>
+            <p th:text="${media.description}">Lorem ipsum</p>
         </div>
     </div>
     <div id="commentaires">
@@ -53,13 +53,13 @@
             <textarea name="comment-body"></textarea>
             <button type="submit">Submit</button>
         </form>
-        <div th:each="commentaire : ${commentaires}" class="commentaire">
+        <div th:each="commentaire : ${media.commentaires}" class="commentaire">
             <div class="title">
-                <h3 th:text="${commentaire.nom()}">user</h3>
-                <p><span th:text="${commentaire.note()}">x</span>/5</p>
+                <h3 th:text="${commentaire.utilisateur}">user</h3>
+                <p><span th:text="${commentaire.note}">x</span>/5</p>
             </div>
             <div>
-                <p th:text="${commentaire.text()}">
+                <p th:text="${commentaire.text}">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
                 </p>
             </div>
