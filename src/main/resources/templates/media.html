@@ -7,14 +7,14 @@
 <header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
-    <h1 th:text="${genres.nom()}">titre</h1>
+    <h1 th:text="${media.nom}">titre</h1>
     <div id="media">
         <div class="media_section1">
             <div>
                 <form>
                     <label for="add_to_list">Add to list:</label>
                     <select  id="add_to_list" name="add_to_list">
-                        <option th:each="liste : ${lists}" th:value="${list.nom()}" th:text="${list.nom()}">list</option>
+                        <option th:each="list : ${lists}" th:value="${list.nom}" th:text="${list.nom}">list</option>
                     </select>
                     <button type="submit">Add</button>
                 </form>
@@ -26,8 +26,9 @@
             </div>
             <div>
                 <h3>Creator</h3>
-                <ul th:each="creator : ${media.creators}">
-                    <li th:text="${creator.nom} ${creator.prenom}">Genre</li>
+                <ul th:each="creator : ${media.createurs}">
+                    <li th:if="${creator.prenom == null}" th:text="${creator.nom}">Creator</li>
+                    <li th:unless="${creator.prenom == null}" th:text="|${creator.nom} ${creator.prenom}|">Creator</li>
                 </ul>
             </div>
             <div>
@@ -36,7 +37,7 @@
             </div>
             <h3>Genres</h3>
             <ul th:each="genre : ${media.genres}">
-                <li th:text="${genre.nom}">Genre</li>
+                <li th:text="${genre}">Genre</li>
             </ul>
             <h3>Video game types</h3>
             <ul th:each="type : ${media.jeuvideotypes}">
@@ -59,11 +60,11 @@
         </form>
         <div th:each="commentaire : ${media.commentaires}" class="commentaire">
             <div class="title">
-                <h3 th:text="${commentaire.utilisateur}">user</h3>
+                <h3 th:text="${commentaire.utilisateur.nom}">user</h3>
                 <p><span th:text="${commentaire.note}">x</span>/5</p>
             </div>
             <div>
-                <p th:text="${commentaire.text}">
+                <p th:text="${commentaire.texte}">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
                 </p>
             </div>

@@ -9,5 +9,6 @@ public class InsertController {
         Map<String, Object> data = new HashMap<String, Object>();
 
         //data.add("")
+        return data;
     }
 }

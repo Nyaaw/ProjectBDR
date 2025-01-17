@@ -74,7 +74,10 @@
             </form>
             <h4>Creator selected:</h4>
             <ul th:each="creator : ${media.creators}">
-                <form action="insert/removecreator" method="post"><li th:text="${creator.nom} ${creatorSelected.prenom}">Creator</li><input type="submit" value="remove"></form>
+                <form action="insert/removecreator" method="post">
+                    <li th:if="${creator.prenom == null}" th:text="${creator.nom}">Creator</li>
+                    <li th:unless="${creator.prenom == null}" th:text="|${creator.nom} ${creatorSelected.prenom}|">Creator</li>
+                    <input type="submit" value="remove"></form>
                 <input type="hidden" name="createurs" th:value="${creatorSelected.id}" form="mainForm">
             </ul>
 

@@ -1,5 +1,6 @@
 package ch.heigvd.dai;
 
+import ch.heigvd.dai.liste.ListeController;
 import ch.heigvd.dai.media.Media;
 import ch.heigvd.dai.media.MediaController;
 import io.javalin.Javalin;
@@ -47,9 +48,9 @@ public class Main {
         });
         
         app.get("/list", ctx -> {
-            String name = getQueryParam(ctx, "name");
+            String name = getQueryParam(ctx, "nom");
 
-            ctx.render("list.html", Map.of("genres", genres));
+            ListeController.getOne(ctx);
         });
         
         app.get("/login", ctx -> {
@@ -92,16 +93,14 @@ public class Main {
         });
         
         app.get("/mylists", ctx -> {
-            String idParam = getQueryParam(ctx, "id");
-            Integer id = checkForNumericParam(ctx, idParam);
 
-            ctx.render("mylists.html", Map.of("genres", genres));
+            ListeController.getAll(ctx);
         });
 
         app.get("/result", ctx -> {
             String search = getQueryParam(ctx, "search");
 
-            ctx.render("result.html", Map.of("genres", genres));
+            MediaController.getResults(ctx);
         });
 
         app.error(404, ctx -> ctx.render("error.html",

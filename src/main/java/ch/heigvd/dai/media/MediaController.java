@@ -3,6 +3,7 @@ package ch.heigvd.dai.media;
 import ch.heigvd.dai.commentaire.Commentaire;
 import ch.heigvd.dai.createur.Createur;
 import ch.heigvd.dai.createur.TypeCreateur;
+import ch.heigvd.dai.liste.Liste;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 
 import java.time.Instant;
@@ -16,6 +17,12 @@ public class MediaController {
 
     static Media exampleMedia;
 
+    static Liste Seen;
+    static Liste Favorite;
+    static Liste toBeSeen;
+    static Liste Watching;
+    static Liste exempleListe;
+
     static{
         exampleMedia = new Media();
 
@@ -24,6 +31,7 @@ public class MediaController {
         exampleMedia.typemedia = TypeMedia.jeuvideo;
         exampleMedia.datesortie = LocalDate.of(2019, 5, 23);
         exampleMedia.description = "A difficult roguelike where every pixel is simulated.";
+        exampleMedia.note = 2;
 
         exampleMedia.genres = List.of("Adventure", "Horror");
 
@@ -58,6 +66,19 @@ public class MediaController {
         com2.utilisateur.nom = "xXxJeanPierredu92xXx";
 
         exampleMedia.commentaires = List.of(com1, com2);
+
+        exempleListe = new Liste();
+        Seen = new Liste();
+        Favorite = new Liste();
+        toBeSeen = new Liste();
+        Watching = new Liste();
+
+        exempleListe.nom = "Liste example";
+        Seen.nom = "Seen";
+        toBeSeen.nom = "To be seen";
+        Favorite.nom = "Favorite";
+        Watching.nom = "Watching";
+
     }
 
     public MediaController() {
@@ -70,7 +91,7 @@ public class MediaController {
 
         // get media with id from DB.
 
-        ctx.render("media.html", Map.of("media", exampleMedia));
+        ctx.render("media.html", Map.of("media", exampleMedia, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
     }
 
     public static void getAll(Context ctx) {
@@ -86,6 +107,12 @@ public class MediaController {
         // get medias with id from db
 
         ctx.render("index.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia), "genres", List.of("Genre 1","Genre 2"), "mediatypes", List.of("type 1","type 2"), "jeuvideotypes", List.of("type 1","type 2")));
+    }
+
+    public static void getResults(Context ctx) {
+        // get medias with id from db
+
+        ctx.render("result.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia)));
     }
 
     public static void insertMedia(Context ctx){

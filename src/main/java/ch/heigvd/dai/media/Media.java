@@ -13,6 +13,7 @@ public class Media{
     public LocalDate datesortie;
     public String description;
     public TypeMedia typemedia;
+    public Integer note;
 
     public List<Commentaire> commentaires;
     public List<Createur> createurs;

@@ -7,8 +7,8 @@
 <header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
-    <h1>List name</h1>
-    <div th:each="media : ${medias}" class="media_list">
+    <h1 th:text="${list.nom}">List name</h1>
+    <div th:each="media : ${list.medias}" class="media_list">
         <div class="List">
             <a th:href="|media?id=${media.id}|"><h3 th:text="${media.nom}">Name</h3></a>
             <ul th:each="genre : ${media.genres}" class="List_item">
