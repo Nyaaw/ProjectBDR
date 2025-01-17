@@ -73,6 +73,10 @@ public class Main {
             mediaController.insertMedia(ctx);
         });
 
+        app.post("/insert/addgenre", ctx -> {
+            mediaController.insertMedia(ctx);
+        });
+
         app.post("/media/addtolist", ctx -> {
 
             String idParam = getQueryParam(ctx, "id");
