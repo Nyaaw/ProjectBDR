@@ -6,7 +6,7 @@
 - Pierric Ripoll
 
 
-## Table of Content <!-- omit in toc -->
+## Table of Contents <!-- omit in toc -->
 - [README Criterion (to remove later)](#readme-criterion-to-remove-later)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
@@ -145,8 +145,6 @@ To build the application, you can use the following commands in your terminal.
 ./mvnw package
 ```
 
-
-
 ##### Build the application package
 If you were to change our application, you will need to build it again and publish it on your account.
 
@@ -160,20 +158,20 @@ docker build -t <TOADD> .
 To publish the container on GitHub:
 
 1. You first need to connect to your account:
-````sh
-docker login ghcr.io -u <username>
-````
+    ```sh
+    docker login ghcr.io -u <username>
+    ```
 
 2. You need to tag the image:
-````sh
-# Tag the image with the correct format
-docker tag <TOADD> ghcr.io/<username>/<TOADD>:latest
-````
+    ```sh
+    # Tag the image with the correct format
+    docker tag <TOADD> ghcr.io/<username>/<TOADD>:latest
+    ```
 
 3. You publish the container on your account:
-````sh
-docker push ghcr.io/<username>/<TOADD>
-````
+    ```sh
+    docker push ghcr.io/<username>/<TOADD>
+    ```
 
 
 
@@ -188,6 +186,12 @@ docker push ghcr.io/<username>/<TOADD>
 ## Deployment
 
 ### Prerequisites
+You can either choose to deploy localy or online.
+
+
+
+
+
 #### Local Use
 - Virtual Machine 
   - Docker Compose
@@ -207,6 +211,16 @@ docker push ghcr.io/<username>/<TOADD>
 
 
 For the VM you can either do it localy or online.  
+
+
+
+- online vm
+- server
+- local machine
+- local vm
+- using docker (recomended)
+
+
 
 
 If you don't know how to setup a VM you can read [this](docs/VM_Help.md) quick help.
