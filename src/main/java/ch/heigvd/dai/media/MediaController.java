@@ -289,7 +289,7 @@ public class MediaController {
 
         // add to db
         String sql = "INSERT INTO Media_List (mediaId, listenom, listePseudo)\n" +
-                "VALUES ("+id+", "+nom+", "+pseudo+")";
+                "VALUES ("+id+", "+nom+", "+pseudo+");";
 
         var result = dsl.fetch(sql, id, nom);
 
@@ -309,7 +309,7 @@ public class MediaController {
 
         // add to db
         String sql = "INSERT INTO Commentaire (pseudo, id, date, note, texte)\n" +
-                "VALUES ("+commentaire.media.id+", "+commentaire.utilisateur.nom+", CUREENT_DATE, "+commentaire.note+", "+commentaire.texte+")";
+                "VALUES ("+commentaire.media.id+", "+commentaire.utilisateur.nom+", CUREENT_DATE, "+commentaire.note+", "+commentaire.texte+");";
 
         var result = dsl.fetch(sql, commentaire.media.id, commentaire.utilisateur.nom, commentaire.note, commentaire.texte);
 
