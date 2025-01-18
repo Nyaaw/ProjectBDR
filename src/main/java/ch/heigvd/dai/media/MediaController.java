@@ -15,6 +15,8 @@ import io.javalin.http.*;
 
 import org.jooq.DSLContext;
 
+import javax.swing.text.StyledEditorKit;
+
 public class MediaController {
 
     private static DSLContext dsl;
@@ -108,16 +110,16 @@ public class MediaController {
                 "    g.nom AS genre_name,\n" +
                 "    c.nom AS creator_name,\n" +
                 "    CASE\n" +
-                "        WHEN p.id IS NOT NULL THEN 'Papier'\n" +
-                "        WHEN n.id IS NOT NULL THEN 'Numérique'\n" +
-                "        END AS media_format,\n" +
+                "WHEN p.id IS NOT NULL THEN 'Papier'\n" +
+                "WHEN n.id IS NOT NULL THEN 'Numérique'\n" +
+                "END AS media_format,\n" +
                 "    CASE\n" +
-                "        WHEN l.id IS NOT NULL THEN 'Livre'\n" +
-                "        WHEN b.id IS NOT NULL THEN 'BD'\n" +
-                "        WHEN f.id IS NOT NULL THEN 'Film'\n" +
-                "        WHEN s.id IS NOT NULL THEN 'Série'\n" +
-                "        WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
-                "        END AS media_type,\n" +
+                "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
+                "WHEN b.id IS NOT NULL THEN 'BD'\n" +
+                "WHEN f.id IS NOT NULL THEN 'Film'\n" +
+                "WHEN s.id IS NOT NULL THEN 'Série'\n" +
+                "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
+                "END AS media_type,\n" +
                 "    l.nbPage AS book_pages,\n" +
                 "    b.couleur AS bd_color,\n" +
                 "    f.duree AS film_duration,\n" +
@@ -125,19 +127,19 @@ public class MediaController {
                 "    jt.nom AS game_type\n" +
                 "FROM\n" +
                 "    Media m\n" +
-                "        LEFT JOIN Media_Genre mg ON m.id = mg.idMedia\n" +
-                "        LEFT JOIN Genre g ON mg.idGenre = g.id\n" +
-                "        LEFT JOIN Media_Createur mc ON m.id = mc.idMedia\n" +
-                "        LEFT JOIN Createur c ON mc.idCreateur = c.id\n" +
-                "        LEFT JOIN Papier p ON m.id = p.id\n" +
-                "        LEFT JOIN Numerique n ON m.id = n.id\n" +
-                "        LEFT JOIN Livre l ON m.id = l.id\n" +
-                "        LEFT JOIN BD b ON m.id = b.id\n" +
-                "        LEFT JOIN Film f ON m.id = f.id\n" +
-                "        LEFT JOIN Serie s ON m.id = s.id\n" +
-                "        LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-                "        LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.idJeuVideo\n" +
-                "        LEFT JOIN Type jt ON jvt.idType = jt.id\n" +
+                        "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
+                        "LEFT JOIN Genre g ON mg.genreNom = g.nom\n" +
+                        "LEFT JOIN Media_Createur mc ON m.id = mc.mediaId\n" +
+                        "LEFT JOIN Createur c ON mc.createurId = c.id\n" +
+                        "LEFT JOIN Papier p ON m.id = p.id\n" +
+                        "LEFT JOIN Numerique n ON m.id = n.id\n" +
+                        "LEFT JOIN Livre l ON m.id = l.id\n" +
+                        "LEFT JOIN BD b ON m.id = b.id\n" +
+                        "LEFT JOIN Film f ON m.id = f.id\n" +
+                        "LEFT JOIN Serie s ON m.id = s.id\n" +
+                        "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
+                        "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
+                        "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
                 "WHERE\n" +
                 "    m.id = " + id + ";";
 
@@ -191,84 +193,85 @@ public class MediaController {
 
     public static void getResults(Context ctx) {
         // à voircomment ajouter tous les paramètres
-        String mediatype = ctx.queryParamAsClass("mediatype", String.class).get();
-        String Genre = ctx.queryParamAsClass("genre", String.class).get();
-        String videogametype = ctx.queryParamAsClass("videogametype", String.class).get();
+        String mediatype = "'" + ctx.queryParamAsClass("mediatype", String.class).get()+ "'";
+        String Genre = "'" + ctx.queryParamAsClass("genre", String.class).get()+ "'";
+        String videogametype = "'" + ctx.queryParamAsClass("videogametype", String.class).get()+ "'";
         Boolean color = ctx.queryParamAsClass("color", Boolean.class).get();
         Integer Pagesnb = ctx.queryParamAsClass("pagesnb", Integer.class).get();
         Integer Seasonnb = ctx.queryParamAsClass("seasonnb", Integer.class).get();
-        String keyword = ctx.queryParamAsClass("keyword", String.class).get();
+        String keyword = "'" + ctx.queryParamAsClass("keyword", String.class).get()+ "'";
 
         // get medias with id from db
-        String sql = "SELECT\n"+
+
+        //quand inutile/optionnel, on met NULL
+        String sql = "SELECT\n" +
                 "m.id AS media_id,\n" +
                 "m.nom AS media_name,\n" +
                 "m.dateSortie AS release_date,\n" +
                 "m.description AS media_description,\n" +
                 "g.nom AS genre_name,\n" +
-            "CASE\n" +
-                "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
-                "WHEN b.id IS NOT NULL THEN 'BD'\n" +
-                "WHEN f.id IS NOT NULL THEN 'Film'\n" +
-                "WHEN s.id IS NOT NULL THEN 'Série'\n" +
-                "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
-            "END AS media_type,\n" +
-        "l.nbPage AS book_pages,\n" +
-        "b.couleur AS bd_color,\n" +
-        "f.duree AS film_duration,\n" +
-        "s.nbSaison AS series_seasons,\n" +
-        "jt.nom AS game_type\n" +
-        "FROM\n" +
-        "Media m\n" +
-            "LEFT JOIN MediaGenre mg ON m.id = mg.idMedia\n" +
-            "LEFT JOIN Genre g ON mg.idGenre = g.id\n" +
-            "LEFT JOIN Papier p ON m.id = p.id\n" +
-            "LEFT JOIN Numerique n ON m.id = n.id\n" +
-            "LEFT JOIN Livre l ON m.id = l.id\n" +
-            "LEFT JOIN BD b ON m.id = b.id\n" +
-            "LEFT JOIN Film f ON m.id = f.id\n" +
-            "LEFT JOIN Serie s ON m.id = s.id\n" +
-            "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-            "LEFT JOIN JeuVideoType jvt ON jv.id = jvt.idJeuVideo\n" +
-            "LEFT JOIN Type jt ON jvt.idType = jt.id\n" +
-        "WHERE\n" +
-            "-- Condition pour le genre\n" +
-            "(g.nom = '" + Genre + "' OR " + Genre + " IS NULL)\n" +
-            "-- Condition pour un type spécifique de média\n" +
-            "AND (\n" +
-                    "('Livre' = '"+ mediatype +"' AND l.id IS NOT NULL)\n" +
-            "OR ('BD' = '"+ mediatype +"' AND b.id IS NOT NULL)\n" +
-            "OR ('Film' = '"+ mediatype +"' AND f.id IS NOT NULL)\n" +
-            "OR ('Série' = '"+ mediatype +"' AND s.id IS NOT NULL)\n" +
-            "OR ('Jeu Vidéo' = '"+ mediatype +"' AND jv.id IS NOT NULL)\n" +
-            "OR '"+ mediatype +"' IS NULL\n" +
-            ")\n" +
-            "-- Condition pour un jeu vidéo d'un type spécifique\n" +
-            "AND (\n" +
-                    "(jv.id IS NOT NULL AND jt.nom = '"+ videogametype +"')\n" +
-            "OR '"+ videogametype +"' IS NULL\n" +
-            ")\n" +
-            "-- Condition pour une BD en couleur ou non\n" +
-            "AND (\n" +
-                    "(b.id IS NOT NULL AND b.couleur = "+ color +")\n" +
-            "OR " + color + " IS NULL\n" +
-            ")\n" +
-            "-- Condition pour un livre avec un nombre de pages minimum\n" +
-            "AND (\n" +
-                    "(l.id IS NOT NULL AND l.nbPage >= " + Pagesnb + ")\n" +
-            "OR " + Pagesnb + " IS NULL\n" +
-            ")\n" +
-            "-- Condition pour une série avec un nombre de saisons minimum\n" +
-            "AND (\n" +
-                    "(s.id IS NOT NULL AND s.nbSaison >= " + Seasonnb + ")\n" +
-            "OR " + Seasonnb + " IS NULL\n" +
-            ")\n" +
-            "-- Condition pour un mot spécifique dans le titre ou la description\n" +
-            "AND (\n" +
-                    "(m.nom ILIKE '%' || '" + keyword + "' || '%')\n" +
-            "OR (m.description ILIKE '%' || '" + keyword + "' || '%')\n" +
-            "OR '" + keyword + "' IS NULL\n" +
-            ");";
+                "CASE\n" +
+                    "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
+                    "WHEN b.id IS NOT NULL THEN 'BD'\n" +
+                    "WHEN f.id IS NOT NULL THEN 'Film'\n" +
+                    "WHEN s.id IS NOT NULL THEN 'Série'\n" +
+                    "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
+                    "END AS media_type,\n" +
+                "l.nbPage AS book_pages,\n" +
+                "b.couleur AS bd_color,\n" +
+                "f.duree AS film_duration,\n" +
+                "s.nbSaison AS series_seasons,\n" +
+                "jt.nom AS game_type\n" +
+                "FROM\n" +
+                    "Media m\n" +
+                        "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
+                        "LEFT JOIN Genre g ON mg.genrenom = g.nom\n" +
+                        "LEFT JOIN Papier p ON m.id = p.id\n" +
+                        "LEFT JOIN Numerique n ON m.id = n.id\n" +
+                        "LEFT JOIN Livre l ON m.id = l.id\n" +
+                        "LEFT JOIN BD b ON m.id = b.id\n" +
+                        "LEFT JOIN Film f ON m.id = f.id\n" +
+                        "LEFT JOIN Serie s ON m.id = s.id\n" +
+                        "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
+                        "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
+                        "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
+                "WHERE\n" +
+                "  -- Condition pour le genre\n" +
+                "    (g.nom = COALESCE("+Genre+", g.nom))\n" +
+                "  -- Condition pour un type spécifique de média\n" +
+                "  AND (\n" +
+                "    (COALESCE("+mediatype+", '') = 'Livre' AND l.id IS NOT NULL)\n" +
+                        "OR (COALESCE("+mediatype+", '') = 'BD' AND b.id IS NOT NULL)\n" +
+                        "OR (COALESCE("+mediatype+", '') = 'Film' AND f.id IS NOT NULL)\n" +
+                        "OR (COALESCE("+mediatype+", '') = 'Série' AND s.id IS NOT NULL)\n" +
+                        "OR (COALESCE("+mediatype+", '') = 'Jeu Vidéo' AND jv.id IS NOT NULL)\n" +
+                        "OR COALESCE("+mediatype+", '') = ''\n" +
+                "    )\n" +
+                "  -- Condition pour un jeu vidéo d'un type spécifique\n" +
+                "  AND (\n" +
+                "    (jv.id IS NOT NULL AND jt.nom = COALESCE("+videogametype+", jt.nom))\n" +
+                "OR "+videogametype+" IS NULL\n" +
+                "    )\n" +
+                "  -- Condition pour une BD en couleur ou non\n" +
+                "  AND (\n" +
+                "    (b.id IS NOT NULL AND b.couleur = COALESCE("+color+", b.couleur))\n" +
+                "OR "+color+" IS NULL\n" +
+                "    )\n" +
+                "  -- Condition pour un livre avec un nombre de pages minimum\n" +
+                "  AND (\n" +
+                "    (l.id IS NOT NULL AND l.nbPage >= COALESCE("+Pagesnb+", 0))\n" +
+                "OR "+Pagesnb+" IS NULL\n" +
+                "    )\n" +
+                "  -- Condition pour une série avec un nombre de saisons minimum\n" +
+                "  AND (\n" +
+                "    (s.id IS NOT NULL AND s.nbSaison >= COALESCE("+Seasonnb+", 0))\n" +
+                "OR "+Seasonnb+" IS NULL\n" +
+                "    )\n" +
+                "  -- Condition pour un mot spécifique dans le titre ou la description\n" +
+                "  AND (\n" +
+                "    (m.nom ILIKE '%' || COALESCE("+keyword+", '') || '%')\n" +
+                "OR (m.description ILIKE '%' || COALESCE("+keyword+", '') || '%')\n" +
+                "    );";
 
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, Genre, mediatype, videogametype, color, Pagesnb, Seasonnb, keyword);
@@ -360,22 +363,34 @@ public class MediaController {
         // verify that jeuvideotypes exists
 
         // create media in DB and get id
-        String sql = "DO $$\n" +
-        "DECLARE\n" +
-        "i INTEGER;\n" +
-        "id_media INTEGER;\n" +
-        "random_genre_id INTEGER;\n" +
-        "BEGIN \n"+
-            "INSERT INTO Media (nom, dateSortie, description)\n" +
-            "VALUES ("+ media.nom +", "+ media.datesortie +", '"+ media.description+"')\n" +
-            "RETURNING id INTO id_media;\n" +
-            "INSERT INTO "+ media.typemedia +" (id)\n" +
-            "VALUES (id_media);\n" +
-                "FOR int i.."+nbGenres+" LOOP" +
-                    "INSERT INTO Media_Genre (idMedia, idGenre)\n" +
-                    "VALUES (id_media, "+ media.genres[i] +");\n" + // à corriger
-                "END LOOP;" +
-        "END $$;";
+        String nom = "'" + media.nom + "'";
+        String datesortie = "'" + media.datesortie + "'";
+        String description = "'" + media.description + "'";
+        String typemedia = "'" + media.typemedia + "'";
+        String Genre = "'" + media.genres + "'"; //actuellement un problème de passer plus d'un genre ou type à la fois
+        String typejeuvideo = "'" + media.jeuvideotypes + "'";
+
+        Integer nbPages = null;
+        Integer nbSeasons = null;
+        Integer duree = null;
+        Boolean color = null;
+
+        Integer idCreateur = null;
+
+        //mettre nul si cela ne concerne pas le media
+        String sql = "SELECT insert_media(\n" +
+                "    "+nom+", --nom media\n" +
+                "    "+datesortie+",   --date de sortie\n" +
+                "    "+description+", --description\n" +
+                "    "+typemedia+", --type du media\n" +
+                "    "+nbPages+",       -- nb_pages\n" +
+                "    "+color+",       -- bd_couleur\n" +
+                "    "+duree+",       -- film_duree\n" +
+                "    "+nbSeasons+",       -- serie_nbSaisons\n" +
+                "    "+typejeuvideo+",      -- jeu_video_type\n" +
+                "    "+Genre+", -- genre_nom\n" +
+                "    "+idCreateur+"           -- createur_id\n" +
+                ");";
 
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, media.nom, media.datesortie, media.description, media.typemedia, media.typemedia, media.genres);
