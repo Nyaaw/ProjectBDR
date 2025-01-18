@@ -2,15 +2,26 @@
 
 ## Author <!-- omit in toc -->
 - Alex Berberat
+- Lisa Gorgerat
+- Pierric Ripoll
 
 
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
+- [Description](#description)
+- [SSH](#ssh)
+- [Acquiring a virtual machine on a cloud provider](#acquiring-a-virtual-machine-on-a-cloud-provider)
+  - [Create a virtual machine](#create-a-virtual-machine)
+- [Access the VM using SSH](#access-the-vm-using-ssh)
+  - [Recommended actions](#recommended-actions)
+- [Install Docker and Docker Compose](#install-docker-and-docker-compose)
+- [End](#end)
+- [Source](#source)
 
 
 
 ## Description
-In this quick tutorial we will focus on how to get and setup an online VM for the project.  
+In this quick tutorial we will focus on how to get and set up an online VM for the project.  
 And will use SSH to connect to the distant VM.
 
 > [!IMPORTANT]
@@ -19,13 +30,13 @@ And will use SSH to connect to the distant VM.
 
 
 ## SSH
-If you don't alredy have the SSH client installed you can do so with this command:
+If you don't already have the SSH client installed you can do so with this command:
 ```sh
 # Install the SSH client
 sudo apt install openssh-client
 ```
 
-Once this is done you'll need to generat a new SSH key if you don't alredy have one.
+Once this is done, you'll need to generate a new SSH key if you don't already have one.
 You can do so with the following command:
 ```sh
 ssh-keygen
@@ -39,7 +50,7 @@ You can access the [Azure portal](https://portal.azure.com) to create your accou
 
 
 ### Create a virtual machine
-You can now create a new virtual machine from the dashboard in section `Create a resource`.
+You can now create a new virtual machine from the dashboard in the section `Create a resource`.
 
 Select a virtual machine with the following characteristics:
 - **Project details**
@@ -65,10 +76,49 @@ Select a virtual machine with the following characteristics:
 
 > [!NOTE]
 > Those are only recommendation you can change them if need.  
-> The only charasteristic you can't change are the **Image**, **VM architecture** and **Inbound port rules** unless you adjust the API accordingly.
+> The only characteristic you can't change are the **Image**, **VM architecture** and **Inbound port rules** unless you adjust the API accordingly.  
 
 
+Click on the `Review + create` button.  
+Validate the configuration and click on the `Create` button.  
+It might take a few minutes to create the virtual machine. Once the virtual machine is created, you can access it with the `Go to resource` button.  
+
+Note the public IP address of the virtual machine. You'll need it to connect to the virtual machine with SSH.
 
 
+## Access the VM using SSH
+Using the public IP address of the virtual machine, you can connect to the virtual machine using SSH with the following command:
+```sh
+# Connect to the virtual machine with SSH
+ssh ubuntu@<vm public ip>
+```
+
+The first time you connect to the virtual machine, you will be asked to confirm the fingerprint of the public key.
+
+### Recommended actions
+Once connected to the virtual machine, you can update the packages with the following command:
+
+```sh
+# Update the available packages
+sudo apt update
+
+# Upgrade the packages
+sudo apt upgrade
+```
+
+You can then reboot the VM with the following command to apply all the updates:
+```sh
+# Reboot the VM
+sudo reboot
+``` 
 
 
+## Install Docker and Docker Compose
+You can go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction to install the version you need.
+
+## End
+Once this is done, you have a working VM to use for the project.
+
+
+## Source
+This quick tutorial was heavily inspired by [this course](https://github.com/heig-vd-dai-course/heig-vd-dai-course/blob/main/20-ssh-and-scp/COURSE_MATERIAL.md).
