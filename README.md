@@ -1,6 +1,6 @@
 # Project BDR/DAI 
 
-## Autor <!-- omit in toc -->
+## Autors <!-- omit in toc -->
 - Alex Berberat
 - Lisa Gorgerat
 - Pierric Ripoll
@@ -204,6 +204,16 @@ docker push ghcr.io/<username>/<TOADD>
 
 - TOADD (MAYBE)
 
+
+
+For the VM you can either do it localy or online.  
+
+
+If you don't know how to setup a VM you can read [this](docs/VM_Help.md) quick help.
+
+
+
+If you don't have a domain name and don't know how to get one you can read [this](docs/Domain_Name_Help.md) quick help.
 
 
 
