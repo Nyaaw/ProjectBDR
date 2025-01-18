@@ -1,10 +1,9 @@
 # Virtual Machine Help
 
-## Author <!-- omit in toc -->
+## Authors <!-- omit in toc -->
 - Alex Berberat
 - Lisa Gorgerat
 - Pierric Ripoll
-
 
 
 ## Table of Contents <!-- omit in toc -->
@@ -15,9 +14,8 @@
 - [Access the VM using SSH](#access-the-vm-using-ssh)
   - [Recommended actions](#recommended-actions)
 - [Install Docker and Docker Compose](#install-docker-and-docker-compose)
-- [End](#end)
+- [Conclusion](#conclusion)
 - [Source](#source)
-
 
 
 ## Description
@@ -41,6 +39,7 @@ You can do so with the following command:
 ```sh
 ssh-keygen
 ```
+
 
 ## Acquiring a virtual machine on a cloud provider
 Many cloud providers exist and offer free tiers. You can check the following Git repository for a list of cloud providers offering free tiers: <https://github.com/cloudcommunity/Cloud-Free-Tier-Comparison>.  
@@ -78,7 +77,6 @@ Select a virtual machine with the following characteristics:
 > Those are only recommendation you can change them if need.  
 > The only characteristic you can't change are the **Image**, **VM architecture** and **Inbound port rules** unless you adjust the API accordingly.  
 
-
 Click on the `Review + create` button.  
 Validate the configuration and click on the `Create` button.  
 It might take a few minutes to create the virtual machine. Once the virtual machine is created, you can access it with the `Go to resource` button.  
@@ -96,8 +94,7 @@ ssh ubuntu@<vm public ip>
 The first time you connect to the virtual machine, you will be asked to confirm the fingerprint of the public key.
 
 ### Recommended actions
-Once connected to the virtual machine, you can update the packages with the following command:
-
+Once connected to the virtual machine, you can update the packages with the following command:  
 ```sh
 # Update the available packages
 sudo apt update
@@ -106,7 +103,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-You can then reboot the VM with the following command to apply all the updates:
+You can then reboot the VM with the following command to apply all the updates:  
 ```sh
 # Reboot the VM
 sudo reboot
@@ -116,7 +113,8 @@ sudo reboot
 ## Install Docker and Docker Compose
 You can go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction to install the version you need.
 
-## End
+
+## Conclusion
 Once this is done, you have a working VM to use for the project.
 
 
