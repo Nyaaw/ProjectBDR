@@ -6,6 +6,7 @@ import ch.heigvd.dai.createur.TypeCreateur;
 import ch.heigvd.dai.liste.Liste;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 
+import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -119,8 +120,10 @@ public class MediaController {
         Media media = new Media();
 
         //media.id = ctx.formParamAsClass("id", Integer.class).get();
-        media.nom = ctx.formParamAsClass("nom", String.class).get();
-        media.description = ctx.formParamAsClass("description", String.class).get();
+        media.nom = ctx.formParamAsClass("nom", String.class)
+                .check(s -> !s.isBlank(), "name is empty").get();
+        media.description = ctx.formParamAsClass("description", String.class)
+                .check(s -> !s.isBlank(), "description is empty").get();
 
         String type = ctx.formParamAsClass("typemedia", String.class).get();
 
@@ -130,29 +133,35 @@ public class MediaController {
             throw new BadRequestResponse("Media type is not valid");
         }
 
-        media.genres = ctx.formParamsAsClass("genres", String.class).get();
+        media.genres = ctx.formParamsAsClass("genres", String.class)
+                .check(g -> !g.isEmpty(), "doesn't specify a genre").get();
 
-        media.datesortie = ctx.formParamAsClass("datesortie", Instant.class)
-                .get().atZone(ZoneId.systemDefault()).toLocalDate();
+        // verify that genres exists
 
-        List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class).get();
+        String date = ctx.formParamAsClass("datesortie", String.class).get();
+
+        try{
+            media.datesortie = LocalDate.parse(date);
+        } catch (DateTimeParseException e){
+            throw new BadRequestResponse("bad date given");
+        }
+
+        List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class)
+                .check(l -> !l.isEmpty(), "no creators given").get();
 
         if(createursIds.isEmpty())
             throw new BadRequestResponse("No creators given");
 
         // verify that createursIds are valid creators
 
-        media.genres = ctx.formParamsAsClass("genres", String.class).get();
-
-        // verify that genres exists
-
         if(media.typemedia == TypeMedia.jeuvideo)
-            media.jeuvideotypes = ctx.formParamsAsClass("jeuvideotypes", String.class).get();
+            media.jeuvideotypes = ctx.formParamsAsClass("jeuvideotypes", String.class)
+                    .check(l -> !l.isEmpty(), "no video game type given").get();
 
         // verify that jeuvideotypes exists
 
         // create media in DB and get id
 
-        ctx.redirect("/media?id=" + media.id);
+        ctx.redirect("/media?id=5");
     }
 }
