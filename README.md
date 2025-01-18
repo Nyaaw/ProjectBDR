@@ -21,7 +21,7 @@
       - [Build the application package](#build-the-application-package)
 - [Deployment](#deployment)
   - [Prerequisites](#prerequisites)
-    - [Local Use](#local-use)
+    - [Local Use (MAYBE not possible )](#local-use-maybe-not-possible-)
     - [Online Use](#online-use)
   - [Steps](#steps)
 - [Usage](#usage)
@@ -69,6 +69,7 @@
 
 ## Introduction
 
+TOADD
 
 
 
@@ -110,15 +111,10 @@ Then you can skip to this [section](#deployment).
 
 
 
-
-
-
 ### As a Developer
 #### Additional Prerequisites
 - JDK
 - Maven (optional, a maven wrapper comes with the project)
-
-
 
 
 #### Setup Using GitHub 
@@ -186,13 +182,14 @@ To publish the container on GitHub:
 ## Deployment
 
 ### Prerequisites
-You can either choose to deploy localy or online.
+
+
+You can either choose to deploy localy or online. (MABYE not)
 
 
 
 
-
-#### Local Use
+#### Local Use (MAYBE not possible )
 - Virtual Machine 
   - Docker Compose
   - Java
@@ -200,8 +197,11 @@ You can either choose to deploy localy or online.
 - TOADD (MAYBE)
 
 
+
+
+
 #### Online Use
-- Virtual Machine
+- Cloud Based Virtual Machine
   - Docker Compose
   - Java
 - Domain Name
@@ -209,25 +209,14 @@ You can either choose to deploy localy or online.
 - TOADD (MAYBE)
 
 
-
-For the VM you can either do it localy or online.  
-
-
-
-- online vm
-- server
-- local machine
-- local vm
-- using docker (recomended)
+> [!NOTE]
+> You can also use a server instead of a Cloud Based VM if you have one available, the application set up should be pretty similar but as we won't explain this scenario you might need to do some research to succed.  
 
 
+If you don't know how to set up a VM you can read [this document](docs/VM_Help.md) to get the basics.  
 
 
-If you don't know how to setup a VM you can read [this](docs/VM_Help.md) quick help.
-
-
-
-If you don't have a domain name and don't know how to get one you can read [this](docs/Domain_Name_Help.md) quick help.
+If you don't have a domain name and don't know how to get one you can read [this document](docs/Domain_Name_Help.md) to get the basics.  
 
 
 
@@ -258,6 +247,7 @@ Once the app is built, you can run it.
 ### Run the application
 #### Using Docker
 
+TOADD
 
 
 
@@ -269,16 +259,17 @@ Once the app is built, you can run it.
 ## Demonstration
 ### Project 
 
+TOADD
 
 
 ### API
 Demonstration made using curl to simulate request.
 
-
+TOADD
 
 
 
 
 ## Complementary Information
-If you need more informations about the API you can read [this file](docs/API.md).
+If you need more informations about the API you can consult [this file](docs/API.md).
 
