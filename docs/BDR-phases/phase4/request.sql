@@ -43,6 +43,14 @@ FROM
 WHERE
     m.id = <media_id>;
 
+-- 5 last medias added
+SELECT 
+    *
+FROM 
+    Media
+ORDER BY id DESC
+LIMIT 5;
+
 -- lists of a user
 SELECT
     nom
