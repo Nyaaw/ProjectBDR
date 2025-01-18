@@ -13,14 +13,7 @@ import ch.heigvd.dai.media.TypeMedia;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 import io.javalin.http.*;
 
-import org.jooq.DSLContext;
-
 public class ListeController {
-    private DSLContext dsl;
-
-    public ListeController(DSLContext dsl){
-        this.dsl = dsl;
-    }
 
     static Liste Seen;
     static Liste Favorite;
@@ -95,47 +88,16 @@ public class ListeController {
     public ListeController() {}
 
     public static void getOne(Context ctx){
-        String nom = ctx.queryParamAsClass("nom", String.class).get();
+
 
         // get media with id from DB.
-        String sql = "SELECT\n" +
-                "*\n" +
-                "FROM\n" +
-        "Media\n" +
-        "INNER JOIN Media_Liste ON Media_Liste.id = Media.id \n" +
-        "INNER JOIN Liste ON Media_Liste.nom = Liste.nom\n" +
-        "WHERE\n" +
-        "Liste.nom = "+ nom +";";
-
-        // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, nom);
-
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
 
         ctx.render("list.html", Map.of("list", Favorite));
     }
 
     public static void getAll(Context ctx){
-        String pseudo = ctx.queryParamAsClass("pseudo", String.class).get();
 
         // get medias with id from db
-        String sql = "SELECT\n" +
-                "    nom\n" +
-                "FROM\n" +
-                "    Liste\n" +
-                "WHERE\n" +
-                "    pseudo = "+ pseudo +";";
-
-        // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, pseudo);
-
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
 
         ctx.render("mylists.html", Map.of("lists", List.of(Favorite, Seen, Watching, toBeSeen)));
     }
@@ -146,20 +108,7 @@ public class ListeController {
         //media.id = ctx.formParamAsClass("id", Integer.class).get();
         list.nom = ctx.formParamAsClass("nom", String.class).get();
 
-        String pseudo = ctx.queryParamAsClass("pseudo", String.class).get();
-
         // create media in DB and get id
-        String sql = "INSERT INTO\n" +
-                "Liste (pseudo, nom)\n" +
-                "VALUES ("+pseudo+", "+list.nom+");";
-
-        // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, pseudo, "exampleName");
-
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
 
         ctx.redirect("/list?nom=" + list.nom);
     }

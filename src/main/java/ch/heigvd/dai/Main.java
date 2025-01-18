@@ -14,9 +14,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.DSLContext;
-import org.jooq.impl.DSL;
-
 public class Main {
 
     record Genre(String nom){}
@@ -35,11 +32,6 @@ public class Main {
 
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
-
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/mediatheque", "postgres", "postgres");
-        DSLContext dsl = DSL.using(conn);
-
-        MediaController mediaController = new MediaController(dsl);
 
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
