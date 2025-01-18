@@ -88,16 +88,17 @@ public class ListeController {
     public ListeController() {}
 
     public static void getOne(Context ctx){
+        String listname = ctx.queryParamAsClass("nom", String.class)
+                .check(s -> !s.isBlank(), "list name not provided").get();
 
-
-        // get media with id from DB.
+        // get list with nom from db
 
         ctx.render("list.html", Map.of("list", Favorite));
     }
 
     public static void getAll(Context ctx){
 
-        // get medias with id from db
+        // get all lists from db
 
         ctx.render("mylists.html", Map.of("lists", List.of(Favorite, Seen, Watching, toBeSeen)));
     }
@@ -106,9 +107,10 @@ public class ListeController {
         Liste list = new Liste();
 
         //media.id = ctx.formParamAsClass("id", Integer.class).get();
-        list.nom = ctx.formParamAsClass("nom", String.class).get();
+        list.nom = ctx.formParamAsClass("nom", String.class)
+                .check(s -> !s.isBlank(), "list name not provided").get();
 
-        // create media in DB and get id
+        // create list in DB
 
         ctx.redirect("/list?nom=" + list.nom);
     }

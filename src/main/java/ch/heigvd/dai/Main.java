@@ -76,8 +76,6 @@ public class Main {
         });
 
         app.get("/list", ctx -> {
-            String name = getQueryParam(ctx, "nom");
-
             ListeController.getOne(ctx);
         });
 
@@ -106,13 +104,6 @@ public class Main {
 
         app.post("/comment", ctx -> {
 
-            String idParam = getQueryParam(ctx, "id");
-            Integer id = checkForNumericParam(ctx, idParam);
-
-            // comment
-
-            ctx.redirect("/media?id=" + id);
-
         });
         
         app.get("/mylists", ctx -> {
@@ -120,9 +111,12 @@ public class Main {
             ListeController.getAll(ctx);
         });
 
-        app.get("/result", ctx -> {
-            String search = getQueryParam(ctx, "search");
+        app.post("/mylists/createlist", ctx -> {
 
+            ListeController.insertList(ctx);
+        });
+
+        app.get("/result", ctx -> {
             MediaController.getResults(ctx);
         });
 
@@ -138,29 +132,6 @@ public class Main {
 
 
         app.start(PORT);
-    }
-
-    private static String getQueryParam(Context ctx, String param) {
-        String value = ctx.queryParam(param);
-        if (value == null) {
-            throw new BadRequestResponse();
-        }
-
-        return value;
-    }
-
-    private static Integer checkForNumericParam(Context ctx, String param) {
-
-        Integer num = null;
-        try {
-
-            num = Integer.parseInt(param);
-
-        } catch (NumberFormatException e) {
-            throw new BadRequestResponse();
-        }
-
-        return num;
     }
 
 }

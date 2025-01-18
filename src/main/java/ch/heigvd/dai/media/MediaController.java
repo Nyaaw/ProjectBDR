@@ -22,6 +22,7 @@ public class MediaController {
     static Liste Favorite;
     static Liste toBeSeen;
     static Liste Watching;
+
     static Liste exempleListe;
 
     static{
