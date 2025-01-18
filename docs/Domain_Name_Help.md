@@ -34,20 +34,18 @@ This will allow you to access the services hosted on the virtual machine using t
 
 Add an `A` record to the DNS zone of your domain name provider to point to the IP address of the virtual machine.  
 
-> [!NOTE] Example  
-> If your domain name is `example.duckdns.org` and your virtual machine IP address is `20.73.17.105`, you must add an `A` record for `example.duckdns.org` pointing to `20.73.17.105`.  
-
-> [!TIP]
+> [!TIP] 
+> _**Example**_ : If your domain name is `example.duckdns.org` and your virtual machine IP address is `20.73.17.105`, you must add an `A` record for `example.duckdns.org` pointing to `20.73.17.105`.  
+>  
 > On Duck DNS, the default are `A`/`AAAA` records. Add a record and it will be of the right type.  
 
 <br>
 
 Add a second wildcard `A` record to the DNS zone of your domain name provider to point to the IP address of the virtual machine. This will allow access to all your services hosted under a subdomain of your domain name.  
 
-> [!NOTE] Example  
-> If your domain name is `example.duckdns.org` and your virtual machine IP address is `20.73.17.105`, you must add a wildcard `A` record for `*.example.duckdns.org` pointing to `20.73.17.105`.  
-
 > [!TIP]
+> _**Example**_ : If your domain name is `example.duckdns.org` and your virtual machine IP address is `20.73.17.105`, you must add a wildcard `A` record for `*.example.duckdns.org` pointing to `20.73.17.105`.  
+>  
 > On Duck DNS, only the root domain name is required. The wildcard DNS record is automatically added for you.  
 
 
