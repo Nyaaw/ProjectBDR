@@ -1,50 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-<header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
-    <div class="media_list">
+    <div th:each="media : ${medias}" class="media_list">
         <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
+            <a th:href="|media?id=${media.id}|"><h3 th:text="${media.nom}">Name</h3></a>
+            <ul th:each="genre : ${media.genres}" class="List_item">
+                <li th:text="${genre}">Genre</li>
             </ul>
         </div>
         <div>
-            <p>Added: dd.mm.yyyy</p>
-        </div>
-    </div>
-    <div class="media_list">
-        <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
-            </ul>
-        </div>
-        <div>
-            <p>Added: dd.mm.yyyy</p>
-        </div>
-    </div>
-    <div class="media_list">
-        <div class="List">
-            <h3><a href="media.html">Name</a></h3>
-            <ul class="List_item">
-                <li>Genre 1</li>
-                <li>Genre 2</li>
-            </ul>
-        </div>
-        <div>
-            <p>Added: dd.mm.yyyy</p>
+            <p>Added: <span th:text="${media.datesortie}">dd.mm.yyyy</span></p>
         </div>
     </div>
 </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>
