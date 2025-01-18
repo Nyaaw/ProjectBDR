@@ -9,6 +9,7 @@ target/
 **/.idea/jarRepositories.xml
 **/.idea/modules.xml
 **/.idea/workspace.xml
+**/.idea/remote-targets.xml
 *.iws
 *.iml
 *.ipr
@@ -50,3 +51,6 @@ Thumbs.db
 
 # Linux tmp files
 *~
+
+# zone identifier
+*:Zone.Identifier
