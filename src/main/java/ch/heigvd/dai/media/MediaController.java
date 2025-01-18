@@ -17,7 +17,7 @@ import org.jooq.DSLContext;
 
 public class MediaController {
 
-    private DSLContext dsl;
+    private static DSLContext dsl;
 
     public MediaController(DSLContext dsl){
         this.dsl = dsl;

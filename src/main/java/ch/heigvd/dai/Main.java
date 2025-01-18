@@ -43,15 +43,6 @@ public class Main {
 
         MediaController mediaController = new MediaController(dsl);
 
-        app.get("/", ctx -> ctx.render("index.html"));
-        app.get("/explore.html", ctx -> ctx.render("explore.html", Map.of("medias", mediaController.getOne(1))));
-        app.get("/insert.html", ctx -> ctx.render("insert.html"));
-        app.get("/list.html", ctx -> ctx.render("list.html"));
-        app.get("/login.html", ctx -> ctx.render("login.html"));
-        app.get("/login_creation.html", ctx -> ctx.render("login_creation.html"));
-        app.get("/media.html", ctx -> ctx.render("media.html"));
-        app.get("/mylists.html", ctx -> ctx.render("mylists.html"));
-        app.get("/result.html", ctx -> ctx.render("result.html"));
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
         app.get("/", ctx -> {
