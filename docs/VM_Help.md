@@ -121,4 +121,4 @@ Once this is done, you have a working VM to use for the project.
 
 
 ## Source
-This quick tutorial was heavily inspired by [this course](https://github.com/heig-vd-dai-course/heig-vd-dai-course/blob/main/20-ssh-and-scp/COURSE_MATERIAL.md).
+This quick tutorial was heavily inspired by [this course](https://github.com/heig-vd-dai-course/heig-vd-dai-course/blob/main/20-ssh-and-scp/COURSE_MATERIAL.md#practical-content).
