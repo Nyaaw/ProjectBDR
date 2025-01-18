@@ -43,6 +43,7 @@ FROM
 WHERE
     m.id = <media_id>;
 
+<<<<<<< HEAD
 -- 5 last added medias
 SELECT *
 FROM Media
@@ -146,6 +147,16 @@ VALUES (id_media);
         VALUES (<id_media>,  <media.genres[i]> );  // à corriger
     END LOOP;
 END $$;
+
+ 
+-- 5 last medias added
+SELECT 
+    *
+FROM 
+    Media
+ORDER BY id DESC
+LIMIT 5;
+
 
 -- lists of a user
 SELECT
