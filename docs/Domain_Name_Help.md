@@ -1,6 +1,6 @@
 # Domain Name Help
 
-## Author <!-- omit in toc -->
+## Authors <!-- omit in toc -->
 - Alex Berberat
 - Lisa Gorgerat
 - Pierric Ripoll
