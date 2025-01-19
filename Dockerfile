@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/webserver.jar /app/webserver.jar
 
 # Set the entrypoint
-ENTRYPOINT ["java", "-jar", "target/webserver.jar"]
+ENTRYPOINT ["java", "-jar", "/app/webserver.jar"]
 
 # Set the default command
 CMD ["--help"]
