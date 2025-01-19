@@ -187,8 +187,12 @@ DECLARE
 i INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
-    INSERT INTO Createur (nom)
-    VALUES ('Createur' || i);
+    WITH inserted_createur AS (
+	INSERT INTO Createur (nom)
+    VALUES ('Createur' || i) RETURNING id )
+	INSERT INTO Personne(id, prenom)
+    SELECT id, 'Prenom'
+    FROM inserted_createur;
 END LOOP;
 END $$;
 
