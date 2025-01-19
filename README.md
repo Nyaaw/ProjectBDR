@@ -27,7 +27,6 @@
 - [Usage](#usage)
   - [Run the application](#run-the-application)
     - [Using Docker](#using-docker)
-    - [Without Docker (MAYBE remove)](#without-docker-maybe-remove)
 - [Demonstration](#demonstration)
   - [Project](#project)
   - [API](#api)
@@ -192,7 +191,6 @@ You can either choose to deploy localy or online. (MABYE not)
 #### Local Use (MAYBE not possible )
 - Virtual Machine 
   - Docker Compose
-  - Java
   
 - TOADD (MAYBE)
 
@@ -203,7 +201,6 @@ You can either choose to deploy localy or online. (MABYE not)
 #### Online Use
 - Cloud Based Virtual Machine
   - Docker Compose
-  - Java
 - Domain Name
 
 - TOADD (MAYBE)
@@ -251,7 +248,7 @@ TOADD
 
 
 
-#### Without Docker (MAYBE remove)
+
 
 
 
@@ -266,6 +263,10 @@ TOADD
 Demonstration made using curl to simulate request.
 
 TOADD
+
+
+
+
 
 
 
