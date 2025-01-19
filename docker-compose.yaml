@@ -54,11 +54,11 @@ services:
       - bdr_network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.webserver.rule=Host(`webserver.localhost`)" # Change domain in production
+      - "traefik.http.routers.webserver.rule=Host(`lg-heig-vd.duckdns.org`)" # Change domain in production
       - "traefik.http.routers.webserver.entrypoints=web"
       - "traefik.http.routers.webserver.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.webserver-secure.rule=Host(`webserver.localhost`)"
+      - "traefik.http.routers.webserver-secure.rule=Host(`lg-heig-vd.duckdns.org`)"
       - "traefik.http.routers.webserver-secure.entrypoints=websecure"
       - "traefik.http.routers.webserver-secure.tls.certresolver=myresolver"
 
