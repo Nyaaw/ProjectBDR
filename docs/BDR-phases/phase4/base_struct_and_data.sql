@@ -198,6 +198,7 @@ DECLARE
 i INTEGER;
     id_media INTEGER;
     random_genre_id VARCHAR;
+    id_createur INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     INSERT INTO Media (nom, dateSortie, description)
@@ -209,6 +210,11 @@ VALUES (id_media);
 
 INSERT INTO Livre (id, nbPage)
 VALUES (id_media, 100 + i);
+
+-- Assigner un créateur aléatoire au livre
+SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
+INSERT INTO Media_Createur (mediaId, createurId)
+VALUES (id_media, id_createur);
 
 -- Associer un genre aléatoire
 SELECT nom INTO random_genre_id
@@ -227,6 +233,7 @@ DECLARE
 i INTEGER;
     id_media INTEGER;
     random_genre_id VARCHAR;
+    id_createur INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     INSERT INTO Media (nom, dateSortie, description)
@@ -238,6 +245,11 @@ VALUES (id_media);
 
 INSERT INTO BD (id, couleur)
 VALUES (id_media, TRUE);
+
+-- Assigner un créateur aléatoire à la BD
+SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
+INSERT INTO Media_Createur (mediaId, createurId)
+VALUES (id_media, id_createur);
 
 -- Associer un genre aléatoire
 SELECT nom INTO random_genre_id
@@ -256,6 +268,7 @@ DECLARE
 i INTEGER;
     id_media INTEGER;
     random_genre_id VARCHAR;
+    id_createur INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     INSERT INTO Media (nom, dateSortie, description)
@@ -267,6 +280,11 @@ VALUES (id_media);
 
 INSERT INTO Film (id, duree)
 VALUES (id_media, INTERVAL '2 hours' + (i || ' minutes')::INTERVAL);
+
+-- Assigner un créateur aléatoire au film
+SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
+INSERT INTO Media_Createur (mediaId, createurId)
+VALUES (id_media, id_createur);
 
 -- Associer un genre aléatoire
 SELECT nom INTO random_genre_id
@@ -285,6 +303,7 @@ DECLARE
 i INTEGER;
     id_media INTEGER;
     random_genre_id VARCHAR;
+    id_createur INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     INSERT INTO Media (nom, dateSortie, description)
@@ -296,6 +315,11 @@ VALUES (id_media);
 
 INSERT INTO Serie (id, nbSaison)
 VALUES (id_media, i);
+
+-- Assigner un créateur aléatoire à la série
+SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
+INSERT INTO Media_Createur (mediaId, createurId)
+VALUES (id_media, id_createur);
 
 -- Associer un genre aléatoire
 SELECT nom INTO random_genre_id
@@ -315,6 +339,7 @@ i INTEGER;
     id_media INTEGER;
     random_type_id VARCHAR;
     random_genre_id VARCHAR;
+    id_createur INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     INSERT INTO Media (nom, dateSortie, description)
@@ -326,6 +351,11 @@ VALUES (id_media);
 
 INSERT INTO JeuVideo (id)
 VALUES (id_media);
+
+-- Assigner un créateur aléatoire au jeu vidéo
+SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
+INSERT INTO Media_Createur (mediaId, createurId)
+VALUES (id_media, id_createur);
 
 -- Associer un type aléatoire
 SELECT nom INTO random_type_id
@@ -391,4 +421,3 @@ VALUES (pseudo_utilisateur, id_media, CURRENT_DATE, note, commentaire_texte);
 END IF;
 END LOOP;
 END $$;
-
