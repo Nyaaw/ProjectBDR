@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+  # Traefik Reverse Proxy
+  traefik:
+    image: "traefik:v2.10"
+    container_name: "traefik"
+    restart: always
+    command:
+      - "--api.insecure=true" # Enables the Traefik Dashboard (remove for production)
+      - "--providers.docker=true" # Enables Docker provider
+      - "--providers.docker.exposedbydefault=false" # Services must be explicitly exposed
+      - "--entrypoints.web.address=:80" # HTTP
+      - "--entrypoints.websecure.address=:443" # HTTPS
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080" # Traefik Dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik_letsencrypt:/letsencrypt"
+    networks:
+      - bdr_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)" # Change domain in production
+      - "traefik.http.routers.traefik.service=api@internal"
+
+  # Database
+  db:
+    container_name: bdr_postgresql_16
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=trustno1
+      - POSTGRES_DB=bdr
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - bdr_network
+
+  # Web Application
+  web:
+    container_name: webserver
+    image: webserver
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - bdr_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webserver.rule=Host(`lg-heig-vd.duckdns.org`)" # Change domain in production
+      - "traefik.http.routers.webserver.entrypoints=web"
+      - "traefik.http.routers.webserver.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.webserver-secure.rule=Host(`lg-heig-vd.duckdns.org`)"
+      - "traefik.http.routers.webserver-secure.entrypoints=websecure"
+      - "traefik.http.routers.webserver-secure.tls.certresolver=myresolver"
+
+volumes:
+  pgdata:
+  traefik_letsencrypt:
+
+networks:
+  bdr_network:
