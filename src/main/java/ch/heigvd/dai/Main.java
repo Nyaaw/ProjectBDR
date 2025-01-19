@@ -84,14 +84,9 @@ public class Main {
 
         app.post("/media", MediaController::insertMedia);
 
-        app.post("/media/addtolist", ctx -> {
+        app.post("/media/addtolist", MediaController::addToList);
 
-            // add to List
-
-            ctx.redirect("/media?id=1");
-        });
-
-        app.post("/comment", ctx -> {
+        app.post("/media/comment", ctx -> {
 
         });
         

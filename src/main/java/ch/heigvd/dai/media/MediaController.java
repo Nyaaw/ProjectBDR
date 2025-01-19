@@ -152,12 +152,16 @@ public class MediaController {
 
         String pseudo = "unpseudo";
 
-        sql = "SELECT\n" +
-                "    nom, pseudo\n" +
-                "FROM\n" +
-                "    Liste\n" +
-                "WHERE\n" +
-                "    pseudo = '"+ pseudo +"';";
+        sql = "SELECT l.pseudo, l.nom\n" +
+        "FROM Liste l\n" +
+        "WHERE l.pseudo = '" + pseudo + "'\n" +
+        "AND NOT EXISTS (\n" +
+                "SELECT 1\n" +
+                "FROM Media_Liste ml\n" +
+                "WHERE ml.listePseudo = l.pseudo\n" +
+                "AND ml.listeNom = l.nom\n" +
+                "AND ml.idMedia = " + id + "\n" +
+        ");";
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, pseudo);
         // Process the result
@@ -360,20 +364,17 @@ public class MediaController {
     }
 
     public static void addToList(Context ctx){
+
         Integer id = ctx.formParamAsClass("id", Integer.class).get();
         String nom = ctx.formParamAsClass("nom", String.class).get();
-        String pseudo = ctx.formParamAsClass("pseudo", String.class).get();
+
+        String pseudo = "unpseudo";
 
         // add to db
-        String sql = "INSERT INTO Media_List (mediaId, listenom, listePseudo)\n" +
-                "VALUES ("+id+", "+nom+", "+pseudo+");";
+        String sql = "INSERT INTO Media_Liste (idmedia, listenom, listePseudo)\n" +
+                "VALUES ('"+id+"', '"+nom+"', '"+pseudo+"');";
 
-        var result = dsl.fetch(sql, id, nom);
-
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        var result = dsl.fetch(sql);
 
         ctx.redirect("/media?id=" + id);
     }
@@ -381,10 +382,11 @@ public class MediaController {
     public static void addComment(Context ctx){
         Commentaire commentaire = new Commentaire();
 
-        commentaire.media.id = ctx.queryParamAsClass("id", Integer.class).get();
-        commentaire.utilisateur.nom = ctx.queryParamAsClass("pseudo", String.class).get();
-        commentaire.note = ctx.queryParamAsClass("note", Integer.class).get();
-        commentaire.texte = ctx.queryParamAsClass("texte", String.class).get();
+        String pseudo = "unpseudo";
+
+        commentaire.media.id = ctx.formParamAsClass("id", Integer.class).get();
+        commentaire.note = ctx.formParamAsClass("note", Integer.class).get();
+        commentaire.texte = ctx.formParamAsClass("texte", String.class).get();
 
         // add to db
         String sql = "INSERT INTO Commentaire (pseudo, id, date, note, texte)\n" +
