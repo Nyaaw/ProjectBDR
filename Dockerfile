@@ -5,10 +5,10 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # Copy the jar file
-COPY webserver.jar /app/webserver.jar
+COPY target/original-webserver.jar /app/original-webserver.jar
 
 # Set the entrypoint
-ENTRYPOINT ["java", "-jar", "webserver.jar"]
+ENTRYPOINT ["java", "-jar", "target/webserver.jar"]
 
 # Set the default command
 CMD ["--help"]
