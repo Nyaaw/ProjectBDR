@@ -122,6 +122,14 @@ h2{
     font-weight: bold;
 }
 
+#login_btn_menu{
+    margin-right: 20px;
+}
+
+#logout_btn_menu{
+    margin-right: 20px;
+}
+
 #btn_menu{
     margin-right: 20px;
 }

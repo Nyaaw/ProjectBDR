@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head th:fragment="head">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>BDR Project</title>
-  <link rel="icon" href="img/timeblack.png" type="image/x-icon" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BDR Project</title>
+    <link rel="icon" href="img/timeblack.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -20,16 +20,22 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="explore.html">Explore</a>
+                        <a href="explore">Explore</a>
                     </li>
                     <li>
-                        <a href="mylists.html">My lists</a>
+                        <a href="mylists">My lists</a>
+                    </li>
+                    <li>
+                        <a href="insert">Insert</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
-    <div><a class="bouton" id="btn_menu" href="login.html">Login</a></div>
+    <div>
+        <a class="bouton" id="login_btn_menu" href="login">Login</a>
+        <a class="bouton" id="logout_btn_menu" href="logout">Logout</a>
+    </div>
 </header>
 
 <main>
@@ -38,6 +44,30 @@
 
 <footer th:fragments="footer">
     Projet BDR 24-25
+
+    <script>
+        function checkLoginStatus() {
+            var utilisateur = getCookie("utilisateur");
+            console.log("Cookie utilisateur:", utilisateur);
+
+            if (utilisateur) {
+                document.getElementById("login_btn_menu").style.display = "none";
+                document.getElementById("logout_btn_menu").style.display = "inline-block";
+            } else {
+                document.getElementById("login_btn_menu").style.display = "inline-block";
+                document.getElementById("logout_btn_menu").style.display = "none";
+            }
+        }
+
+        function getCookie(name) {
+            let value = "; " + document.cookie;
+            let parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+            return null;
+        }
+
+        checkLoginStatus();
+    </script>
 </footer>
 </body>
 </html>
