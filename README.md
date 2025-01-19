@@ -36,39 +36,6 @@
   - [DNS Configuration](#dns-configuration)
 
 
-
-
-
-## README Criterion (to remove later)
-- Category 1 - Git, GitHub and Markdown
-  - [ ] The README is well structured and explains the purpose of your web with the authors' names so new users can understand it and know who is behind the application
-- Category 2 - Java, IntelliJ IDEA and Maven
-  - [x] The README describes explicit commands to clone and build your network application with Git and Maven so new developers can start and develop your project on their own computer
-- Category 3 - Docker and Docker Compose
-  - [x] The README describes explicit commands to build and publish your network application with Docker
-  - [ ] The README describes explicit commands to use your network application with Docker Compose so other people can easily use it
-- Category 6 - HTTP and curl
-  - [ ] The README (or repository) contains the application protocol interface (API) that describes the web application
-  - [ ] The README explains how to use your web application with explicit examples using curl with outputs to demonstrate how to interact with your web application deployed on the Internet
-- Category 7 - Web infrastructures
-  - [x] The README (or repository) contains instructions how to install and configure the virtual machine with each step
-  - [x] The README (or repository) contains explains how to configure the DNS zone to access your web application
-  - [ ] The README (or repository) contains instructions how to deploy, run and access the web applications with Docker Compose
-  - [x] The README displays the domain names configuration in the DNS zone to validate everything is set up right
-
-- [ ] And More
-- [ ] Complet all the `TOADD`
-- [ ] Verify all the `MAYBE`
-
-
-
-
-
-
-
-
-
-
 ## Introduction
 This web application allows users to manage medias.
 Users can put medias in customised lists or basic lists such as the finished media list. They can also add notes or comments to the media they interact with.
@@ -97,11 +64,11 @@ Use Docker and Docker compose instead of running the application natively it's w
 
 
 ### As a User
-To begin you'll need our app package that you can find [here](TOADD).  
+To begin you'll need our app package that you can find [here](https://github.com/users/LisaGorgerat/packages/container/package/webserver).  
 
 You can also use this command in your terminal:  
 ```sh
-docker pull ghcr.io/<TOADD>
+docker pull ghcr.io/lisagorgerat/webserver:latest
 ```
 
 Then you can skip to this [section](#deployment).
@@ -158,12 +125,12 @@ To publish the container on GitHub:
 2. You need to tag the image:
     ```sh
     # Tag the image with the correct format
-    docker tag <TOADD> ghcr.io/<username>/<TOADD>:latest
+    docker tag webserver ghcr.io/<username>/webserver:latest
     ```
 
 3. You publish the container on your account:
     ```sh
-    docker push ghcr.io/<username>/<TOADD>
+    docker push ghcr.io/<username>/webserver
     ```
 
 
@@ -235,14 +202,15 @@ java -jar target/webserver.jar
 To see the result, go to ``localhost:8080`` in your browser.
 
 
-
-
-
-
 ## Demonstration
 ### Project 
 
-TOADD
+To see the project running, simply visit the website URL on your browser.
+
+[https://lg-heig-vd.duckdns.org/](https://lg-heig-vd.duckdns.org/)
+
+From there you can naturally go through the website by clicking on the menu bar at the top, or by clicking the titles of the media objects.
+
 
 
 ### API
