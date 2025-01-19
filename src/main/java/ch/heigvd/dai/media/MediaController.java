@@ -198,6 +198,7 @@ public class MediaController {
                     m.id AS media_id,
                     m.nom AS media_name,
                     m.dateSortie AS release_date,
+                    m.description AS media_description,
                     g.nom AS genre_name,
                     CASE
                 WHEN l.id IS NOT NULL THEN 'livre'
@@ -205,7 +206,7 @@ public class MediaController {
                 WHEN f.id IS NOT NULL THEN 'film'
                 WHEN s.id IS NOT NULL THEN 'serie'
                 WHEN jv.id IS NOT NULL THEN 'jeuvideo'
-                END AS media_type,
+                END AS media_type
                 FROM
                     Media m
                 LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
@@ -216,8 +217,8 @@ public class MediaController {
                 LEFT JOIN Serie s ON m.id = s.id
                 LEFT JOIN JeuVideo jv ON m.id = jv.id
                 LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
-                LEFT JOIN Type jt ON jvt.typenom = jt.no
-                ORDER BY id DESC
+                LEFT JOIN Type jt ON jvt.typenom = jt.nom
+                ORDER BY m.id DESC
                 LIMIT 5;
                 """;
 
@@ -239,9 +240,9 @@ public class MediaController {
 
         ctx.render("index.html", Map.of(
                 "medias", medias,
-                "genres", List.of("Genre 1","Genre 2"),
-                "mediatypes", List.of("type 1","type 2"),
-                "jeuvideotypes", List.of("type 1","type 2")
+                "genres", genres,
+                "mediatypes", List.of("livre", "film", "jeuvideo", "serie", "bd"),
+                "jeuvideotypes", types
         ));
     }
 
