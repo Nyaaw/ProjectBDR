@@ -38,11 +38,6 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
         });
 
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/mediatheque", "postgres", "postgres");
-        DSLContext dsl = DSL.using(conn);
-
-        MediaController mediaController = new MediaController(dsl);
-
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
         app.get("/", ctx -> {
@@ -52,25 +47,51 @@ public class Main {
         app.get("/explore", ctx -> {
             MediaController.getAll(ctx);
         });
-        
-        app.get("/insert", ctx -> {
-            ctx.render("insert.html", Map.of("genres", genres));
-        });
-        
-        app.get("/list", ctx -> {
-            String name = getQueryParam(ctx, "nom");
 
+        app.get("/insert", ctx -> {
+           InsertController.RenderInsert(ctx);
+        });
+
+        app.post("/insert/createcreator", ctx -> {
+            InsertController.CreateCreator(ctx);
+        });
+
+        app.post("/insert/removecreator", ctx -> {
+            InsertController.RemoveCreator(ctx);
+        });
+
+        app.post("/insert/addcreator", ctx -> {
+            InsertController.AddCreator(ctx);
+        });
+
+        app.post("/insert/addgenre", ctx -> {
+            InsertController.AddGenre(ctx);
+        });
+
+        app.post("/insert/removegenre", ctx -> {
+            InsertController.RemoveGenre(ctx);
+        });
+
+        app.post("/insert/addvideogametype", ctx -> {
+            InsertController.AddJeuvideotype(ctx);
+        });
+
+        app.post("/insert/removevideogametype", ctx -> {
+            InsertController.RemoveJeuvideotype(ctx);
+        });
+
+        app.get("/list", ctx -> {
             ListeController.getOne(ctx);
         });
-        
+
         app.get("/login", ctx -> {
             ctx.render("login.html");
         });
-        
+
         app.get("/login_creation", ctx -> {
             ctx.render("login_creation.html");
         });
-        
+
         app.get("/media", ctx -> {
             MediaController.getOne(ctx);
         });
@@ -79,26 +100,14 @@ public class Main {
             MediaController.insertMedia(ctx);
         });
 
-        app.post("/insert/addgenre", ctx -> {
-            MediaController.insertMedia(ctx);
-        });
-
         app.post("/media/addtolist", ctx -> {
 
             // add to List
 
             ctx.redirect("/media?id=1");
-
         });
 
         app.post("/comment", ctx -> {
-
-            String idParam = getQueryParam(ctx, "id");
-            Integer id = checkForNumericParam(ctx, idParam);
-
-            // comment
-
-            ctx.redirect("/media?id=" + id);
 
         });
         
@@ -107,43 +116,27 @@ public class Main {
             ListeController.getAll(ctx);
         });
 
-        app.get("/result", ctx -> {
-            String search = getQueryParam(ctx, "search");
+        app.post("/mylists/createlist", ctx -> {
 
+            ListeController.insertList(ctx);
+        });
+
+        app.get("/result", ctx -> {
             MediaController.getResults(ctx);
         });
 
-        app.error(404, ctx -> ctx.render("error.html",
-                Map.of("errorCode", "404", "errorMsg", "Cette page n'existe pas !")));
+        app.error(404, ctx -> {
+            ctx.render("error.html",
+                    Map.of("errorCode", "404", "errorMsg", "Cette page n'existe pas !"));
+        });
 
-        app.error(400, ctx -> ctx.render("error.html",
-                Map.of("errorCode", "400", "errorMsg", "Paramètre invalide")));
+        app.error(400, ctx -> {
+            ctx.render("error.html",
+                    Map.of("errorCode", "400", "errorMsg", "Paramètre invalide"));
+        });
 
 
         app.start(PORT);
-    }
-
-    private static String getQueryParam(Context ctx, String param) {
-        String value = ctx.queryParam(param);
-        if (value == null) {
-            throw new BadRequestResponse();
-        }
-
-        return value;
-    }
-
-    private static Integer checkForNumericParam(Context ctx, String param) {
-
-        Integer num = null;
-        try {
-
-            num = Integer.parseInt(param);
-
-        } catch (NumberFormatException e) {
-            throw new BadRequestResponse();
-        }
-
-        return num;
     }
 
 }

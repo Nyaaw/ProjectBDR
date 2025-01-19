@@ -127,19 +127,19 @@ public class MediaController {
                 "    jt.nom AS game_type\n" +
                 "FROM\n" +
                 "    Media m\n" +
-                        "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
-                        "LEFT JOIN Genre g ON mg.genreNom = g.nom\n" +
-                        "LEFT JOIN Media_Createur mc ON m.id = mc.mediaId\n" +
-                        "LEFT JOIN Createur c ON mc.createurId = c.id\n" +
-                        "LEFT JOIN Papier p ON m.id = p.id\n" +
-                        "LEFT JOIN Numerique n ON m.id = n.id\n" +
-                        "LEFT JOIN Livre l ON m.id = l.id\n" +
-                        "LEFT JOIN BD b ON m.id = b.id\n" +
-                        "LEFT JOIN Film f ON m.id = f.id\n" +
-                        "LEFT JOIN Serie s ON m.id = s.id\n" +
-                        "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-                        "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
-                        "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
+                "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
+                "LEFT JOIN Genre g ON mg.genreNom = g.nom\n" +
+                "LEFT JOIN Media_Createur mc ON m.id = mc.mediaId\n" +
+                "LEFT JOIN Createur c ON mc.createurId = c.id\n" +
+                "LEFT JOIN Papier p ON m.id = p.id\n" +
+                "LEFT JOIN Numerique n ON m.id = n.id\n" +
+                "LEFT JOIN Livre l ON m.id = l.id\n" +
+                "LEFT JOIN BD b ON m.id = b.id\n" +
+                "LEFT JOIN Film f ON m.id = f.id\n" +
+                "LEFT JOIN Serie s ON m.id = s.id\n" +
+                "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
+                "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
+                "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
                 "WHERE\n" +
                 "    m.id = " + id + ";";
 
@@ -211,41 +211,41 @@ public class MediaController {
                 "m.description AS media_description,\n" +
                 "g.nom AS genre_name,\n" +
                 "CASE\n" +
-                    "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
-                    "WHEN b.id IS NOT NULL THEN 'BD'\n" +
-                    "WHEN f.id IS NOT NULL THEN 'Film'\n" +
-                    "WHEN s.id IS NOT NULL THEN 'Série'\n" +
-                    "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
-                    "END AS media_type,\n" +
+                "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
+                "WHEN b.id IS NOT NULL THEN 'BD'\n" +
+                "WHEN f.id IS NOT NULL THEN 'Film'\n" +
+                "WHEN s.id IS NOT NULL THEN 'Série'\n" +
+                "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
+                "END AS media_type,\n" +
                 "l.nbPage AS book_pages,\n" +
                 "b.couleur AS bd_color,\n" +
                 "f.duree AS film_duration,\n" +
                 "s.nbSaison AS series_seasons,\n" +
                 "jt.nom AS game_type\n" +
                 "FROM\n" +
-                    "Media m\n" +
-                        "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
-                        "LEFT JOIN Genre g ON mg.genrenom = g.nom\n" +
-                        "LEFT JOIN Papier p ON m.id = p.id\n" +
-                        "LEFT JOIN Numerique n ON m.id = n.id\n" +
-                        "LEFT JOIN Livre l ON m.id = l.id\n" +
-                        "LEFT JOIN BD b ON m.id = b.id\n" +
-                        "LEFT JOIN Film f ON m.id = f.id\n" +
-                        "LEFT JOIN Serie s ON m.id = s.id\n" +
-                        "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-                        "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
-                        "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
+                "Media m\n" +
+                "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
+                "LEFT JOIN Genre g ON mg.genrenom = g.nom\n" +
+                "LEFT JOIN Papier p ON m.id = p.id\n" +
+                "LEFT JOIN Numerique n ON m.id = n.id\n" +
+                "LEFT JOIN Livre l ON m.id = l.id\n" +
+                "LEFT JOIN BD b ON m.id = b.id\n" +
+                "LEFT JOIN Film f ON m.id = f.id\n" +
+                "LEFT JOIN Serie s ON m.id = s.id\n" +
+                "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
+                "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
+                "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
                 "WHERE\n" +
                 "  -- Condition pour le genre\n" +
                 "    (g.nom = COALESCE("+Genre+", g.nom))\n" +
                 "  -- Condition pour un type spécifique de média\n" +
                 "  AND (\n" +
                 "    (COALESCE("+mediatype+", '') = 'Livre' AND l.id IS NOT NULL)\n" +
-                        "OR (COALESCE("+mediatype+", '') = 'BD' AND b.id IS NOT NULL)\n" +
-                        "OR (COALESCE("+mediatype+", '') = 'Film' AND f.id IS NOT NULL)\n" +
-                        "OR (COALESCE("+mediatype+", '') = 'Série' AND s.id IS NOT NULL)\n" +
-                        "OR (COALESCE("+mediatype+", '') = 'Jeu Vidéo' AND jv.id IS NOT NULL)\n" +
-                        "OR COALESCE("+mediatype+", '') = ''\n" +
+                "OR (COALESCE("+mediatype+", '') = 'BD' AND b.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'Film' AND f.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'Série' AND s.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'Jeu Vidéo' AND jv.id IS NOT NULL)\n" +
+                "OR COALESCE("+mediatype+", '') = ''\n" +
                 "    )\n" +
                 "  -- Condition pour un jeu vidéo d'un type spécifique\n" +
                 "  AND (\n" +
@@ -321,15 +321,16 @@ public class MediaController {
             System.out.println(record);
         });
 
-
     }
 
     public static void insertMedia(Context ctx){
         Media media = new Media();
 
         //media.id = ctx.formParamAsClass("id", Integer.class).get();
-        media.nom = ctx.formParamAsClass("nom", String.class).get();
-        media.description = ctx.formParamAsClass("description", String.class).get();
+        media.nom = ctx.formParamAsClass("nom", String.class)
+                .check(s -> !s.isBlank(), "name is empty").get();
+        media.description = ctx.formParamAsClass("description", String.class)
+                .check(s -> !s.isBlank(), "description is empty").get();
 
         String type = ctx.formParamAsClass("typemedia", String.class).get();
 
@@ -339,26 +340,30 @@ public class MediaController {
             throw new BadRequestResponse("Media type is not valid");
         }
 
-        media.genres = ctx.formParamsAsClass("genres", String.class).get();
+        media.genres = ctx.formParamsAsClass("genres", String.class)
+                .check(g -> !g.isEmpty(), "doesn't specify a genre").get();
 
-        media.datesortie = ctx.formParamAsClass("datesortie", Instant.class)
-                .get().atZone(ZoneId.systemDefault()).toLocalDate();
+        // verify that genres exists
 
-        List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class).get();
+        String date = ctx.formParamAsClass("datesortie", String.class).get();
+
+        try{
+            media.datesortie = LocalDate.parse(date);
+        } catch (DateTimeParseException e){
+            throw new BadRequestResponse("bad date given");
+        }
+
+        List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class)
+                .check(l -> !l.isEmpty(), "no creators given").get();
 
         if(createursIds.isEmpty())
             throw new BadRequestResponse("No creators given");
 
         // verify that createursIds are valid creators
 
-        media.genres = ctx.formParamsAsClass("genres", String.class).get();
-
-        Integer nbGenres = media.genres.size();
-
-        // verify that genres exists
-
         if(media.typemedia == TypeMedia.jeuvideo)
-            media.jeuvideotypes = ctx.formParamsAsClass("jeuvideotypes", String.class).get();
+            media.jeuvideotypes = ctx.formParamsAsClass("jeuvideotypes", String.class)
+                    .check(l -> !l.isEmpty(), "no video game type given").get();
 
         // verify that jeuvideotypes exists
 

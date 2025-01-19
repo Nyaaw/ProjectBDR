@@ -3,6 +3,7 @@ package ch.heigvd.dai.media;
 import ch.heigvd.dai.commentaire.Commentaire;
 import ch.heigvd.dai.createur.Createur;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
 
