@@ -208,7 +208,7 @@ INSERT INTO Numerique (id)
 VALUES (id_media);
 
 INSERT INTO Film (id, duree)
-VALUES (id_media, INTERVAL '2 hours' + (i || ' minutes')::INTERVAL);
+VALUES (id_media, 100+i);
 
 -- Assigner un créateur aléatoire au film
 SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
