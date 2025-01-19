@@ -3,6 +3,7 @@ package ch.heigvd.dai;
 import ch.heigvd.dai.liste.ListeController;
 import ch.heigvd.dai.media.Media;
 import ch.heigvd.dai.media.MediaController;
+import ch.heigvd.dai.utilisateur.UtilisateurController;
 import io.javalin.Javalin;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
@@ -47,6 +48,7 @@ public class Main {
         MediaController.dsl = dsl;
         ListeController.dsl = dsl;
         InsertController.dsl = dsl;
+        UtilisateurController.dsl = dsl;
 
         List<Genre> genres = List.of(new Genre("Comedy"), new Genre("Science"));
 
@@ -76,9 +78,15 @@ public class Main {
             ctx.render("login.html");
         });
 
+        app.post("/login", UtilisateurController::login);
+
         app.get("/login_creation", ctx -> {
             ctx.render("login_creation.html");
         });
+
+        app.post("/login_creation", UtilisateurController::signup);
+
+        app.get("/logout", UtilisateurController::logout);
 
         app.get("/media", MediaController::getOne);
 
