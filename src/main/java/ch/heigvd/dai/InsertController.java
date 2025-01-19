@@ -6,6 +6,7 @@ import ch.heigvd.dai.media.Media;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
+import org.jooq.DSLContext;
 
 import java.util.*;
 
@@ -14,6 +15,8 @@ public class InsertController {
     static List<Createur> creatorsExample = new ArrayList<>();
     static List<String> genresExamples = List.of("Horror", "Comedy");
     static List<String> jeuvideotypesExamples = List.of("Rogue Like", "Platformer");
+
+    public static DSLContext dsl;
 
     static{
         Createur crea1 = new Createur();

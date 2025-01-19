@@ -1,8 +1,6 @@
 package ch.heigvd.dai.liste;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 import ch.heigvd.dai.commentaire.Commentaire;
@@ -12,8 +10,11 @@ import ch.heigvd.dai.media.Media;
 import ch.heigvd.dai.media.TypeMedia;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 import io.javalin.http.*;
+import org.jooq.DSLContext;
 
 public class ListeController {
+
+    public static DSLContext dsl;
 
     static Liste Seen;
     static Liste Favorite;
@@ -85,20 +86,43 @@ public class ListeController {
 
     }
 
-    public ListeController() {}
-
     public static void getOne(Context ctx){
-        String listname = ctx.queryParamAsClass("nom", String.class)
+        String nom = ctx.queryParamAsClass("nom", String.class)
                 .check(s -> !s.isBlank(), "list name not provided").get();
 
-        // get list with nom from db
+        String sql = "SELECT\n" +
+                "*\n" +
+                "FROM\n" +
+                "Media\n" +
+                "INNER JOIN Media_Liste ON Media_Liste.id = Media.id \n" +
+                "INNER JOIN Liste ON Media_Liste.nom = Liste.nom\n" +
+                "WHERE\n" +
+                "Liste.nom = "+ nom +";";
+        // Execute the raw SQL with bind parameters
+        var result = dsl.fetch(sql, nom);
+        // Process the result
+        result.forEach(record -> {
+            System.out.println(record);
+        });
 
         ctx.render("list.html", Map.of("list", Favorite));
     }
 
     public static void getAll(Context ctx){
+        String pseudo = "unpseudo";
 
-        // get all lists from db
+        String sql = "SELECT\n" +
+                "    nom\n" +
+                "FROM\n" +
+                "    Liste\n" +
+                "WHERE\n" +
+                "    pseudo = "+ pseudo +";";
+        // Execute the raw SQL with bind parameters
+        var result = dsl.fetch(sql, pseudo);
+        // Process the result
+        result.forEach(record -> {
+            System.out.println(record);
+        });
 
         ctx.render("mylists.html", Map.of("lists", List.of(Favorite, Seen, Watching, toBeSeen)));
     }
@@ -110,7 +134,18 @@ public class ListeController {
         list.nom = ctx.formParamAsClass("nom", String.class)
                 .check(s -> !s.isBlank(), "list name not provided").get();
 
+        String pseudo = "unpseudo";
+
         // create list in DB
+        String sql = "INSERT INTO\n" +
+                "Liste (pseudo, nom)\n" +
+                "VALUES ("+pseudo+", "+list.nom+");";
+        // Execute the raw SQL with bind parameters
+        var result = dsl.fetch(sql, pseudo, "exampleName");
+        // Process the result
+        result.forEach(record -> {
+            System.out.println(record);
+        });
 
         ctx.redirect("/list?nom=" + list.nom);
     }

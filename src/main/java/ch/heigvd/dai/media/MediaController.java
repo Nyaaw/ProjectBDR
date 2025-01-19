@@ -19,11 +19,7 @@ import javax.swing.text.StyledEditorKit;
 
 public class MediaController {
 
-    private static DSLContext dsl;
-
-    public MediaController(DSLContext dsl){
-        this.dsl = dsl;
-    }
+    public static DSLContext dsl;
 
     static Media exampleMedia;
 
@@ -150,7 +146,6 @@ public class MediaController {
         result.forEach(record -> {
             System.out.println(record);
         });
-
 
         ctx.render("media.html", Map.of("media", exampleMedia, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
     }
