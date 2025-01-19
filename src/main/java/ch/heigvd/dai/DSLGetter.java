@@ -1,5 +1,6 @@
 package ch.heigvd.dai;
 
+import ch.heigvd.dai.commentaire.Commentaire;
 import ch.heigvd.dai.createur.Createur;
 import ch.heigvd.dai.createur.TypeCreateur;
 import ch.heigvd.dai.media.Media;
@@ -178,5 +179,24 @@ public class DSLGetter {
         }
 
         return types;
+    }
+
+    public static List<Commentaire> getMultipleCommentaires(Result<Record> result){
+
+        List<Commentaire> coms = new ArrayList<>();
+
+        for(var record : result){
+            Commentaire c = new Commentaire();
+
+            c.texte = (String) record.get("texte");
+            c.note = (Integer) record.get("note");
+            c.date = (Date) record.get("date");
+            c.utilisateur = new Utilisateur();
+            c.utilisateur.nom = (String) record.get("pseudo");
+
+            coms.add(c);
+        }
+
+        return coms;
     }
 }

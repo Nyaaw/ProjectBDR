@@ -56,6 +56,7 @@
             <label>Note</label>
             <input type="number" name="note" min="1" max="5">
             <label>Comment</label>
+            <input type="hidden" th:value="${media.id}" name="id">
             <textarea name="texte"></textarea>
             <button type="submit">Submit</button>
         </form>
