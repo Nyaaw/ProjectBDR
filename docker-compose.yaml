@@ -35,7 +35,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=trustno1
-      - POSTGRES_DB=bdr
+      - POSTGRES_DB=mediatheque
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db-scripts:/docker-entrypoint-initdb.d/
