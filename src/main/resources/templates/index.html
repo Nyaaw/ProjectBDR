@@ -29,14 +29,14 @@
                   <div>
                       <h3>Media type</h3>
                       <div th:each="mediatype : ${mediatypes}" class="box">
-                          <input type="checkbox" class="box" name="mediaType" th:value="${mediatype}">
+                          <input type="checkbox" class="box" name="mediatype" th:value="${mediatype}">
                           <label th:text="${mediatype}">Type</label>
                       </div>
                   </div>
                   <div>
                       <h3>Video game type</h3>
                       <div th:each="VideoGameType : ${jeuvideotypes}" class="box">
-                          <input type="checkbox" class="box" name="typeVideogame" th:value="${VideoGameType}">
+                          <input type="checkbox" class="box" name="videogametype" th:value="${VideoGameType}">
                           <label th:text="${VideoGameType}">Type</label>
                       </div>
                   </div>
@@ -50,21 +50,21 @@
                   <div>
                       <h3>Book option</h3>
                       <p>Number of pages</p>
-                      <input type="number" name="Number of pages" min="1">
+                      <input type="number" name="pagesnb" min="1">
                   </div>
-                  <div>
+                  <!--<div>
                       <h3>Film option</h3>
                       <p>Duration (minutes)</p>
                       <input type="number" name="Duration" min="1">
-                  </div>
+                  </div>-->
                   <div>
                       <h3>Serie option</h3>
                       <p>Number of season</p>
-                      <input type="number" name="Number of seasons">
+                      <input type="number" name="seasonnb">
                   </div>
                   <div>
                       <h3>Keyword</h3>
-                      <input type="text" id="search" name="Search..">
+                      <input type="text" id="search" name="keyword">
                       <button type="submit" class="btn btn-success btn-block mb-3 btn-rounded" value="submit"><a th:href="|result?search=oui|">Search</a></button>
                   </div>
               </div>

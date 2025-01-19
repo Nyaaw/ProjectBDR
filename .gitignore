@@ -10,6 +10,7 @@ target/
 **/.idea/modules.xml
 **/.idea/workspace.xml
 **/.idea/remote-targets.xml
+**/.idea/uiDesigner.xml
 *.iws
 *.iml
 *.ipr

@@ -6,6 +6,7 @@ import ch.heigvd.dai.media.Media;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
+import org.jooq.DSLContext;
 
 import java.util.*;
 
@@ -14,6 +15,8 @@ public class InsertController {
     static List<Createur> creatorsExample = new ArrayList<>();
     static List<String> genresExamples = List.of("Horror", "Comedy");
     static List<String> jeuvideotypesExamples = List.of("Rogue Like", "Platformer");
+
+    public static DSLContext dsl;
 
     static{
         Createur crea1 = new Createur();
@@ -33,14 +36,37 @@ public class InsertController {
     public static void RenderInsert(Context ctx){
 
         // get all creators from db
-        List<Createur> allCreators = creatorsExample;
+        String sql = """
+                Select 
+                    c.nom,
+                    c.id,
+                    p.prenom,
+                CASE
+                WHEN p.id IS NOT NULL THEN 'personne'
+                WHEN g.id IS NOT NULL THEN 'groupe'
+                END AS type
+                FROM Createur c
+                LEFT JOIN Personne p
+                ON c.id = p.id
+                LEFT JOIN Groupe g
+                ON c.id = g.id
+                """;
 
-        // get all genres from db
-        List<String> allGenres = genresExamples;
+        var result = dsl.fetch(sql);
 
-        // get all videogametypes
-        List<String> allJeuvideotypes = jeuvideotypesExamples;
+        List<Createur> allCreators = DSLGetter.getMultipleCreateurs(result);
 
+        sql = "SELECT * FROM Genre;";
+
+        result = dsl.fetch(sql);
+
+        List<String> allGenres = DSLGetter.getMultipleGenres(result);
+
+        sql = "SELECT * FROM Type;";
+
+        result = dsl.fetch(sql);
+
+        List<String> allJeuvideotypes = DSLGetter.getMultipleTypes(result);
 
         Set<Integer> set = ctx.sessionAttribute("createurs");
 
@@ -84,16 +110,31 @@ public class InsertController {
             throw new BadRequestResponse("type createur is invalid");
         }
 
-        // add creator in db and get id
-        c.id = 3;
-        creatorsExample.add(c);
+        String sql = " WITH inserted_createur AS ( " +
+                "INSERT INTO createur (nom) VALUES ('" + c.nom + "') RETURNING id)";
+
+
+        if(c.typecreateur == TypeCreateur.personne){
+            sql += " INSERT INTO personne (id, prenom)\n" +
+                    "SELECT id, '" + (c.prenom == null ? "" : c.prenom) + "'\n" +
+                    "FROM inserted_createur\n" +
+                    "RETURNING id;";
+        } else {
+            sql += " INSERT INTO groupe (id)\n" +
+                    "SELECT id\n" +
+                    "FROM inserted_createur\n" +
+                    "RETURNING id;";
+        }
+
+        var result = dsl.fetch(sql);
+        Integer id = result.get(0).get("id", Integer.class);
 
         Set<Integer> insertCreators = ctx.sessionAttribute("createurs");
 
         if(insertCreators == null){
-            insertCreators = Set.of(3);
+            insertCreators = Set.of(id);
         } else {
-            insertCreators.add(3);
+            insertCreators.add(id);
         }
 
         ctx.sessionAttribute("createurs", insertCreators);
@@ -104,8 +145,6 @@ public class InsertController {
     public static void AddCreator(Context ctx){
 
         Integer idCreator = ctx.formParamAsClass("id", Integer.class).get();
-
-        // get creator from db with id
 
         Set<Integer> insertCreators = ctx.sessionAttribute("createurs");
 
@@ -126,7 +165,7 @@ public class InsertController {
         HashSet<Integer> insertCreators = ctx.sessionAttribute("createurs");
 
         if(insertCreators == null){
-            insertCreators = new HashSet<Integer>();
+            insertCreators = new HashSet<>();
         } else {
             insertCreators.remove(idCreator);
         }
@@ -139,8 +178,6 @@ public class InsertController {
     public static void AddGenre(Context ctx){
       
         String genre = ctx.formParamAsClass("genre", String.class).get();
-
-        // get creator from db with id
 
         Set<String> insertGenres = ctx.sessionAttribute("genres");
 
@@ -159,8 +196,6 @@ public class InsertController {
       
         String genre = ctx.formParamAsClass("genre", String.class).get();
 
-        // get creator from db with id
-
         HashSet<String> insertGenres = ctx.sessionAttribute("genres");
 
         if(insertGenres == null){
@@ -178,8 +213,6 @@ public class InsertController {
       
         String jeuvideotype = ctx.formParamAsClass("jeuvideotype", String.class).get();
 
-        // get creator from db with id
-
         Set<String> insertjeuvideotypes = ctx.sessionAttribute("jeuvideotypes");
 
         if(insertjeuvideotypes == null){
@@ -196,8 +229,6 @@ public class InsertController {
     public static void RemoveJeuvideotype(Context ctx){
       
         String jeuvideotype = ctx.formParamAsClass("jeuvideotype", String.class).get();
-
-        // get creator from db with id
 
         HashSet<String> insertjeuvideotypes = ctx.sessionAttribute("jeuvideotypes");
 
