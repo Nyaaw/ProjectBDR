@@ -46,10 +46,10 @@ public class InsertController {
                 WHEN g.id IS NOT NULL THEN 'groupe'
                 END AS type
                 FROM Createur c
-                INNER JOIN Personne p
-                ON Createur.id = Personne.id;
-                INNER JOIN Groupe g
-                ON Createur.id = Groupe.id;
+                LEFT JOIN Personne p
+                ON c.id = p.id
+                LEFT JOIN Groupe g
+                ON c.id = g.id
                 """;
 
         var result = dsl.fetch(sql);

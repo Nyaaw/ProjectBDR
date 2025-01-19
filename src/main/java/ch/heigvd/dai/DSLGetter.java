@@ -122,7 +122,7 @@ public class DSLGetter {
         Map<Integer, Createur> creaMap = new HashMap<>();
 
         for (var record : result) {
-            Integer creaId = (Integer) record.get("createur_id");
+            Integer creaId = (Integer) record.get("id");
 
             // If the crea doesn't exist in the map, create a new crea entry
             if (!creaMap.containsKey(creaId)) {
