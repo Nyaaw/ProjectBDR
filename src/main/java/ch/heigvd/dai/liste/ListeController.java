@@ -3,6 +3,7 @@ package ch.heigvd.dai.liste;
 import java.time.LocalDate;
 import java.util.*;
 
+import ch.heigvd.dai.DSLGetter;
 import ch.heigvd.dai.commentaire.Commentaire;
 import ch.heigvd.dai.createur.Createur;
 import ch.heigvd.dai.createur.TypeCreateur;
@@ -94,10 +95,10 @@ public class ListeController {
                 "*\n" +
                 "FROM\n" +
                 "Media\n" +
-                "INNER JOIN Media_Liste ON Media_Liste.id = Media.id \n" +
-                "INNER JOIN Liste ON Media_Liste.nom = Liste.nom\n" +
+                "INNER JOIN Media_Liste ON Media_Liste.idMedia = Media.id \n" +
+                "INNER JOIN Liste ON Media_Liste.listeNom = Liste.nom\n" +
                 "WHERE\n" +
-                "Liste.nom = "+ nom +";";
+                "Liste.nom = '"+ nom +"';";
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, nom);
         // Process the result
@@ -112,11 +113,11 @@ public class ListeController {
         String pseudo = "unpseudo";
 
         String sql = "SELECT\n" +
-                "    nom\n" +
+                "    nom, pseudo\n" +
                 "FROM\n" +
                 "    Liste\n" +
                 "WHERE\n" +
-                "    pseudo = "+ pseudo +";";
+                "    pseudo = '"+ pseudo +"';";
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, pseudo);
         // Process the result
@@ -124,7 +125,9 @@ public class ListeController {
             System.out.println(record);
         });
 
-        ctx.render("mylists.html", Map.of("lists", List.of(Favorite, Seen, Watching, toBeSeen)));
+        List<Liste> lists = DSLGetter.getMultipleLists(result);
+
+        ctx.render("mylists.html", Map.of("lists", lists));
     }
 
     public static void insertList(Context ctx){
@@ -139,7 +142,7 @@ public class ListeController {
         // create list in DB
         String sql = "INSERT INTO\n" +
                 "Liste (pseudo, nom)\n" +
-                "VALUES ("+pseudo+", "+list.nom+");";
+                "VALUES ('"+pseudo+"', '"+list.nom+"');";
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, pseudo, "exampleName");
         // Process the result

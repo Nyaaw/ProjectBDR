@@ -4,6 +4,8 @@ import ch.heigvd.dai.createur.Createur;
 import ch.heigvd.dai.createur.TypeCreateur;
 import ch.heigvd.dai.media.Media;
 import ch.heigvd.dai.media.TypeMedia;
+import ch.heigvd.dai.liste.Liste;
+import ch.heigvd.dai.utilisateur.Utilisateur;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -86,7 +88,6 @@ public class DSLGetter {
                 mediaMap.get(mediaId).datesortie = (Date) record.get("release_date");
                 mediaMap.get(mediaId).typemedia = TypeMedia.valueOf((String) record.get("media_type"));
                 mediaMap.get(mediaId).genres = new ArrayList<String>();
-                mediaMap.get(mediaId).description = (String) record.get("media_description");
             }
 
             // Add genre to the media's genre list
@@ -141,6 +142,31 @@ public class DSLGetter {
         List<Createur> createurs = new ArrayList<>(creaMap.values());
 
         return createurs;
+    }
+
+    public static List<Liste> getMultipleLists (Result<Record> result){
+
+        // Process the result into a list of crea objects, grouped by crea id
+        Map<String, Liste> creaMap = new HashMap<>();
+
+        for (var record : result) {
+            String listId = (String) record.get("nom");
+
+            // If the crea doesn't exist in the map, create a new crea entry
+            if (!creaMap.containsKey(listId)) {
+                creaMap.put(listId, new Liste());
+                creaMap.get(listId).nom = listId;
+                Utilisateur user = new Utilisateur();
+                user.nom = (String) record.get("pseudo");
+                creaMap.get(listId).utilisateur = user;
+            }
+
+        }
+
+        // Convert the map values to a list to pass to the view
+        List<Liste> lists = new ArrayList<>(creaMap.values());
+
+        return lists;
     }
 
     public static List<String> getMultipleTypes(Result<Record> result){

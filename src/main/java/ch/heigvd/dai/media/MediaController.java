@@ -167,7 +167,7 @@ public class MediaController {
                 WHEN f.id IS NOT NULL THEN 'film'
                 WHEN s.id IS NOT NULL THEN 'serie'
                 WHEN jv.id IS NOT NULL THEN 'jeuvideo'
-                END AS media_type,
+                END AS media_type
                 FROM
                     Media m
                 LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
