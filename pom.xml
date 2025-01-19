@@ -62,12 +62,18 @@
         <finalName>webserver</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <outputDirectory>.</outputDirectory>
-                </configuration>
                 <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Update the path to the main class if needed -->
+                            <mainClass>ch.heigvd.dai.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+
             </plugin>
             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
             <plugin>
