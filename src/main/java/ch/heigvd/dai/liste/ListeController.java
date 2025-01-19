@@ -42,7 +42,7 @@ public class ListeController {
         exampleMedia.id = 2;
         exampleMedia.nom = "Noita";
         exampleMedia.typemedia = TypeMedia.jeuvideo;
-        exampleMedia.datesortie = LocalDate.of(2019, 5, 23);
+        exampleMedia.datesortie = new Date();
         exampleMedia.description = "A difficult roguelike where every pixel is simulated.";
 
         exampleMedia.genres = List.of("Adventure", "Horror");

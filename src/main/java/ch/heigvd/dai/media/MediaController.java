@@ -35,7 +35,7 @@ public class MediaController {
         exampleMedia.id = 2;
         exampleMedia.nom = "Noita";
         exampleMedia.typemedia = TypeMedia.jeuvideo;
-        exampleMedia.datesortie = LocalDate.of(2019, 5, 23);
+        exampleMedia.datesortie = new Date(2020,2,3);
         exampleMedia.description = "A difficult roguelike where every pixel is simulated.";
         exampleMedia.note = 2;
 
@@ -104,17 +104,19 @@ public class MediaController {
                 "    m.dateSortie AS release_date,\n" +
                 "    m.description AS media_description,\n" +
                 "    g.nom AS genre_name,\n" +
+                "    c.id AS creator_id,\n" +
                 "    c.nom AS creator_name,\n" +
+                "    jt.nom AS jeuvideotype_name,\n" +
                 "    CASE\n" +
                 "WHEN p.id IS NOT NULL THEN 'Papier'\n" +
                 "WHEN n.id IS NOT NULL THEN 'Numérique'\n" +
                 "END AS media_format,\n" +
                 "    CASE\n" +
-                "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
-                "WHEN b.id IS NOT NULL THEN 'BD'\n" +
-                "WHEN f.id IS NOT NULL THEN 'Film'\n" +
-                "WHEN s.id IS NOT NULL THEN 'Série'\n" +
-                "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
+                "WHEN l.id IS NOT NULL THEN 'livre'\n" +
+                "WHEN b.id IS NOT NULL THEN 'bd'\n" +
+                "WHEN f.id IS NOT NULL THEN 'film'\n" +
+                "WHEN s.id IS NOT NULL THEN 'serie'\n" +
+                "WHEN jv.id IS NOT NULL THEN 'jeuvideo'\n" +
                 "END AS media_type,\n" +
                 "    l.nbPage AS book_pages,\n" +
                 "    b.couleur AS bd_color,\n" +
@@ -124,6 +126,7 @@ public class MediaController {
                 "FROM\n" +
                 "    Media m\n" +
                 "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
+                "LEFT JOIN Commentaire com ON m.id = com.id\n" +
                 "LEFT JOIN Genre g ON mg.genreNom = g.nom\n" +
                 "LEFT JOIN Media_Createur mc ON m.id = mc.mediaId\n" +
                 "LEFT JOIN Createur c ON mc.createurId = c.id\n" +
@@ -139,16 +142,70 @@ public class MediaController {
                 "WHERE\n" +
                 "    m.id = " + id + ";";
 
+
         // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, id);
+        var raw = dsl.fetch(sql, id);
 
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        for(var x : raw){
+            System.out.println(x);
+        }
 
-        ctx.render("media.html", Map.of("media", exampleMedia, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
+        // Process the result into a list of media objects, grouped by media id
+        Media m = null;
+
+        for (var record : raw) {
+            Integer mediaId = (Integer) record.get("media_id");
+
+            // If the media doesn't exist in the map, create a new media entry
+            if (m == null) {
+
+                m = new Media();
+                m.id = mediaId;
+                m.nom = (String) record.get("media_name");
+                m.datesortie = (Date) record.get("release_date");
+                m.description = (String) record.get("media_description");
+                m.typemedia = TypeMedia.valueOf((String) record.get("media_type"));
+
+                m.genres = new ArrayList<>();
+                m.createurs = new ArrayList<>();
+                if(m.typemedia == TypeMedia.jeuvideo)
+                    m.jeuvideotypes = new ArrayList<>();
+            }
+
+            // Add genre to the media's genre list
+            String genreNom = (String) record.get("genre_name");
+            if (genreNom != null) {
+                // Add the genre only if it isn't already in the list
+                if (!m.genres.contains(genreNom)) {
+                    m.genres.add(genreNom);
+                }
+            }
+
+            String jeuVideoType = (String) record.get("jeuvideotype_name");
+            if (jeuVideoType != null) {
+                if (!m.jeuvideotypes.contains(jeuVideoType)) {
+                    m.jeuvideotypes.add(jeuVideoType);
+                }
+            }
+
+            String createurNom = (String) record.get("creator_name");
+            Integer createurId = (Integer) record.get("creator_id");
+            if (createurId != null) {
+                if (m.createurs.stream().noneMatch(c -> c.id == createurId)) {
+                    Createur c = new Createur();
+                    c.id = createurId;
+                    c.nom = createurNom;
+                    m.createurs.add(c);
+                }
+            }
+
+            //TODO videogametype
+            //TODO specific fields like Livre.nbPages
+        }
+
+        ctx.render("media.html", Map.of("media", m, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
     }
+
 
     public static void getAll(Context ctx) {
 
@@ -343,7 +400,7 @@ public class MediaController {
         String date = ctx.formParamAsClass("datesortie", String.class).get();
 
         try{
-            media.datesortie = LocalDate.parse(date);
+            media.datesortie = new Date(date);
         } catch (DateTimeParseException e){
             throw new BadRequestResponse("bad date given");
         }
