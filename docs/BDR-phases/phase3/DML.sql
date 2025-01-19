@@ -12,7 +12,7 @@ INSERT INTO Genre (nom) VALUES ('Thriller');
 INSERT INTO Genre (nom) VALUES ('Tragedy');
 INSERT INTO Genre (nom) VALUES ('Drama');
 INSERT INTO Genre (nom) VALUES ('Game show');
-INSERT INTO Genre (nom) VALUES ('Mistery');
+INSERT INTO Genre (nom) VALUES ('Mystery');
 INSERT INTO Genre (nom) VALUES ('Reality TV');
 INSERT INTO Genre (nom) VALUES ('Western');
 INSERT INTO Genre (nom) VALUES ('Noir');

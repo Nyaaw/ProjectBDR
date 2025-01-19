@@ -39,12 +39,12 @@ CREATE OR REPLACE FUNCTION insert_media(
     media_type TEXT DEFAULT NULL,
     nb_pages INTEGER DEFAULT NULL,
     bd_couleur BOOLEAN DEFAULT NULL,
-    film_duree TIME DEFAULT NULL,
+    film_duree INTEGER DEFAULT NULL,
     serie_nbSaisons INTEGER DEFAULT NULL,
     jeu_video_type TEXT DEFAULT NULL,
     genre_nom TEXT DEFAULT NULL,
     createur_id INTEGER DEFAULT NULL
-) RETURNS VOID AS $$
+) RETURNS INTEGER AS $$
 DECLARE
 id_media INTEGER;
 BEGIN
@@ -54,23 +54,23 @@ VALUES (media_nom, media_dateSortie, media_description)
     RETURNING id INTO id_media;
 
 -- Étape 2 : Insérer dans la sous-catégorie correspondante
-IF media_type = 'Livre' THEN
+IF media_type = 'livre' THEN
             INSERT INTO Papier (id) VALUES (id_media);
 INSERT INTO Livre (id, nbPage) VALUES (id_media, nb_pages);
 
-ELSIF media_type = 'BD' THEN
+ELSIF media_type = 'bd' THEN
             INSERT INTO Papier (id) VALUES (id_media);
 INSERT INTO BD (id, couleur) VALUES (id_media, bd_couleur);
 
-ELSIF media_type = 'Film' THEN
+ELSIF media_type = 'film' THEN
             INSERT INTO Numerique (id) VALUES (id_media);
 INSERT INTO Film (id, duree) VALUES (id_media, film_duree);
 
-ELSIF media_type = 'Série' THEN
+ELSIF media_type = 'serie' THEN
             INSERT INTO Numerique (id) VALUES (id_media);
 INSERT INTO Serie (id, nbSaison) VALUES (id_media, serie_nbSaisons);
 
-ELSIF media_type = 'Jeu Vidéo' THEN
+ELSIF media_type = 'jeuvideo' THEN
             INSERT INTO Numerique (id) VALUES (id_media);
 INSERT INTO JeuVideo (id) VALUES (id_media);
 
@@ -100,6 +100,7 @@ END IF;
         INSERT INTO Media_Createur (mediaId, createurId)
         VALUES (id_media, createur_id);
 END IF;
+RETURN id_media;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -116,8 +117,8 @@ FOR i IN 1..5 LOOP
 	INSERT INTO Createur (nom)
     VALUES ('Createur' || i) RETURNING id )
 	INSERT INTO Personne(id, prenom)
-    SELECT id, 'Prenom'
-    FROM inserted_createur;
+SELECT id, 'Prenom'
+FROM inserted_createur;
 END LOOP;
 END $$;
 
@@ -208,7 +209,7 @@ INSERT INTO Numerique (id)
 VALUES (id_media);
 
 INSERT INTO Film (id, duree)
-VALUES (id_media, 100+i);
+VALUES (id_media, 100 + i);
 
 -- Assigner un créateur aléatoire au film
 SELECT id INTO id_createur FROM Createur ORDER BY random() LIMIT 1;
@@ -311,15 +312,8 @@ DO $$
 BEGIN
 INSERT INTO Utilisateur (pseudo, motDePasse)
 VALUES ('User1', 'mdp1'),
-       ('User2', 'mdp2'),
-       ('unpseudo', 'mdp3');
+       ('User2', 'mdp2');
 END $$;
-
--- Insérer des medias dans la liste watched à but demonstratif
-INSERT INTO Media_Liste(idMedia, listeNom, listePseudo)
-    VALUES (1, 'Finished', 'unpseudo'),
-           (7, 'Finished', 'unpseudo'),
-           (24, 'Finished', 'unpseudo');
 
 -- insérer 10 commentaires au hasard
 DO $$
