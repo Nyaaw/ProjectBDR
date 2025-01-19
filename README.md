@@ -7,7 +7,6 @@
 
 
 ## Table of Contents <!-- omit in toc -->
-- [README Criterion (to remove later)](#readme-criterion-to-remove-later)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
   - [General Prerequisites](#general-prerequisites)
@@ -59,7 +58,7 @@ If that's not the case, please go to the official website ([Dockerdocs](https://
 
 
 ### Recommendation
-Use Docker and Docker compose instead of running the application natively it's way more easy.
+Use Docker and Docker compose instead of running the application natively it's way easier.
 
 
 
@@ -149,10 +148,10 @@ You can either choose to deploy localy or online.
 
 
 > [!NOTE]
-> You can also use a server instead of a Cloud Based VM if you have one available, the application set up should be pretty similar but as we won't explain this scenario you might need to do some research to succed.  
+> You can also use a server instead of a Cloud Based VM if you have one available, the application set up should be pretty similar but as we won't explain this scenario you might need to do some research to succeed.  
 
 If you don't know how to set up a VM you can read [this document](docs/VM_Help.md) to get the basics.  
-If you don't have a domain name and don't know how to get one you can read [this document](docs/Domain_Name_Help.md) to get the basics.  
+If you don't have a domain name and don't know how to get one, you can read [this document](docs/Domain_Name_Help.md) to get the basics.  
 
 
 
@@ -215,11 +214,6 @@ From there you can naturally go through the website by clicking on the menu bar 
 
 ### API
 Demonstration made using curl to simulate request.
-
-TOADD
-
-
-
 
 
 
