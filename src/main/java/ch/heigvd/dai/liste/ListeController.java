@@ -91,22 +91,48 @@ public class ListeController {
         String nom = ctx.queryParamAsClass("nom", String.class)
                 .check(s -> !s.isBlank(), "list name not provided").get();
 
-        String sql = "SELECT\n" +
-                "*\n" +
-                "FROM\n" +
-                "Media\n" +
-                "INNER JOIN Media_Liste ON Media_Liste.idMedia = Media.id \n" +
-                "INNER JOIN Liste ON Media_Liste.listeNom = Liste.nom\n" +
-                "WHERE\n" +
-                "Liste.nom = '"+ nom +"';";
-        // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, nom);
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        String pseudo = "unpseudo";
 
-        ctx.render("list.html", Map.of("list", Favorite));
+        // get medias with id from db
+        String sql = """
+                SELECT
+                    m.id AS media_id,
+                    m.nom AS media_name,
+                    m.dateSortie AS release_date,
+                    g.nom AS genre_name,
+                    CASE
+                WHEN l.id IS NOT NULL THEN 'livre'
+                WHEN b.id IS NOT NULL THEN 'bd'
+                WHEN f.id IS NOT NULL THEN 'film'
+                WHEN s.id IS NOT NULL THEN 'serie'
+                WHEN jv.id IS NOT NULL THEN 'jeuvideo'
+                END AS media_type
+                FROM
+                    Media m
+                LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
+                LEFT JOIN Genre g ON mg.genreNom = g.nom
+                LEFT JOIN Livre l ON m.id = l.id
+                LEFT JOIN BD b ON m.id = b.id
+                LEFT JOIN Film f ON m.id = f.id
+                LEFT JOIN Serie s ON m.id = s.id
+                LEFT JOIN JeuVideo jv ON m.id = jv.id
+                LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
+                LEFT JOIN Type jt ON jvt.typenom = jt.nom
+                LEFT JOIN Media_Liste ml ON m.id = ml.idMedia
+                WHERE\n""" +
+                    "ml.listenom = '"+ nom +"' AND " +
+                    "ml.listepseudo = '"+ pseudo +"';";
+
+        // Execute the raw SQL with bind parameters
+        var result = dsl.fetch(sql);
+
+        List<Media> medias = DSLGetter.getMultipleMedias(result);
+        
+        Liste list = new Liste();
+        list.nom = nom;
+        list.medias = medias;
+
+        ctx.render("list.html", Map.of("list", list));
     }
 
     public static void getAll(Context ctx){
