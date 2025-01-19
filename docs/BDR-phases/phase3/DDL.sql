@@ -116,7 +116,7 @@ CREATE TABLE Numerique(
 
 CREATE TABLE Film(
     id integer,
-    duree time NOT NULL,
+    duree integer NOT NULL,
     CONSTRAINT PK_Film PRIMARY KEY(id),
     CONSTRAINT FK_Film_id FOREIGN KEY
      (id) REFERENCES Numerique(id) ON UPDATE CASCADE ON DELETE CASCADE
