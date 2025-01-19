@@ -1,10 +1,20 @@
 # Project BDR API Documentation
 
-This API provides endpoints for managing media content, lists, creators, and user interactions. It uses the HTTP protocol and serves HTML templates using Thymeleaf.
+The Media Library API allows management of media items, users, lists, and creators. It uses the HTTP protocol with HTML responses and form submissions.
+
+The API provides the following core functionalities:
+- Media management (create, view, search)
+- User authentication (login, signup, logout)
+- List management (create, view, add items)
+- Creator management
+- Genre and type management
+- Comments system
+
 
 ## Base Configuration
 
 - **Server Port**: 8080
+- **Database**: PostgreSQL
 - **Static Files Directory**: `/public`
 - **Template Directory**: `/templates`
 - **Template Engine**: Thymeleaf with HTML mode
@@ -79,7 +89,7 @@ Form data must include:
 - `jeuvideotypes` - List of video game types (required if media type is "jeuvideo")
 
 #### Status Codes
-- `302` (Found) - Redirect to new media page
+- `201` (Created)
 - `400` (Bad Request) - Invalid input data
 
 ### Insert Operations
@@ -144,22 +154,42 @@ Create a new media list.
 ### User Authentication
 
 #### Login
+- `GET /login` - Display login form
+- `POST /login` - Process login
 
-- `GET /login`
-
-Display login page.
-
-#### Response
-- Renders `login.html`
-
-#### Create Account
-
-- `GET /login_creation`
-
-Display account creation page.
+#### Request (POST)
+Form data containing:
+- `email` - User's email
+- `password` - User's password
 
 #### Response
-- Renders `login_creation.html`
+Redirects to home page on success.
+
+#### Status codes
+- `200` (OK) - Login successful
+- `401` (Unauthorized) - Invalid credentials
+
+#### Sign Up
+- `GET /login_creation` - Display signup form
+- `POST /login_creation` - Process signup
+
+#### Request (POST)
+Form data containing user details.
+
+#### Status codes
+- `201` (Created) - Account created
+- `400` (Bad Request) - Invalid data
+
+#### Logout
+- `GET /logout`
+
+Ends user session.
+
+#### Response
+Redirects to home page.
+
+#### Status codes
+- `200` (OK) - Logout successful
 
 ### Search Results
 
