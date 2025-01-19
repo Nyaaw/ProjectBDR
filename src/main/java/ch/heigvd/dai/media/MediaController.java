@@ -1,21 +1,20 @@
 package ch.heigvd.dai.media;
 
+import ch.heigvd.dai.DSLGetter;
 import ch.heigvd.dai.commentaire.Commentaire;
 import ch.heigvd.dai.createur.Createur;
 import ch.heigvd.dai.createur.TypeCreateur;
 import ch.heigvd.dai.liste.Liste;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import io.javalin.http.*;
 
 import org.jooq.DSLContext;
-
-import javax.swing.text.StyledEditorKit;
+import org.jooq.Result;
+import org.jooq.Record;
 
 public class MediaController {
 
@@ -98,110 +97,56 @@ public class MediaController {
         // get media with id from DB.
 
         // Define your raw SQL statement with placeholders
-        String sql = "SELECT\n" +
-                "    m.id AS media_id,\n" +
-                "    m.nom AS media_name,\n" +
-                "    m.dateSortie AS release_date,\n" +
-                "    m.description AS media_description,\n" +
-                "    g.nom AS genre_name,\n" +
-                "    c.id AS creator_id,\n" +
-                "    c.nom AS creator_name,\n" +
-                "    jt.nom AS jeuvideotype_name,\n" +
-                "    CASE\n" +
-                "WHEN p.id IS NOT NULL THEN 'Papier'\n" +
-                "WHEN n.id IS NOT NULL THEN 'Numérique'\n" +
-                "END AS media_format,\n" +
-                "    CASE\n" +
-                "WHEN l.id IS NOT NULL THEN 'livre'\n" +
-                "WHEN b.id IS NOT NULL THEN 'bd'\n" +
-                "WHEN f.id IS NOT NULL THEN 'film'\n" +
-                "WHEN s.id IS NOT NULL THEN 'serie'\n" +
-                "WHEN jv.id IS NOT NULL THEN 'jeuvideo'\n" +
-                "END AS media_type,\n" +
-                "    l.nbPage AS book_pages,\n" +
-                "    b.couleur AS bd_color,\n" +
-                "    f.duree AS film_duration,\n" +
-                "    s.nbSaison AS series_seasons,\n" +
-                "    jt.nom AS game_type\n" +
-                "FROM\n" +
-                "    Media m\n" +
-                "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
-                "LEFT JOIN Commentaire com ON m.id = com.id\n" +
-                "LEFT JOIN Genre g ON mg.genreNom = g.nom\n" +
-                "LEFT JOIN Media_Createur mc ON m.id = mc.mediaId\n" +
-                "LEFT JOIN Createur c ON mc.createurId = c.id\n" +
-                "LEFT JOIN Papier p ON m.id = p.id\n" +
-                "LEFT JOIN Numerique n ON m.id = n.id\n" +
-                "LEFT JOIN Livre l ON m.id = l.id\n" +
-                "LEFT JOIN BD b ON m.id = b.id\n" +
-                "LEFT JOIN Film f ON m.id = f.id\n" +
-                "LEFT JOIN Serie s ON m.id = s.id\n" +
-                "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-                "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
-                "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
-                "WHERE\n" +
-                "    m.id = " + id + ";";
+        String sql = """
+                SELECT
+                    m.id AS media_id,
+                    m.nom AS media_name,
+                    m.dateSortie AS release_date,
+                    m.description AS media_description,
+                    g.nom AS genre_name,
+                    c.id AS creator_id,
+                    c.nom AS creator_name,
+                    jt.nom AS jeuvideotype_name,
+                    CASE
+                WHEN p.id IS NOT NULL THEN 'Papier'
+                WHEN n.id IS NOT NULL THEN 'Numérique'
+                END AS media_format,
+                    CASE
+                WHEN l.id IS NOT NULL THEN 'livre'
+                WHEN b.id IS NOT NULL THEN 'bd'
+                WHEN f.id IS NOT NULL THEN 'film'
+                WHEN s.id IS NOT NULL THEN 'serie'
+                WHEN jv.id IS NOT NULL THEN 'jeuvideo'
+                END AS media_type,
+                    l.nbPage AS book_pages,
+                    b.couleur AS bd_color,
+                    f.duree AS film_duration,
+                    s.nbSaison AS series_seasons,
+                    jt.nom AS game_type
+                FROM
+                    Media m
+                LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
+                LEFT JOIN Genre g ON mg.genreNom = g.nom
+                LEFT JOIN Media_Createur mc ON m.id = mc.mediaId
+                LEFT JOIN Createur c ON mc.createurId = c.id
+                LEFT JOIN Papier p ON m.id = p.id
+                LEFT JOIN Numerique n ON m.id = n.id
+                LEFT JOIN Livre l ON m.id = l.id
+                LEFT JOIN BD b ON m.id = b.id
+                LEFT JOIN Film f ON m.id = f.id
+                LEFT JOIN Serie s ON m.id = s.id
+                LEFT JOIN JeuVideo jv ON m.id = jv.id
+                LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
+                LEFT JOIN Type jt ON jvt.typenom = jt.nom
+                WHERE
+                    m.id = 
+                """ + id + ";";
 
 
         // Execute the raw SQL with bind parameters
-        var raw = dsl.fetch(sql, id);
+        Result<Record> raw = dsl.fetch(sql, id);
 
-        for(var x : raw){
-            System.out.println(x);
-        }
-
-        // Process the result into a list of media objects, grouped by media id
-        Media m = null;
-
-        for (var record : raw) {
-            Integer mediaId = (Integer) record.get("media_id");
-
-            // If the media doesn't exist in the map, create a new media entry
-            if (m == null) {
-
-                m = new Media();
-                m.id = mediaId;
-                m.nom = (String) record.get("media_name");
-                m.datesortie = (Date) record.get("release_date");
-                m.description = (String) record.get("media_description");
-                m.typemedia = TypeMedia.valueOf((String) record.get("media_type"));
-
-                m.genres = new ArrayList<>();
-                m.createurs = new ArrayList<>();
-                if(m.typemedia == TypeMedia.jeuvideo)
-                    m.jeuvideotypes = new ArrayList<>();
-            }
-
-            // Add genre to the media's genre list
-            String genreNom = (String) record.get("genre_name");
-            if (genreNom != null) {
-                // Add the genre only if it isn't already in the list
-                if (!m.genres.contains(genreNom)) {
-                    m.genres.add(genreNom);
-                }
-            }
-
-            String jeuVideoType = (String) record.get("jeuvideotype_name");
-            if (jeuVideoType != null) {
-                if (!m.jeuvideotypes.contains(jeuVideoType)) {
-                    m.jeuvideotypes.add(jeuVideoType);
-                }
-            }
-
-            String createurNom = (String) record.get("creator_name");
-            Integer createurId = (Integer) record.get("creator_id");
-            if (createurId != null) {
-                if (m.createurs.stream().noneMatch(c -> c.id == createurId)) {
-                    Createur c = new Createur();
-                    c.id = createurId;
-                    c.nom = createurNom;
-                    m.createurs.add(c);
-                }
-            }
-
-            //TODO videogametype
-            //TODO specific fields like Livre.nbPages
-        }
+        Media m = DSLGetter.getOneMedia(raw);
 
         ctx.render("media.html", Map.of("media", m, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
     }
@@ -210,37 +155,94 @@ public class MediaController {
     public static void getAll(Context ctx) {
 
         // get medias with id from db
-        String sql = "SELECT * FROM Media;";
+        String sql = """
+                SELECT
+                    m.id AS media_id,
+                    m.nom AS media_name,
+                    m.dateSortie AS release_date,
+                    g.nom AS genre_name,
+                    CASE
+                WHEN l.id IS NOT NULL THEN 'livre'
+                WHEN b.id IS NOT NULL THEN 'bd'
+                WHEN f.id IS NOT NULL THEN 'film'
+                WHEN s.id IS NOT NULL THEN 'serie'
+                WHEN jv.id IS NOT NULL THEN 'jeuvideo'
+                END AS media_type,
+                FROM
+                    Media m
+                LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
+                LEFT JOIN Genre g ON mg.genreNom = g.nom
+                LEFT JOIN Livre l ON m.id = l.id
+                LEFT JOIN BD b ON m.id = b.id
+                LEFT JOIN Film f ON m.id = f.id
+                LEFT JOIN Serie s ON m.id = s.id
+                LEFT JOIN JeuVideo jv ON m.id = jv.id
+                LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
+                LEFT JOIN Type jt ON jvt.typenom = jt.nom;
+                """;
 
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql);
 
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        List<Media> medias = DSLGetter.getMultipleMedias(result);
 
-        ctx.render("explore.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia)));
+        ctx.render("explore.html", Map.of("medias", medias));
     }
 
 
     public static void getFive(Context ctx) {
 
         // get medias with id from db
-        String sql = "SELECT *\n" +
-                "FROM Media\n" +
-                "ORDER BY id DESC\n" +
-                "LIMIT 5;";
+        String sql = """
+                SELECT
+                    m.id AS media_id,
+                    m.nom AS media_name,
+                    m.dateSortie AS release_date,
+                    g.nom AS genre_name,
+                    CASE
+                WHEN l.id IS NOT NULL THEN 'livre'
+                WHEN b.id IS NOT NULL THEN 'bd'
+                WHEN f.id IS NOT NULL THEN 'film'
+                WHEN s.id IS NOT NULL THEN 'serie'
+                WHEN jv.id IS NOT NULL THEN 'jeuvideo'
+                END AS media_type,
+                FROM
+                    Media m
+                LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
+                LEFT JOIN Genre g ON mg.genreNom = g.nom
+                LEFT JOIN Livre l ON m.id = l.id
+                LEFT JOIN BD b ON m.id = b.id
+                LEFT JOIN Film f ON m.id = f.id
+                LEFT JOIN Serie s ON m.id = s.id
+                LEFT JOIN JeuVideo jv ON m.id = jv.id
+                LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
+                LEFT JOIN Type jt ON jvt.typenom = jt.no
+                ORDER BY id DESC
+                LIMIT 5;
+                """;
 
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql);
 
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        List<Media> medias = DSLGetter.getMultipleMedias(result);
 
-        ctx.render("index.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia), "genres", List.of("Genre 1","Genre 2"), "mediatypes", List.of("type 1","type 2"), "jeuvideotypes", List.of("type 1","type 2")));
+        sql = "SELECT * FROM Genre";
+
+        result = dsl.fetch(sql);
+
+        List<String> genres = DSLGetter.getMultipleGenres(result);
+
+        sql = "SELECT * FROM Type";
+        result = dsl.fetch(sql);
+
+        List<String> types = DSLGetter.getMultipleTypes(result);
+
+        ctx.render("index.html", Map.of(
+                "medias", medias,
+                "genres", List.of("Genre 1","Genre 2"),
+                "mediatypes", List.of("type 1","type 2"),
+                "jeuvideotypes", List.of("type 1","type 2")
+        ));
     }
 
     public static void getResults(Context ctx) {
@@ -256,47 +258,49 @@ public class MediaController {
         // get medias with id from db
 
         //quand inutile/optionnel, on met NULL
-        String sql = "SELECT\n" +
-                "m.id AS media_id,\n" +
-                "m.nom AS media_name,\n" +
-                "m.dateSortie AS release_date,\n" +
-                "m.description AS media_description,\n" +
-                "g.nom AS genre_name,\n" +
-                "CASE\n" +
-                "WHEN l.id IS NOT NULL THEN 'Livre'\n" +
-                "WHEN b.id IS NOT NULL THEN 'BD'\n" +
-                "WHEN f.id IS NOT NULL THEN 'Film'\n" +
-                "WHEN s.id IS NOT NULL THEN 'Série'\n" +
-                "WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'\n" +
-                "END AS media_type,\n" +
-                "l.nbPage AS book_pages,\n" +
-                "b.couleur AS bd_color,\n" +
-                "f.duree AS film_duration,\n" +
-                "s.nbSaison AS series_seasons,\n" +
-                "jt.nom AS game_type\n" +
-                "FROM\n" +
-                "Media m\n" +
-                "LEFT JOIN Media_Genre mg ON m.id = mg.mediaId\n" +
-                "LEFT JOIN Genre g ON mg.genrenom = g.nom\n" +
-                "LEFT JOIN Papier p ON m.id = p.id\n" +
-                "LEFT JOIN Numerique n ON m.id = n.id\n" +
-                "LEFT JOIN Livre l ON m.id = l.id\n" +
-                "LEFT JOIN BD b ON m.id = b.id\n" +
-                "LEFT JOIN Film f ON m.id = f.id\n" +
-                "LEFT JOIN Serie s ON m.id = s.id\n" +
-                "LEFT JOIN JeuVideo jv ON m.id = jv.id\n" +
-                "LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId\n" +
-                "LEFT JOIN Type jt ON jvt.typenom = jt.nom\n" +
-                "WHERE\n" +
-                "  -- Condition pour le genre\n" +
+        String sql = """
+                SELECT
+                m.id AS media_id,
+                m.nom AS media_name,
+                m.dateSortie AS release_date,
+                m.description AS media_description,
+                g.nom AS genre_name,
+                CASE
+                WHEN l.id IS NOT NULL THEN 'Livre'
+                WHEN b.id IS NOT NULL THEN 'BD'
+                WHEN f.id IS NOT NULL THEN 'Film'
+                WHEN s.id IS NOT NULL THEN 'Série'
+                WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'
+                END AS media_type,
+                l.nbPage AS book_pages,
+                b.couleur AS bd_color,
+                f.duree AS film_duration,
+                s.nbSaison AS series_seasons,
+                jt.nom AS game_type
+                FROM
+                Media m
+                LEFT JOIN Media_Genre mg ON m.id = mg.mediaId
+                LEFT JOIN Genre g ON mg.genrenom = g.nom
+                LEFT JOIN Papier p ON m.id = p.id
+                LEFT JOIN Numerique n ON m.id = n.id
+                LEFT JOIN Livre l ON m.id = l.id
+                LEFT JOIN BD b ON m.id = b.id
+                LEFT JOIN Film f ON m.id = f.id
+                LEFT JOIN Serie s ON m.id = s.id
+                LEFT JOIN JeuVideo jv ON m.id = jv.id
+                LEFT JOIN JeuVideo_Type jvt ON jv.id = jvt.jeuVideoId
+                LEFT JOIN Type jt ON jvt.typenom = jt.nom
+                WHERE
+                  -- Condition pour le genre
+                """ + 
                 "    (g.nom = COALESCE("+Genre+", g.nom))\n" +
                 "  -- Condition pour un type spécifique de média\n" +
                 "  AND (\n" +
-                "    (COALESCE("+mediatype+", '') = 'Livre' AND l.id IS NOT NULL)\n" +
-                "OR (COALESCE("+mediatype+", '') = 'BD' AND b.id IS NOT NULL)\n" +
-                "OR (COALESCE("+mediatype+", '') = 'Film' AND f.id IS NOT NULL)\n" +
-                "OR (COALESCE("+mediatype+", '') = 'Série' AND s.id IS NOT NULL)\n" +
-                "OR (COALESCE("+mediatype+", '') = 'Jeu Vidéo' AND jv.id IS NOT NULL)\n" +
+                "    (COALESCE("+mediatype+", '') = 'livre' AND l.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'bd' AND b.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'film' AND f.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'serie' AND s.id IS NOT NULL)\n" +
+                "OR (COALESCE("+mediatype+", '') = 'jeuvideo' AND jv.id IS NOT NULL)\n" +
                 "OR COALESCE("+mediatype+", '') = ''\n" +
                 "    )\n" +
                 "  -- Condition pour un jeu vidéo d'un type spécifique\n" +
@@ -328,19 +332,16 @@ public class MediaController {
         // Execute the raw SQL with bind parameters
         var result = dsl.fetch(sql, Genre, mediatype, videogametype, color, Pagesnb, Seasonnb, keyword);
 
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        List<Media> medias = DSLGetter.getMultipleMedias(result);
 
-
-        ctx.render("result.html", Map.of("medias", List.of(exampleMedia, exampleMedia, exampleMedia)));
+        ctx.render("result.html", Map.of(
+                "medias", medias));
     }
 
     public static void addToList(Context ctx){
-        Integer id = ctx.queryParamAsClass("id", Integer.class).get();
-        String nom = ctx.queryParamAsClass("nom", String.class).get();
-        String pseudo = ctx.queryParamAsClass("pseudo", String.class).get();
+        Integer id = ctx.formParamAsClass("id", Integer.class).get();
+        String nom = ctx.formParamAsClass("nom", String.class).get();
+        String pseudo = ctx.formParamAsClass("pseudo", String.class).get();
 
         // add to db
         String sql = "INSERT INTO Media_List (mediaId, listenom, listePseudo)\n" +
@@ -352,6 +353,8 @@ public class MediaController {
         result.forEach(record -> {
             System.out.println(record);
         });
+
+        ctx.redirect("/media?id=" + id);
     }
 
     public static void addComment(Context ctx){
@@ -373,6 +376,7 @@ public class MediaController {
             System.out.println(record);
         });
 
+        ctx.redirect("/media?id=" + commentaire.media.id);
     }
 
     public static void insertMedia(Context ctx){

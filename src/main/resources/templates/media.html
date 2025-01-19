@@ -13,7 +13,7 @@
             <div>
                 <form>
                     <label for="add_to_list">Add to list:</label>
-                    <select  id="add_to_list" name="add_to_list">
+                    <select  id="add_to_list" name="nom">
                         <option th:each="list : ${lists}" th:value="${list.nom}" th:text="${list.nom}">list</option>
                     </select>
                     <button type="submit">Add</button>
