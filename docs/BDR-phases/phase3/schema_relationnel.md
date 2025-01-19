@@ -47,9 +47,8 @@ JeuVideo_Type.typeNom references Type.nom
 
 Utilisateur(<u>pseudo</u>, motDePasse)
 
-Liste(<u>pseudo, nom</u>, dateCreation, mediaId)  
+Liste(<u>pseudo, nom</u>, dateCreation)  
 Liste.pseudo references Utilisateur.pseudo
-Liste.mediaId references Media.id
 
 Media_Liste(<u>idMedia, pseudoListe, nomListe</u>)
 Media_Liste.idMedia references Media.id

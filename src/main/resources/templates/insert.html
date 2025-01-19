@@ -1,109 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-<header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
-<main>
-    <form>
+<main id="insert">
+    <h1>Insert a new media</h1>
+
+    <form id="mainForm" action="/media" method="post"> </form>
+
+    <div class="form_part">
+        <h2>Genres: </h2>
+        <form action="/insert/addgenre" method="post">
+            <label for="genre">Add genre:</label>
+            <select  id="genre" name="genre">
+                <option th:each="genre : ${allGenres}" th:value="${genre}" th:text="${genre}">Genre</option>
+            </select>
+            <input type="submit" value="Add">
+        </form>
+        <h4>Genre selected:</h4>
+        <ul>
+            <li th:each="genre : ${session.genres}">
+                <form action="insert/removegenre" method="post">
+                    <span th:text="${genre}">Genre </span>
+                    <input type="hidden" name="genre" th:value="${genre}">
+                    <input type="submit" value="remove">
+                </form>
+                <input type="hidden" name="genres" th:value="${genre}" form="mainForm">
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="form_part">
+        <h2>Creators: </h2>
+        <div>
+            <form action="insert/addcreator" method="post">
+                <label for="addcreator">Select creator:</label>
+                <select  id="addcreator" name="id">
+                    <option th:unless="${creator.prenom == null}" th:each="creator : ${allCreators}" th:value="${creator.id}" th:text="|${creator.nom} ${creator.prenom}|">Creator</option>
+                    <option th:if="${creator.prenom == null}" th:each="creator : ${allCreators}" th:value="${creator.id}" th:text="${creator.nom}">Creator</option>
+                </select>
+                <input type="submit" value="Add">
+            </form>
+
+        </div>
+        <form action="insert/createcreator" method="post">
+            <h4 for="createcreator">Add creator:</h4>
+            <label for="createcreatorname"></label>
+            <input type="text" id="createcreatorname" name="nom">
+            <label for="createcreatorsurname"></label>
+            <input type="text" id="createcreatorsurname" name="prenom">
+            <br>
+            <label>type of creator:</label>
+
+            <input type="radio" name="typecreateur" id="creatorTypePerson" value="personne">
+            <label for="creatorTypePerson">Person</label>
+            <input type="radio" name="typecreateur" id="creatorTypeGroup" value="groupe">
+            <label for="creatorTypeGroup">Group</label>
+
+            <input type="submit" value="Add">
+        </form>
+        <h4>Creator selected:</h4>
+        <ul>
+            <li th:each="creator : ${selectedCreators}">
+                <form action="insert/removecreator" method="post">
+                    <span th:if="${creator.prenom == null}" th:text="${creator.nom}">Creator</span>
+                    <span th:unless="${creator.prenom == null}" th:text="|${creator.nom} ${creator.prenom}|">Creator</span>
+                    <input type="hidden" name="id" th:value="${creator.id}">
+                    <input type="submit" value="remove">
+                </form>
+                <input type="hidden" name="createurs" th:value="${creator.id}" form="mainForm">
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="form_part">
+        <div>
+            <h3>Video game types: </h3>
+            <form action="insert/addvideogametype" method="post">
+                <label for="videoGameType">Add video game type</label>
+                <select id="videoGameType" name="jeuvideotype">
+                    <option th:each="videoGameType : ${allJeuvideotypes}" th:value="${videoGameType}" th:text="${videoGameType}">Genre</option>
+                </select>
+                <input type="submit" value="Add">
+            </form>
+            <h4>Video Game type selected:</h4>
+            
+            <ul>
+                <li th:each="videoGameTypeSelected : ${session.jeuvideotypes}">
+                    <form action="insert/removevideogametype" method="post">
+                        <span th:text="${videoGameTypeSelected}">Type </span>
+                        <input type="hidden" name="jeuvideotype" th:value="${videoGameTypeSelected}">
+                        <input type="submit" value="remove">
+                    </form>
+                    <input type="hidden" name="jeuvideotypes" th:value="${videoGameTypeSelected}" form="mainForm">
+                </li>
+            </ul>
+            
+        </div>
+
+    </div>
+    <div class="form_part">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="nom" form="mainForm">
 
-        <br>
+        <label for="date">Release date:</label>
+        <input type="date" id="date" name="datesortie" form="mainForm">
 
         <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
-
-        <br>
-        <form>
-            <label for="creator">Select creator:</label>
-            <select id="creator" name="creator">
-                <option value="0">John Cena</option>
-                <option value="1">Mario</option>
-                <!-- tous les créateurs ici -->
+        <textarea name="description" id="description" form="mainForm"></textarea>
+        <div class="form_part">
+            <label for="type">Type de média:</label>
+            <select id="type" name="typemedia" form="mainForm">
+                <option value="film">Film</option>
+                <option value="serie">Série</option>
+                <option value="jeuvideo">Jeu-Vidéo</option>
+                <option value="livre">Livre</option>
+                <option value="bd">BD</option>
             </select>
-            <br>
-            <input type="button" value="Add">
-        </form>
-
-        <br>
-
-        <label for="genre">Add genre:</label>
-        <select id="genre" name="genre">
-            <option value="genre1">Genre 1</option>
-            <option value="genre2">Genre 2</option>
-            <!-- tous les genres ici -->
-        </select>
-        <input type="button" value="Add">
-        <br>
-        <div>
-            <h2>Genres: </h2>
-            <ul>
-                <li>Horror <btn>remove</btn></li>
-                <li>Comedy <btn>remove</btn></li>
-            </ul>
         </div>
 
-        <br>
+    </div>
 
-        <form>
-            <label for="creatorName">Add creator:</label>
-            <input type="text" id="creatorName" name="creatorName">
-            <br>
-            <label for="creatorType">type de créateur:</label>
-            <input type="radio" name="creatorType" id="creatorTypePerson">
-            <input type="radio" name="creatorType" id="creatorTypeGroup">
-            <br>
-            <input type="button" value="Add">
-        </form>
-
-        <br>
-        <div>
-            <h2>Creators: </h2>
-            <ul>
-                <li>Luigi <btn>remove</btn></li>
-                <li>Zelda <btn>remove</btn></li>
-                <li>Studio Ghibli <btn>remove</btn></li>
-            </ul>
-        </div>
-
-        <label for="type">Type de média:</label>
-        <select id="type" name="type">
-            <option value="film">Film</option>
-            <option value="serie">Série</option>
-            <option value="jeuvideo">Jeu-Vidéo</option>
-            <option value="livre">Livre</option>
-            <option value="bd">BD</option>
-        </select>
-
-
-        <br>
-
-        <!-- SEULEMENT POUR JEUX VIDEOS -->
-
-        <label for="videoGameType">Add video game type</label>
-        <select id="videoGameType" name="videoGameType">
-            <option value="type1">Type 1</option>
-            <option value="type2">Type 2</option>
-            <!-- tous les genres ici -->
-        </select>
-        <input type="button" value="Add">
-
-        <br>
-        <div>
-            <h2>Video game types: </h2>
-            <ul>
-                <li>FPS <btn>remove</btn></li>
-                <li>Multiplayer <btn>remove</btn></li>
-            </ul>
-        </div>
-
-        <br>
-    </form>
+    <input type="submit" value="Create" form="mainForm">
 </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>

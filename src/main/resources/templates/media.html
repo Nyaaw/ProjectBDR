@@ -1,74 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-<header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
 <main>
-    <h1>titre</h1>
+    <h1 th:text="${media.nom}">titre</h1>
     <div id="media">
         <div class="media_section1">
             <div>
-                <h3>Note</h3>
-                <p>x/5</p>
+                <form action="media/addtolist" method="post">
+                    <label for="add_to_list">Add to list:</label>
+                    <select  id="add_to_list" name="nom">
+                        <option th:each="list : ${lists}" th:value="${list.nom}" th:text="${list.nom}">list</option>
+                    </select>
+                    <input type="hidden" th:value="${media.id}" name="id">
+                    <button type="submit">Add</button>
+                </form>
+
             </div>
             <div>
-                <h3>Réalisateur</h3>
-                <p>NOM</p>
+                <h3>Note</h3>
+                <p><span th:text="${media.note}">x</span>/5</p>
+            </div>
+            <div>
+                <h3>Creator</h3>
+                <ul th:each="creator : ${media.createurs}">
+                    <li th:if="${creator.prenom == null}" th:text="${creator.nom}">Creator</li>
+                    <li th:unless="${creator.prenom == null}" th:text="|${creator.nom} ${creator.prenom}|">Creator</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Media Type</h3>
+                <p th th:text="${media.typemedia}">NOM</p>
             </div>
             <h3>Genres</h3>
-            <ul>
-                <li>Genre 1</li>
-                <li>Genre 2</li>
-                <li>Genre 3</li>
+            <ul th:each="genre : ${media.genres}">
+                <li th:text="${genre}">Genre</li>
             </ul>
-            <!--
-            <h3>Options specifique</h3>
-            <ul>
-                <li>option 1: attribut</li>
+            <h3>Video game types</h3>
+            <ul th:each="type : ${media.jeuvideotypes}">
+                <li th:text="${type}">Genre</li>
             </ul>
--->
         </div>
         <div class="media_section2">
             <h2>Description</h2>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper. Suspendisse ut dapibus tellus. Integer non nibh in turpis mollis porta id vitae massa. Vivamus lorem dui, rutrum vel vestibulum ut, vehicula et lorem. Suspendisse auctor, justo eu finibus aliquam, massa tellus malesuada est, in pretium ipsum justo vel ex. Maecenas in faucibus libero. Vivamus ullamcorper placerat justo, sed laoreet lectus cursus id. Nunc id semper leo. Ut nisl ante, iaculis at urna ut, commodo finibus urna. Nullam vehicula sagittis eros ac suscipit. Nullam a nibh ante.
-
-                Curabitur lacus dolor, dictum nec faucibus in, pellentesque imperdiet velit. Integer aliquam nunc at nulla accumsan tempor. Ut finibus facilisis cursus. Etiam lobortis leo dolor, non ultrices dolor sodales a. Nam at felis et justo sodales faucibus eget non felis. Aenean mi dolor, blandit nec neque eu, rhoncus mollis enim. Duis in scelerisque odio, ultricies vulputate ex. Pellentesque maximus, sem sed lacinia iaculis, ante elit rutrum dui, eget rhoncus ipsum quam at libero. Quisque tincidunt neque urna, vitae vehicula augue sagittis vel. Quisque vel tincidunt neque, ut tristique nibh. Aliquam rutrum sollicitudin quam sed ultrices. Sed sodales fringilla mi vitae dapibus. Duis hendrerit a est sed auctor. Cras non nulla et quam tincidunt sagittis. Ut consectetur ipsum ultricies nisi congue egestas. Cras sollicitudin diam ac eros dignissim, sed cursus erat ultrices. </p>
+            <p th:text="${media.description}">Lorem ipsum</p>
         </div>
     </div>
     <div id="commentaires">
         <h2>Comments</h2>
-        <div class="commentaire">
+        <form id="comment" action="/media/comment" method="post">
+            <label>Note</label>
+            <input type="number" name="note" min="1" max="5">
+            <label>Comment</label>
+            <textarea name="texte"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div th:each="commentaire : ${media.commentaires}" class="commentaire">
             <div class="title">
-                <h3>user</h3>
-                <p>x/5</p>
+                <h3 th:text="${commentaire.utilisateur.nom}">user</h3>
+                <p><span th:text="${commentaire.note}">x</span>/5</p>
             </div>
             <div>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
-                </p>
-            </div>
-        </div>
-        <div class="commentaire">
-            <div class="title">
-                <h3>user</h3>
-                <p>x/5</p>
-            </div>
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
-                </p>
-            </div>
-        </div>
-        <div class="commentaire">
-            <div class="title">
-                <h3>user</h3>
-                <p>x/5</p>
-            </div>
-            <div>
-                <p>
+                <p th:text="${commentaire.texte}">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus consequat iaculis. Nullam pulvinar nisi ac urna congue, in mattis leo ullamcorper.
                 </p>
             </div>
@@ -76,6 +73,6 @@
     </div>
 </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>

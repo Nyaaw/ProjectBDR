@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="includes/layout :: head"></head>
+<head th:replace="~{includes/layout.html :: head}"></head>
 
 <body>
-  <header th:replace="includes/layout :: header"></header>
+<header th:replace="~{includes/layout.html :: header}"></header>
 
   <main>
     <div id="part_1">
@@ -12,114 +12,80 @@
       <div id="ainfo">
           <!--<h2 th:text="${title}">Title fallback</h2> -->
           <h2>Explore our wide range of media</h2>
-          <a class="bouton" href="explore.html">En savoir plus</a>
+          <a class="bouton" th:href="|explore|">En savoir plus</a>
       </div>
     </div>
       <div id="part_2">
-          <form action="" method="post">
+          <form action="/media/search" method="get">
               <h1>Search</h1>
               <div id="checks">
                   <div>
                       <h3>Genres</h3>
-                      <div class="box">
-                          Genre 1
-                          <input type="checkbox" class="box" name="genre1" value="Genre 1">
-                      </div>
-                      <div class="box">
-                          Genre 2
-                          <input type="checkbox" class="box" name="genre2" value="Genre 2">
-                      </div>
-                      <div class="box">
-                          Genre 3
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="genre : ${genres}" class="box">
+                          <input type="checkbox" th:value="${genre}" class="box" name="genres" >
+                          <label th:text="${genre}">Genre</label>
                       </div>
                   </div>
                   <div>
                       <h3>Media type</h3>
-                      <div class="box">
-                          Type 1
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
-                      </div>
-                      <div class="box">
-                          Type 2
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="mediatype : ${mediatypes}" class="box">
+                          <input type="checkbox" class="box" name="mediatype" th:value="${mediatype}">
+                          <label th:text="${mediatype}">Type</label>
                       </div>
                   </div>
-                  <!-- if video game checked -->
                   <div>
                       <h3>Video game type</h3>
-                      <div class="box">
-                          Type 1
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
-                      </div>
-                      <div class="box">
-                          Type 2
-                          <input type="checkbox" class="box" name="genre3" value="Genre 3">
+                      <div th:each="VideoGameType : ${jeuvideotypes}" class="box">
+                          <input type="checkbox" class="box" name="videogametype" th:value="${VideoGameType}">
+                          <label th:text="${VideoGameType}">Type</label>
                       </div>
                   </div>
-                  <!-- if BD checked -->
                   <div>
                       <h3>BD option</h3>
                       <div class="box">
-                          Color
-                          <input type="checkbox" class="box" name="genre3" value="color">
+                          <input type="checkbox" class="box" name="color" value="color">
+                          <label >Color</label>
                       </div>
                   </div>
-                  <!-- if book checked -->
                   <div>
                       <h3>Book option</h3>
                       <p>Number of pages</p>
-                      <input type="number" name="Number of pages" min="1">
+                      <input type="number" name="pagesnb" min="1">
                   </div>
-                  <!-- if film checked -->
-                  <div>
+                  <!--<div>
                       <h3>Film option</h3>
                       <p>Duration (minutes)</p>
                       <input type="number" name="Duration" min="1">
-                  </div>
-                  <!-- if serie checked -->
+                  </div>-->
                   <div>
                       <h3>Serie option</h3>
                       <p>Number of season</p>
-                      <input type="number" name="Number of seasons">
+                      <input type="number" name="seasonnb">
                   </div>
                   <div>
                       <h3>Keyword</h3>
-                      <input type="text" id="search" name="Search..">
-                      <button type="submit" class="btn btn-success btn-block mb-3 btn-rounded" value="submit"><a href="result.html">Search</a></button>
+                      <input type="text" id="search" name="keyword">
+                      <button type="submit" class="btn btn-success btn-block mb-3 btn-rounded" value="submit"><a th:href="|result?search=oui|">Search</a></button>
                   </div>
               </div>
           </form>
       </div>
       <div id="part_3">
           <div><h1>Last added</h1></div>
-          <div class="media_list">
+          <div th:each="media : ${medias}" class="media_list">
               <div class="List">
-                  <h3><a href="media.html">Name</a></h3>
-                  <ul class="List_item">
-                      <li>Genre 1</li>
-                      <li>Genre 2</li>
+                  <a th:href="|media?id=${media.id}|" th:text="${media.nom}"><h3>Name</h3></a>
+                  <ul th:each="genre : ${media.genres}" class="List_item">
+                      <li th:text="${genre}">Genre</li>
                   </ul>
               </div>
               <div>
-                  <p>Added: dd.mm.yyyy</p>
-              </div>
-          </div>
-          <div class="media_list">
-              <div class="List">
-                  <h3><a href="media.html">Name</a></h3>
-                  <ul class="List_item">
-                      <li>Genre 1</li>
-                      <li>Genre 2</li>
-                  </ul>
-              </div>
-              <div>
-                  <p>Added: dd.mm.yyyy</p>
+                  <p>Added: <span th:text="${media.datesortie}">dd.mm.yyyy</span></p>
               </div>
           </div>
       </div>
   </main>
 
-<footer th:replace="includes/layout :: footer"></footer>
+<footer th:replace="~{includes/layout.html :: footer}"></footer>
 </body>
 </html>

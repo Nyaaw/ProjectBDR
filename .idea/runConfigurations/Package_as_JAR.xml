@@ -31,8 +31,8 @@
           </option>
           <option name="goals">
             <list>
-              <option value="package" />
               <option value="clean" />
+              <option value="package" />
             </list>
           </option>
           <option name="multimoduleDir" />
