@@ -67,13 +67,11 @@
 
 
 ## Introduction
+This web application allows users to manage medias.
+Users can put medias in customised lists or basic lists such as the finished media list. They can also add notes or comments to the media they interact with.
+Finally, users can add medias themselves, if they are not in the database.
 
-TOADD
-
-
-
-
-
+The types of medias that can be managed are: Books, Comics, Movies, Series and Video Games.
 
 
 ## Getting Started 
@@ -83,9 +81,6 @@ TOADD
 
 To use the docker image, you first need to ensure that docker is installed on your machine.
 If that's not the case, please go to the official website ([Dockerdocs](https://docs.docker.com/engine/)) and follow the instruction for the version you need.
-
-
-
 
 
 
@@ -172,20 +167,12 @@ To publish the container on GitHub:
 
 
 
-
-
-
-
-
-
 ## Deployment
 
 ### Prerequisites
 
 
 You can either choose to deploy localy or online.
-
-
 
 
 #### Local Use
