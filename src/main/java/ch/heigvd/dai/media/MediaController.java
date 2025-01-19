@@ -7,6 +7,8 @@ import ch.heigvd.dai.createur.TypeCreateur;
 import ch.heigvd.dai.liste.Liste;
 import ch.heigvd.dai.utilisateur.Utilisateur;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -148,7 +150,25 @@ public class MediaController {
 
         Media m = DSLGetter.getOneMedia(raw);
 
-        ctx.render("media.html", Map.of("media", m, "lists", List.of(Favorite, Seen, toBeSeen, Watching, exempleListe)));
+        String pseudo = "unpseudo";
+
+        sql = "SELECT\n" +
+                "    nom, pseudo\n" +
+                "FROM\n" +
+                "    Liste\n" +
+                "WHERE\n" +
+                "    pseudo = '"+ pseudo +"';";
+        // Execute the raw SQL with bind parameters
+        var result = dsl.fetch(sql, pseudo);
+        // Process the result
+        result.forEach(record -> {
+            System.out.println(record);
+        });
+
+        List<Liste> lists = DSLGetter.getMultipleLists(result);
+
+
+        ctx.render("media.html", Map.of("media", m, "lists", lists));
     }
 
 
@@ -383,7 +403,6 @@ public class MediaController {
     public static void insertMedia(Context ctx){
         Media media = new Media();
 
-        //media.id = ctx.formParamAsClass("id", Integer.class).get();
         media.nom = ctx.formParamAsClass("nom", String.class)
                 .check(s -> !s.isBlank(), "name is empty").get();
         media.description = ctx.formParamAsClass("description", String.class)
@@ -405,16 +424,14 @@ public class MediaController {
         String date = ctx.formParamAsClass("datesortie", String.class).get();
 
         try{
-            media.datesortie = new Date(date);
-        } catch (DateTimeParseException e){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            media.datesortie = formatter.parse(date);
+        } catch (ParseException e) {
             throw new BadRequestResponse("bad date given");
         }
 
         List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class)
                 .check(l -> !l.isEmpty(), "no creators given").get();
-
-        if(createursIds.isEmpty())
-            throw new BadRequestResponse("No creators given");
 
         // verify that createursIds are valid creators
 
@@ -429,29 +446,29 @@ public class MediaController {
         String datesortie = "'" + media.datesortie + "'";
         String description = "'" + media.description + "'";
         String typemedia = "'" + media.typemedia + "'";
-        String Genre = "'" + media.genres + "'"; //actuellement un problème de passer plus d'un genre ou type à la fois
-        String typejeuvideo = "'" + media.jeuvideotypes + "'";
+        String Genre = "'" + media.genres.getFirst() + "'"; //actuellement un problème de passer plus d'un genre ou type à la fois
+        String typejeuvideo = media.jeuvideotypes == null ? "''"  : "'" + media.jeuvideotypes.getFirst() + "'";
 
-        Integer nbPages = null;
-        Integer nbSeasons = null;
-        Integer duree = null;
-        Boolean color = null;
+        Integer nbPages = 420;
+        Integer nbSeasons = 42;
+        Integer duree = 42;
+        Boolean color = true;
 
-        Integer idCreateur = null;
+        Integer idCreateur = createursIds.getFirst();
 
         //mettre nul si cela ne concerne pas le media
-        String sql = "SELECT insert_media(\n" +
-                "    "+nom+", --nom media\n" +
-                "    "+datesortie+",   --date de sortie\n" +
-                "    "+description+", --description\n" +
-                "    "+typemedia+", --type du media\n" +
-                "    "+nbPages+",       -- nb_pages\n" +
-                "    "+color+",       -- bd_couleur\n" +
-                "    "+duree+",       -- film_duree\n" +
-                "    "+nbSeasons+",       -- serie_nbSaisons\n" +
-                "    "+typejeuvideo+",      -- jeu_video_type\n" +
-                "    "+Genre+", -- genre_nom\n" +
-                "    "+idCreateur+"           -- createur_id\n" +
+        String sql = "SELECT insert_media(" +
+                nom + "::TEXT,           -- nom media\n" +
+                datesortie + "::DATE,    -- date de sortie\n" +
+                description + "::TEXT,   -- description\n" +
+                typemedia + "::TEXT,     -- type du media\n" +
+                nbPages + "::INTEGER,    -- nb_pages\n" +
+                color + "::BOOLEAN,      -- bd_couleur\n" +
+                duree + "::INTEGER,      -- film_duree\n" +
+                nbSeasons + "::INTEGER,  -- serie_nbSaisons\n" +
+                typejeuvideo + "::TEXT,  -- jeu_video_type\n" +
+                Genre + "::TEXT,         -- genre_nom\n" +
+                idCreateur + "::INTEGER  -- createur_id\n" +
                 ");";
 
         // Execute the raw SQL with bind parameters
@@ -461,6 +478,8 @@ public class MediaController {
         result.forEach(record -> {
             System.out.println(record);
         });
+
+        media.id = result.get(0).get("insert_media", Integer.class);
 
         ctx.redirect("/media?id=" + media.id);
     }

@@ -62,11 +62,11 @@ public class InsertController {
 
         List<String> allGenres = DSLGetter.getMultipleGenres(result);
 
-        sql = "SELECT * FROM Genre;";
+        sql = "SELECT * FROM Type;";
 
         result = dsl.fetch(sql);
 
-        List<String> allJeuvideotypes = DSLGetter.getMultipleGenres(result);
+        List<String> allJeuvideotypes = DSLGetter.getMultipleTypes(result);
 
         Set<Integer> set = ctx.sessionAttribute("createurs");
 
@@ -111,10 +111,10 @@ public class InsertController {
         }
 
         String sql = " WITH inserted_createur AS ( " +
-                "INSERT INTO createur (nom) VALUES ('dad') RETURNING id)";
+                "INSERT INTO createur (nom) VALUES ('" + c.nom + "') RETURNING id)";
 
 
-        if(c.typecreateur == TypeCreateur.groupe){
+        if(c.typecreateur == TypeCreateur.personne){
             sql += " INSERT INTO personne (id, prenom)\n" +
                     "SELECT id, '" + (c.prenom == null ? "" : c.prenom) + "'\n" +
                     "FROM inserted_createur\n" +
@@ -165,7 +165,7 @@ public class InsertController {
         HashSet<Integer> insertCreators = ctx.sessionAttribute("createurs");
 
         if(insertCreators == null){
-            insertCreators = new HashSet<Integer>();
+            insertCreators = new HashSet<>();
         } else {
             insertCreators.remove(idCreator);
         }
