@@ -192,7 +192,7 @@ public class DSLGetter {
             c.note = (Integer) record.get("note");
             c.date = (Date) record.get("date");
             c.utilisateur = new Utilisateur();
-            c.utilisateur.nom = (String) record.get("nom");
+            c.utilisateur.nom = (String) record.get("pseudo");
 
             coms.add(c);
         }

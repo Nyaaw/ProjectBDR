@@ -101,8 +101,7 @@ public class MediaController {
 
         List<Liste> lists = DSLGetter.getMultipleLists(result);
 
-        sql = "SELECT * FROM Commentaire where id = " + id +
-                ");";
+        sql = "SELECT * FROM Commentaire where id = " + id + ";";
         // Execute the raw SQL with bind parameters
         result = dsl.fetch(sql, pseudo);
 
