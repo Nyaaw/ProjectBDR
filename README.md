@@ -137,7 +137,7 @@ To build the application, you can use the following commands in your terminal.
 ./mvnw dependency:go-offline
 
 # Package the application
-./mvnw package
+./mvnw clean package
 ```
 
 ##### Build the application package
@@ -147,7 +147,7 @@ To build the app:
 
 Go into the folder of the app and use the command:
 ```sh
-docker build -t <TOADD> .
+docker build -t webserver .
 ```
 
 To publish the container on GitHub:
@@ -183,27 +183,30 @@ To publish the container on GitHub:
 ### Prerequisites
 
 
-You can either choose to deploy localy or online. (MABYE not)
+You can either choose to deploy localy or online.
 
 
 
 
-#### Local Use (MAYBE not possible )
-- Virtual Machine 
-  - Docker Compose
-  
-- TOADD (MAYBE)
+#### Local Use
 
+##### Without Docker
+- Java
 
+Note : To run the project locally, you need to have a Postgre Database with the following settings (if you modify any of the following, do not forget to modify the file src/main/java/ch/heigvd/dai/Main.java):
 
+- Database name : mediatheque
 
+We have sql scripts for creating the content of the database and to give it base data, if you want to fill it. The scripts are in docs/BDR-phases in phase 3 and 4. The order to run them is DDL.sql, DML.sql and base_struct_and_data.sql
+
+##### With Docker
+- Docker
+- Docker Compose
 
 #### Online Use
 - Cloud Based Virtual Machine
   - Docker Compose
 - Domain Name
-
-- TOADD (MAYBE)
 
 
 > [!NOTE]
@@ -216,39 +219,29 @@ If you don't know how to set up a VM you can read [this document](docs/VM_Help.m
 If you don't have a domain name and don't know how to get one you can read [this document](docs/Domain_Name_Help.md) to get the basics.  
 
 
-
-
-
-
-
 ### Steps
 
-TOADD
+#### Without Docker
+To run the project without docker, after packaging, run this command:
+```sh
+java -jar target/webserver.jar
+```
 
+To see the result, go to ``localhost:8080`` in your browser.
 
+#### With Docker
+To run the project with docker, after packaging and building the project with Docker, use the following command:
+````shell
+docker compose up
+````
+To see the result, go to ``localhost:8080`` in your browser.
 
-
-
-
-
-
-
-
-
-
-
-## Usage
-Once the app is built, you can run it.
-
-
-### Run the application
-#### Using Docker
-
-TOADD
-
-
-
-
+#### Online
+To run it online, use the same methode that locally with docker.
+> [!IMPORTANT]
+> However, you will need to change the name of the domain in ``docker-compose.yaml`` to your domain that is linked to your vm.
+> - Line 57 : ``- "traefik.http.routers.webserver.rule=Host(`<your domain name>`)"``
+> - Line 61 : ``- "traefik.http.routers.webserver-secure.rule=Host(`<your domain name>`)"``
 
 
 
@@ -273,4 +266,49 @@ TOADD
 
 ## Complementary Information
 If you need more informations about the API you can consult [this file](docs/API.md).
+
+### DNS Config
+We used ``Duck DNS`` to get our domain. ``Duck DNS`` give automatically an `A` record.
+We made our domain point to our VM.
+````shell 
+lg-heig-vd.duckdns.org points to 4.180.67.252
+```` 
+Now we can access our website using: ``http://lg-heig-vd.duckdns.org``.
+
+To see the ``TTL`` of our domain, we used this command:
+``dig +nocmd +noquestion +nocomments +stats``
+
+The result was: ``lg-heig-vd.duckdns.org. 60      IN      A       4.180.67.252``
+
+To see all the records and information, the ``nslookup`` command is very useful.
+Exemples:
+- The ``A`` record: ```nslookup -type=a lg-heig-vd.duckdns.org```
+  - Answer:
+  ```shell
+  Server:         127.0.0.53
+  Address:        127.0.0.53#53
+  
+  Non-authoritative answer:
+  Name:   lg-heig-vd.duckdns.org
+  Address: 4.180.67.252
+   ``` 
+
+- The ``MX`` record: ```nslookup -type=mx lg-heig-vd.duckdns.org```
+  - Answer:
+  ```shell
+  Server:         127.0.0.53
+  Address:        127.0.0.53#53
+  
+  Non-authoritative answer:
+  lg-heig-vd.duckdns.org  mail exchanger = 50 lg-heig-vd.duckdns.org.
+  
+  Authoritative answers can be found from:
+  lg-heig-vd.duckdns.org  internet address = 4.180.67.252
+   ```
+
+
+
+
+
+
 
