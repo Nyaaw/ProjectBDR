@@ -7,9 +7,9 @@ i INTEGER;
 BEGIN
 FOR i IN 1..5 LOOP
     WITH inserted_createur AS (
-	INSERT INTO Createur (nom)
+  INSERT INTO Createur (nom)
     VALUES ('Createur' || i) RETURNING id )
-	INSERT INTO Personne(id, prenom)
+  INSERT INTO Personne(id, prenom)
 SELECT id, 'Prenom'
 FROM inserted_createur;
 END LOOP;

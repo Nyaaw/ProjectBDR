@@ -1,6 +1,3 @@
-
-
-/*Supression des tables si elles existent déjà*/
 DROP TABLE IF EXISTS Media_Genre;
 DROP TABLE IF EXISTS Media_Liste;
 DROP TABLE IF EXISTS Media_Createur;
@@ -191,8 +188,6 @@ CREATE TABLE Commentaire(
 );
 
 
-/* add unmoving table info*/
-
 INSERT INTO Genre (nom) VALUES ('Horror');
 INSERT INTO Genre (nom) VALUES ('Comedy');
 INSERT INTO Genre (nom) VALUES ('Action');
@@ -236,12 +231,6 @@ INSERT INTO Type (nom) VALUES ('Strategy');
 INSERT INTO Type (nom) VALUES ('Tower defense');
 INSERT INTO Type (nom) VALUES ('Cards and Board');
 INSERT INTO Type (nom) VALUES ('Light Novel');
-
-
-
-
-
-/*Triggers and functions*/
 
 -- Créer un trigger pour générer automatiquement les listes des utilisateurs
 DO $$
