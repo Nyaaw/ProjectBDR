@@ -311,8 +311,15 @@ DO $$
 BEGIN
 INSERT INTO Utilisateur (pseudo, motDePasse)
 VALUES ('User1', 'mdp1'),
-       ('User2', 'mdp2');
+       ('User2', 'mdp2'),
+       ('unpseudo', 'mdp3');
 END $$;
+
+-- Insérer des medias dans la liste watched à but demonstratif
+INSERT INTO Media_Liste(idMedia, listeNom, listePseudo)
+    VALUES (1, 'Finished', 'unpseudo'),
+           (7, 'Finished', 'unpseudo'),
+           (24, 'Finished', 'unpseudo');
 
 -- insérer 10 commentaires au hasard
 DO $$
