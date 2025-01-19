@@ -22,72 +22,6 @@ public class MediaController {
 
     public static DSLContext dsl;
 
-    static Media exampleMedia;
-
-    static Liste Seen;
-    static Liste Favorite;
-    static Liste toBeSeen;
-    static Liste Watching;
-    static Liste exempleListe;
-
-    static{
-        exampleMedia = new Media();
-
-        exampleMedia.id = 2;
-        exampleMedia.nom = "Noita";
-        exampleMedia.typemedia = TypeMedia.jeuvideo;
-        exampleMedia.datesortie = new Date(2020,2,3);
-        exampleMedia.description = "A difficult roguelike where every pixel is simulated.";
-        exampleMedia.note = 2;
-
-        exampleMedia.genres = List.of("Adventure", "Horror");
-
-        exampleMedia.jeuvideotypes = List.of("Rogue like", "Sandbox");
-
-        Createur crea1 = new Createur();
-        crea1.typecreateur = TypeCreateur.personne;
-        crea1.nom = "Hempuli";
-
-        Createur crea2 = new Createur();
-        crea2.typecreateur = TypeCreateur.groupe;
-        crea2.nom = "Nolla Games";
-
-        exampleMedia.createurs = List.of(crea1, crea2);
-
-        Commentaire com1 = new Commentaire();
-        com1.media = exampleMedia;
-        com1.date = LocalDate.now();
-        com1.note = 2;
-        com1.texte = "Trop nul\nce jeu.";
-
-        com1.utilisateur = new Utilisateur();
-        com1.utilisateur.nom = "Jean-jacques";
-
-        Commentaire com2 = new Commentaire();
-        com2.media = exampleMedia;
-        com2.date = LocalDate.parse("2024-01-02");
-        com2.note = 2;
-        com2.texte = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
-
-        com2.utilisateur = new Utilisateur();
-        com2.utilisateur.nom = "xXxJeanPierredu92xXx";
-
-        exampleMedia.commentaires = List.of(com1, com2);
-
-        exempleListe = new Liste();
-        Seen = new Liste();
-        Favorite = new Liste();
-        toBeSeen = new Liste();
-        Watching = new Liste();
-
-        exempleListe.nom = "Liste example";
-        Seen.nom = "Seen";
-        toBeSeen.nom = "To be seen";
-        Favorite.nom = "Favorite";
-        Watching.nom = "Watching";
-
-    }
-
     public MediaController() {
 
     }
@@ -146,11 +80,11 @@ public class MediaController {
 
 
         // Execute the raw SQL with bind parameters
-        Result<Record> raw = dsl.fetch(sql, id);
+        Result<Record> result = dsl.fetch(sql, id);
 
-        Media m = DSLGetter.getOneMedia(raw);
+        Media m = DSLGetter.getOneMedia(result);
 
-        String pseudo = "unpseudo";
+        String pseudo = ctx.cookie("utilisateur");
 
         sql = "SELECT l.pseudo, l.nom\n" +
         "FROM Liste l\n" +
@@ -163,14 +97,18 @@ public class MediaController {
                 "AND ml.idMedia = " + id + "\n" +
         ");";
         // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, pseudo);
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        result = dsl.fetch(sql, pseudo);
 
         List<Liste> lists = DSLGetter.getMultipleLists(result);
 
+        sql = "SELECT * FROM Commentaire where id = " + id +
+                ");";
+        // Execute the raw SQL with bind parameters
+        result = dsl.fetch(sql, pseudo);
+
+        List<Commentaire> coms = DSLGetter.getMultipleCommentaires(result);
+
+        m.commentaires = coms;
 
         ctx.render("media.html", Map.of("media", m, "lists", lists));
     }
@@ -368,7 +306,7 @@ public class MediaController {
         Integer id = ctx.formParamAsClass("id", Integer.class).get();
         String nom = ctx.formParamAsClass("nom", String.class).get();
 
-        String pseudo = "unpseudo";
+        String pseudo = ctx.cookie("utilisateur");
 
         // add to db
         String sql = "INSERT INTO Media_Liste (idmedia, listenom, listePseudo)\n" +
@@ -382,24 +320,24 @@ public class MediaController {
     public static void addComment(Context ctx){
         Commentaire commentaire = new Commentaire();
 
-        String pseudo = "unpseudo";
+        String pseudo = ctx.cookie("utilisateur");
 
-        commentaire.media.id = ctx.formParamAsClass("id", Integer.class).get();
+        Integer mediaId = ctx.formParamAsClass("id", Integer.class).get();
         commentaire.note = ctx.formParamAsClass("note", Integer.class).get();
         commentaire.texte = ctx.formParamAsClass("texte", String.class).get();
 
         // add to db
-        String sql = "INSERT INTO Commentaire (pseudo, id, date, note, texte)\n" +
-                "VALUES ("+commentaire.media.id+", "+commentaire.utilisateur.nom+", CUREENT_DATE, "+commentaire.note+", "+commentaire.texte+");";
+        String sql = "INSERT INTO Commentaire (id, pseudo, date, note, texte)\n" +
+                "VALUES ("+mediaId+", '"+ pseudo +"', CURRENT_DATE, "+commentaire.note+", '"+commentaire.texte+"');";
 
-        var result = dsl.fetch(sql, commentaire.media.id, commentaire.utilisateur.nom, commentaire.note, commentaire.texte);
+        var result = dsl.fetch(sql);
 
         // Process the result
         result.forEach(record -> {
             System.out.println(record);
         });
 
-        ctx.redirect("/media?id=" + commentaire.media.id);
+        ctx.redirect("/media?id=" + mediaId);
     }
 
     public static void insertMedia(Context ctx){

@@ -94,9 +94,7 @@ public class Main {
 
         app.post("/media/addtolist", MediaController::addToList);
 
-        app.post("/media/comment", ctx -> {
-
-        });
+        app.post("/media/comment", MediaController::addComment);
         
         app.get("/mylists", ListeController::getAll);
 
