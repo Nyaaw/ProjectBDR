@@ -52,13 +52,13 @@ services:
       - bdr_network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.winventory.rule=Host(`winventory.localhost`)" # Change domain in production
-      - "traefik.http.routers.winventory.entrypoints=web"
-      - "traefik.http.routers.winventory.middlewares=redirect-to-https"
+      - "traefik.http.routers.webserver.rule=Host(`webserver.localhost`)" # Change domain in production
+      - "traefik.http.routers.webserver.entrypoints=web"
+      - "traefik.http.routers.webserver.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.winventory-secure.rule=Host(`winventory.localhost`)"
-      - "traefik.http.routers.winventory-secure.entrypoints=websecure"
-      - "traefik.http.routers.winventory-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.webserver-secure.rule=Host(`webserver.localhost`)"
+      - "traefik.http.routers.webserver-secure.entrypoints=websecure"
+      - "traefik.http.routers.webserver-secure.tls.certresolver=myresolver"
 
 volumes:
   pgdata:
