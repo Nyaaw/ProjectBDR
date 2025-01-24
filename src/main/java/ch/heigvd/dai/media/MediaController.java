@@ -42,6 +42,7 @@ public class MediaController {
                     g.nom AS genre_name,
                     c.id AS creator_id,
                     c.nom AS creator_name,
+                    pe.prenom AS creator_firstname,
                     jt.nom AS jeuvideotype_name,
                     CASE
                 WHEN p.id IS NOT NULL THEN 'Papier'
@@ -65,6 +66,7 @@ public class MediaController {
                 LEFT JOIN Genre g ON mg.genreNom = g.nom
                 LEFT JOIN Media_Createur mc ON m.id = mc.mediaId
                 LEFT JOIN Createur c ON mc.createurId = c.id
+                LEFT JOIN Personne pe ON pe.id = c.id
                 LEFT JOIN Papier p ON m.id = p.id
                 LEFT JOIN Numerique n ON m.id = n.id
                 LEFT JOIN Livre l ON m.id = l.id
