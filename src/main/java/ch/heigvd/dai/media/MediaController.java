@@ -413,7 +413,7 @@ public class MediaController {
             }
             typesjeuvideo.append("}'");
         } else {
-            typesjeuvideo.append("null");
+            typesjeuvideo.append("'{}'");
         }
 
         //mettre nul si cela ne concerne pas le media
