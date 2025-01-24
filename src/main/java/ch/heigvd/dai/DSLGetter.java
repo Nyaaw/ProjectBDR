@@ -74,12 +74,14 @@ public class DSLGetter {
             }
 
             String createurNom = (String) record.get("creator_name");
+            String createurPrenom = (String) record.get("creator_firstname");
             Integer createurId = (Integer) record.get("creator_id");
             if (createurId != null) {
                 if (m.createurs.stream().noneMatch(c -> c.id == createurId)) {
                     Createur c = new Createur();
                     c.id = createurId;
                     c.nom = createurNom;
+                    c.prenom = createurPrenom;
                     m.createurs.add(c);
                 }
             }
