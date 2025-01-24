@@ -42,7 +42,7 @@ public class Main {
         });
 
 
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://db/mediatheque", "postgres", "trustno1");
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5666/mediatheque", "postgres", "trustno1");
         DSLContext dsl = DSL.using(conn);
 
         MediaController.dsl = dsl;

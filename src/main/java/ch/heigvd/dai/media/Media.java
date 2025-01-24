@@ -15,6 +15,11 @@ public class Media{
     public TypeMedia typemedia;
     public Integer note;
 
+    public Integer duree;
+    public Boolean couleur;
+    public Integer saison;
+    public Integer pages;
+
     public List<Commentaire> commentaires;
     public List<Createur> createurs;
     public List<String> genres;

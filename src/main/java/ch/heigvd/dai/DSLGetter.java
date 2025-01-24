@@ -34,10 +34,27 @@ public class DSLGetter {
                 m.description = (String) record.get("media_description");
                 m.typemedia = TypeMedia.valueOf((String) record.get("media_type"));
 
+
                 m.genres = new ArrayList<>();
                 m.createurs = new ArrayList<>();
-                if(m.typemedia == TypeMedia.jeuvideo)
-                    m.jeuvideotypes = new ArrayList<>();
+                switch(m.typemedia){
+                    case jeuvideo:
+                        m.jeuvideotypes = new ArrayList<>();
+                        break;
+                    case bd:
+                        m.couleur = (Boolean) record.get("bd_color");
+                        break;
+                    case film:
+                        m.duree = (Integer) record.get("film_duration");
+                        break;
+                    case serie:
+                        m.saison = (Integer) record.get("series_seasons");
+                        break;
+                    case livre:
+                        m.pages = (Integer) record.get("book_pages");
+                        break;
+                }
+
             }
 
             // Add genre to the media's genre list

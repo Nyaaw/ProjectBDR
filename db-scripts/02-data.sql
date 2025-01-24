@@ -239,13 +239,13 @@ ORDER BY random()
 
 -- Vérifier si le commentaire pour cet utilisateur et ce média existe déjà
 IF NOT EXISTS (SELECT 1 FROM Commentaire WHERE pseudo = pseudo_utilisateur AND id = id_media) THEN
-                -- Générer une note au hasard entre 1 et 5
-                note := (floor(random() * 5) + 1)::int;
+    -- Générer une note au hasard entre 1 et 5
+    note := (floor(random() * 5) + 1)::int;
 
-                -- Générer un texte de commentaire générique
-                commentaire_texte := 'Commentaire générique pour le média ' || id_media || ' - Note: ' || note;
+    -- Générer un texte de commentaire générique
+    commentaire_texte := 'Commentaire générique pour le média ' || id_media || ' - Note: ' || note;
 
-                -- Insérer le commentaire dans la table
+    -- Insérer le commentaire dans la table
 INSERT INTO Commentaire (pseudo, id, date, note, texte)
 VALUES (pseudo_utilisateur, id_media, CURRENT_DATE, note, commentaire_texte);
 END IF;

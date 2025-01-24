@@ -12,7 +12,7 @@
     <form id="mainForm" action="/media" method="post"> </form>
 
     <div class="form_part">
-        <h2>Genres: </h2>
+        <h2>Genres:</h2>
         <form action="/insert/addgenre" method="post">
             <label for="genre">Add genre:</label>
             <select  id="genre" name="genre">
@@ -35,7 +35,7 @@
 
 
     <div class="form_part">
-        <h2>Creators: </h2>
+        <h2>Creators:</h2>
         <div>
             <form action="insert/addcreator" method="post">
                 <label for="addcreator">Select creator:</label>
@@ -49,21 +49,24 @@
         </div>
         <form action="insert/createcreator" method="post">
             <h4 for="createcreator">Add creator:</h4>
-            <label for="createcreatorname"></label>
-            <input type="text" id="createcreatorname" name="nom">
-            <label for="createcreatorsurname"></label>
-            <input type="text" id="createcreatorsurname" name="prenom">
-            <br>
-            <label>type of creator:</label>
 
-            <input type="radio" name="typecreateur" id="creatorTypePerson" value="personne">
+            <label>Type of creator:</label>
             <label for="creatorTypePerson">Person</label>
-            <input type="radio" name="typecreateur" id="creatorTypeGroup" value="groupe">
+            <input type="radio" name="typecreateur" id="creatorTypePerson" value="personne" checked>
             <label for="creatorTypeGroup">Group</label>
+            <input type="radio" name="typecreateur" id="creatorTypeGroup" value="groupe">
+            <br>
+            <label for="createcreatorname">Name: </label>
+            <input type="text" id="createcreatorname" name="nom" required>
+            <div id="creatorFirstNameForm">
+                <label for="createcreatorfirstname">First name: </label>
+                <input type="text" id="createcreatorfirstname" name="prenom">
+            </div>
+            <br>
 
             <input type="submit" value="Add">
         </form>
-        <h4>Creator selected:</h4>
+        <h4>Creators selected:</h4>
         <ul>
             <li th:each="creator : ${selectedCreators}">
                 <form action="insert/removecreator" method="post">
@@ -75,12 +78,23 @@
                 <input type="hidden" name="createurs" th:value="${creator.id}" form="mainForm">
             </li>
         </ul>
-
     </div>
 
     <div class="form_part">
+        <label for="type">Type:</label>
+        <select id="type" name="typemedia" form="mainForm">
+            <option value="film">Film</option>
+            <option value="serie">Série</option>
+            <option value="jeuvideo">Jeu-Vidéo</option>
+            <option value="livre">Livre</option>
+            <option value="bd">BD</option>
+        </select>
+    </div>
+
+
+    <div class="form_part jeuvideoForm">
         <div>
-            <h3>Video game types: </h3>
+            <h3>Select video game types: </h3>
             <form action="insert/addvideogametype" method="post">
                 <label for="videoGameType">Add video game type</label>
                 <select id="videoGameType" name="jeuvideotype">
@@ -88,7 +102,7 @@
                 </select>
                 <input type="submit" value="Add">
             </form>
-            <h4>Video Game type selected:</h4>
+            <h4>Video game types selected:</h4>
             
             <ul>
                 <li th:each="videoGameTypeSelected : ${session.jeuvideotypes}">
@@ -100,35 +114,80 @@
                     <input type="hidden" name="jeuvideotypes" th:value="${videoGameTypeSelected}" form="mainForm">
                 </li>
             </ul>
-            
         </div>
-
     </div>
     <div class="form_part">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="nom" form="mainForm">
-
-        <label for="date">Release date:</label>
-        <input type="date" id="date" name="datesortie" form="mainForm">
-
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" form="mainForm"></textarea>
-        <div class="form_part">
-            <label for="type">Type de média:</label>
-            <select id="type" name="typemedia" form="mainForm">
-                <option value="film">Film</option>
-                <option value="serie">Série</option>
-                <option value="jeuvideo">Jeu-Vidéo</option>
-                <option value="livre">Livre</option>
-                <option value="bd">BD</option>
-            </select>
+        <h2>Infos:</h2>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="nom" form="mainForm" required>
         </div>
 
+        <div class="bdForm">
+            <label>BD Color:</label>
+            <label for="couleurTrue">Colored</label>
+            <input type="radio" name="couleur" id="couleurTrue" value="true" form="mainForm" checked>
+            <label for="couleurTrue">Black and white</label>
+            <input type="radio" name="couleur" id="couleurFalse" value="false" form="mainForm">
+        </div>
+
+        <div class="serieForm">
+            <label for="saison">Season:</label>
+            <input type="number" name="saison" id="saison" min="1" value="1" form="mainForm">
+        </div>
+
+        <div class="livreForm">
+            <label for="pages">Page number:</label>
+            <input type="number" min="1" id="pages" name="pages" value="1" form="mainForm">
+        </div>
+
+        <div class="filmForm">
+            <label for="duree">Duration (mins):</label>
+            <input type="number" id="duree" name="duree" value="1" form="mainForm">
+        </div>
+
+        <label for="date">Release date:</label>
+        <input type="date" id="date" name="datesortie" form="mainForm" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" form="mainForm" required></textarea>
     </div>
+
+    <br>
 
     <input type="submit" value="Create" form="mainForm">
 </main>
 
 <footer th:replace="~{includes/layout.html :: footer}"></footer>
+<script>
+    var typeSelectInput = document.getElementById("type");
+
+    function updateInsertForm(){
+        let type = typeSelectInput.value;
+
+        ["jeuvideo", "film", "livre", "bd", "serie"].forEach( s => {
+            for(x of document.getElementsByClassName(s + "Form"))
+                x.style.display = type === s ? "flex" : "none";
+        })
+
+    }
+
+    function updateAddCreatorForm(event){
+        console.log(event.target.id)
+        var firstNameInput = document.getElementById("creatorFirstNameForm");
+
+        if(event.target.id === "creatorTypePerson")
+            firstNameInput.style.display = "block"
+        else
+            firstNameInput.style.display = "none"
+
+    }
+
+    typeSelectInput.addEventListener("input", updateInsertForm);
+    document.getElementById("creatorTypePerson").addEventListener('change', updateAddCreatorForm)
+    document.getElementById("creatorTypeGroup").addEventListener('change', updateAddCreatorForm)
+
+    updateInsertForm();
+</script>
 </body>
 </html>

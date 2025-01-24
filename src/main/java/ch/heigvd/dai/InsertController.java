@@ -12,26 +12,7 @@ import java.util.*;
 
 public class InsertController {
 
-    static List<Createur> creatorsExample = new ArrayList<>();
-    static List<String> genresExamples = List.of("Horror", "Comedy");
-    static List<String> jeuvideotypesExamples = List.of("Rogue Like", "Platformer");
-
     public static DSLContext dsl;
-
-    static{
-        Createur crea1 = new Createur();
-        crea1.id = 1;
-        crea1.typecreateur = TypeCreateur.personne;
-        crea1.nom = "Hempuli";
-
-        Createur crea2 = new Createur();
-        crea2.id = 2;
-        crea2.typecreateur = TypeCreateur.groupe;
-        crea2.nom = "Nolla Games";
-
-        creatorsExample.add(crea1);
-        creatorsExample.add(crea2);
-    }
 
     public static void RenderInsert(Context ctx){
 
