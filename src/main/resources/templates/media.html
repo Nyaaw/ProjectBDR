@@ -26,7 +26,7 @@
                 <p><span th:text="${media.note}">x</span>/5</p>
             </div>
             <div>
-                <h3>Creator</h3>
+                <h3>Creators</h3>
                 <ul th:each="creator : ${media.createurs}">
                     <li th:if="${creator.prenom == null}" th:text="${creator.nom}">Creator</li>
                     <li th:unless="${creator.prenom == null}" th:text="|${creator.nom} ${creator.prenom}|">Creator</li>
@@ -40,13 +40,31 @@
             <ul th:each="genre : ${media.genres}">
                 <li th:text="${genre}">Genre</li>
             </ul>
-            <h3>Video game types</h3>
-            <ul th:each="type : ${media.jeuvideotypes}">
-                <li th:text="${type}">Genre</li>
-            </ul>
         </div>
         <div class="media_section2">
-            <h2>Description</h2>
+            <div th:if="${media.typemedia.name() == 'jeuvideo'}">
+                <h3>Video game types</h3>
+                <ul th:each="type : ${media.jeuvideotypes}">
+                    <li th:text="${type}">Genre</li>
+                </ul>
+            </div>
+            <div th:if="${media.typemedia.name() == 'bd'}">
+                <h3>Color</h3>
+                <p th:text="${media.couleur ? 'yes' : 'no'}"></p>
+            </div>
+            <div th:if="${media.typemedia.name() == 'film'}">
+                <h3>Duration (minutes)</h3>
+                <p th:text="${media.duree}"></p>
+            </div>
+            <div th:if="${media.typemedia.name() == 'serie'}">
+                <h3>Seasons number</h3>
+                <p th:text="${media.saison}"></p>
+            </div>
+            <div th:if="${media.typemedia.name() == 'livre'}">
+                <h3>Page number</h3>
+                <p th:text="${media.pages}"></p>
+            </div>
+            <h3>Description</h3>
             <p th:text="${media.description}">Lorem ipsum</p>
         </div>
     </div>
@@ -54,10 +72,10 @@
         <h2>Comments</h2>
         <form id="comment" action="/media/comment" method="post">
             <label>Note</label>
-            <input type="number" name="note" min="1" max="5">
+            <input type="number" name="note" min="1" max="5" required>
             <label>Comment</label>
+            <textarea name="texte" required></textarea>
             <input type="hidden" th:value="${media.id}" name="id">
-            <textarea name="texte"></textarea>
             <button type="submit">Submit</button>
         </form>
         <div th:each="commentaire : ${media.commentaires}" class="commentaire">

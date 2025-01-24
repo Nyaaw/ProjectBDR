@@ -228,11 +228,11 @@ public class MediaController {
                 m.description AS media_description,
                 g.nom AS genre_name,
                 CASE
-                WHEN l.id IS NOT NULL THEN 'Livre'
-                WHEN b.id IS NOT NULL THEN 'BD'
-                WHEN f.id IS NOT NULL THEN 'Film'
-                WHEN s.id IS NOT NULL THEN 'Série'
-                WHEN jv.id IS NOT NULL THEN 'Jeu Vidéo'
+                WHEN l.id IS NOT NULL THEN 'livre'
+                WHEN b.id IS NOT NULL THEN 'bd'
+                WHEN f.id IS NOT NULL THEN 'film'
+                WHEN s.id IS NOT NULL THEN 'serie'
+                WHEN jv.id IS NOT NULL THEN 'jeuvideo'
                 END AS media_type,
                 l.nbPage AS book_pages,
                 b.couleur AS bd_color,
@@ -358,8 +358,6 @@ public class MediaController {
         media.genres = ctx.formParamsAsClass("genres", String.class)
                 .check(g -> !g.isEmpty(), "doesn't specify a genre").get();
 
-        // verify that genres exists
-
         String date = ctx.formParamAsClass("datesortie", String.class).get();
 
         try{
@@ -372,28 +370,51 @@ public class MediaController {
         List<Integer> createursIds = ctx.formParamsAsClass("createurs", Integer.class)
                 .check(l -> !l.isEmpty(), "no creators given").get();
 
-        // verify that createursIds are valid creators
-
         if(media.typemedia == TypeMedia.jeuvideo)
             media.jeuvideotypes = ctx.formParamsAsClass("jeuvideotypes", String.class)
                     .check(l -> !l.isEmpty(), "no video game type given").get();
-
-        // verify that jeuvideotypes exists
 
         // create media in DB and get id
         String nom = "'" + media.nom + "'";
         String datesortie = "'" + media.datesortie + "'";
         String description = "'" + media.description + "'";
         String typemedia = "'" + media.typemedia + "'";
-        String Genre = "'" + media.genres.getFirst() + "'"; //actuellement un problème de passer plus d'un genre ou type à la fois
-        String typejeuvideo = media.jeuvideotypes == null ? "''"  : "'" + media.jeuvideotypes.getFirst() + "'";
 
-        Integer nbPages = 420;
-        Integer nbSeasons = 42;
-        Integer duree = 42;
-        Boolean color = true;
+        Integer nbPages = ctx.formParamAsClass("pages", Integer.class).get();
+        Integer nbSeasons = ctx.formParamAsClass("saison", Integer.class).get();
+        Integer duree = ctx.formParamAsClass("duree", Integer.class).get();
+        Boolean color = ctx.formParamAsClass("couleur", Boolean.class).get();
 
-        Integer idCreateur = createursIds.getFirst();
+        StringBuilder idCreateurs = new StringBuilder("'{");
+        for(int i = 0; i < createursIds.size(); i++){
+            idCreateurs.append(createursIds.get(i));
+            if(i + 1 != createursIds.size())
+                idCreateurs.append(", ");
+        }
+        idCreateurs.append("}'");
+
+        StringBuilder genres = new StringBuilder("'{");
+        for(int i = 0; i < media.genres.size(); i++){
+            genres.append(media.genres.get(i));
+            if(i + 1 != media.genres.size())
+                genres.append(", ");
+        }
+        genres.append("}'");
+
+        StringBuilder typesjeuvideo = new StringBuilder();
+        if(media.typemedia == TypeMedia.jeuvideo){
+
+            typesjeuvideo.append("'{");
+            for(int i = 0; i < media.jeuvideotypes.size(); i++){
+                typesjeuvideo.append(media.jeuvideotypes.get(i));
+                if(i + 1 != media.jeuvideotypes.size()) {
+                    typesjeuvideo.append(", ");
+                }
+            }
+            typesjeuvideo.append("}'");
+        } else {
+            typesjeuvideo.append("null");
+        }
 
         //mettre nul si cela ne concerne pas le media
         String sql = "SELECT insert_media(" +
@@ -405,18 +426,13 @@ public class MediaController {
                 color + "::BOOLEAN,      -- bd_couleur\n" +
                 duree + "::INTEGER,      -- film_duree\n" +
                 nbSeasons + "::INTEGER,  -- serie_nbSaisons\n" +
-                typejeuvideo + "::TEXT,  -- jeu_video_type\n" +
-                Genre + "::TEXT,         -- genre_nom\n" +
-                idCreateur + "::INTEGER  -- createur_id\n" +
+                typesjeuvideo + "::TEXT[],  -- jeu_video_type\n" +
+                genres + "::TEXT[],         -- genre_nom\n" +
+                idCreateurs + "::INTEGER[]  -- createur_id\n" +
                 ");";
 
         // Execute the raw SQL with bind parameters
-        var result = dsl.fetch(sql, media.nom, media.datesortie, media.description, media.typemedia, media.typemedia, media.genres);
-
-        // Process the result
-        result.forEach(record -> {
-            System.out.println(record);
-        });
+        var result = dsl.fetch(sql);
 
         media.id = result.get(0).get("insert_media", Integer.class);
 
