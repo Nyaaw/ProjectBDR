@@ -1158,7 +1158,7 @@
 											"top": 966,
 											"width": 131.88525390625,
 											"height": 13,
-											"text": "numeroSaison",
+											"text": "nbSaison",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1170,6 +1170,7 @@
 											"model": {
 												"$ref": "AAAAAAGS59A2rDy5yB0="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 587,
 											"top": 981,
@@ -1183,7 +1184,7 @@
 									"left": 582,
 									"top": 961,
 									"width": 141.88525390625,
-									"height": 38
+									"height": 23
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1239,7 +1240,7 @@
 							"left": 582,
 							"top": 936,
 							"width": 141.88525390625,
-							"height": 73,
+							"height": 48,
 							"showVisibility": false,
 							"nameCompartment": {
 								"$ref": "AAAAAAGTAWGqJEl1uDQ="
@@ -6267,7 +6268,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGS5yzixiy78eo="
 							},
-							"name": "numeroSaison",
+							"name": "nbSaison",
 							"type": ""
 						},
 						{
@@ -7153,7 +7154,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTAXpPctgsGCI="
 							},
-							"name": "note"
+							"name": "note",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
